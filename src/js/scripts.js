@@ -18,14 +18,11 @@ $(function() {
     return animal;
   }
 
-  // Function for figuring out difficulty level
+  // Function for taking users desired difficulty level and applying classes
   function difficulty() {
     var difficulty = $('input[type="radio"]:checked').val().toLowerCase();
-    $('main').removeClass();
-    $('main').addClass(difficulty);
+    $('main').removeClass().addClass(difficulty);
   }
-
-  difficulty();
 
   $('.game__board-tile').on('click', function() {
     if(!$(this).hasClass('game__board-tile--flipped')) {
