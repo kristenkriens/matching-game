@@ -1,0 +1,84 @@
+.game {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: calc(100% + 20px);
+  margin: 50px -20px;
+
+  &__options {
+    background-color: $orange;
+    width: calc(25% - 20px);
+    margin: 10px;
+  }
+
+  &__stats-board {
+    width: calc(75% - 20px);
+    margin: 10px;
+  }
+
+  &__stats {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px;
+    background-color: $orange;
+    position: relative;
+    margin-bottom: 20px;
+
+    &-timer {
+      background-color: $dark-orange;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 35px;
+      text-align: center;
+      padding: 0 15px;
+      width: 115px;
+    }
+  }
+
+  &__board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: -5px;
+
+    &--easy {
+      .game__board-tile {
+        width: calc(25% - 10px);
+        padding-bottom: calc(25% - 10px);
+        height: 0;
+        position: relative;
+        margin: 5px;
+      }
+    }
+
+    &-tile {
+      cursor: pointer;
+
+      &-front {
+        width: 100%;
+        padding-bottom: 100%;
+        background-color: $orange;
+      }
+
+      &-back {
+        width: 100%;
+        padding-bottom: 100%;
+        background-color: $dark-orange; // temporary until pictures are added
+        display: none;
+      }
+
+      &--flipped {
+        .game__board-tile-front {
+          display: none;
+        }
+
+        .game__board-tile-back {
+          display: block;
+        }
+      }
+    }
+  }
+}

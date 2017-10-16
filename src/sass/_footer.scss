@@ -1,8 +1,12 @@
 .footer {
-  padding: 10px 0;
+  background-color: $dark-orange;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  padding: 15px 0;
 
   .wrapper {
     justify-content: space-between;
+    max-width: 1200px;
   }
 
   p {
@@ -13,6 +17,14 @@
       &:first-of-type {
         margin-bottom: 15px;
       }
+    }
+  }
+
+  a {
+    color: $white;
+
+    &:hover, &:active, &:focus {
+      color: $light-orange;
     }
   }
 }
