@@ -18,11 +18,11 @@
   }
 
   .game__board-tile {
-    width: calc(calc(100% / 6) - 10px);
-    padding-bottom: calc(calc(100% / 6) - 10px);
+    width: calc(calc(100% / 5) - 8px);
+    padding-bottom: calc(calc(100% / 5) - 8px);
     height: 0;
     position: relative;
-    margin: 5px;
+    margin: 4px;
   }
 }
 
@@ -32,11 +32,11 @@
   }
 
   .game__board-tile {
-    width: calc(calc(100% / 8) - 10px);
-    padding-bottom: calc(calc(100% / 8) - 10px);
+    width: calc(calc(100% / 6) - 6px);
+    padding-bottom: calc(calc(100% / 6) - 6px);
     height: 0;
     position: relative;
-    margin: 5px;
+    margin: 3px;
   }
 }
 
@@ -92,7 +92,7 @@
 
 .game {
   margin: 50px auto;
-  max-width: 800px;
+  max-width: 750px;
 
   &__stats {
     display: flex;
