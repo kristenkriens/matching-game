@@ -45,7 +45,7 @@
   text-align: center;
 
   &__box {
-    background-color: $orange;
+    background-color: $dark-orange;
     padding: 10px;
     width: 100%;
     max-width: 330px;
@@ -79,6 +79,7 @@
   }
 
   &__item {
+    background-color: $orange;
     border: 2px solid transparent;
     margin: 5px;
     padding: 5px 15px;
