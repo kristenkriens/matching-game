@@ -6,6 +6,12 @@ $(function() {
 
   var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf'];
 
+  var difficultyBoxes = {
+    easy: 16,
+    medium: 25,
+    hard: 36
+  }
+
   // Generate random number from 1 to some number
   var randomNum = function(num) {
     return Math.floor(Math.random() * num);
