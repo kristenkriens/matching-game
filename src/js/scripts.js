@@ -18,6 +18,15 @@ $(function() {
     return animal;
   }
 
+  // Function for figuring out difficulty level
+  function difficulty() {
+    var difficulty = $('input[type="radio"]:checked').val().toLowerCase();
+    $('main').removeClass();
+    $('main').addClass(difficulty);
+  }
+
+  difficulty();
+
   $('.game__board-tile').on('click', function() {
     if(!$(this).hasClass('game__board-tile--flipped')) {
       games.clicks++;
@@ -26,5 +35,9 @@ $(function() {
     $('.game__stats-clicks span').text(games.clicks);
 
     $(this).addClass('game__board-tile--flipped');
+  });
+
+  $('.options__item').on('click', function() {
+    difficulty();
   });
 });
