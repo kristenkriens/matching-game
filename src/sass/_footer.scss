@@ -1,0 +1,18 @@
+.footer {
+  padding: 10px 0;
+
+  .wrapper {
+    justify-content: space-between;
+  }
+
+  p {
+    @media (max-width: $sm-width) {
+      width: 100%;
+      text-align: center;
+
+      &:first-of-type {
+        margin-bottom: 15px;
+      }
+    }
+  }
+}
