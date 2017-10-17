@@ -52,7 +52,7 @@ main {
   text-align: center;
 
   &__box {
-    background-color: $dark-orange;
+    background-color: $orange;
     padding: 20px;
     width: 100%;
     margin: 0 auto;
@@ -80,10 +80,11 @@ main {
 
   &__item {
     display: block;
-    background-color: $orange;
+    background-color: $dark-orange;
     border: 2px solid transparent;
     margin: 10px 0;
     padding: 5px 15px;
+    transition: 200ms border-style ease, 200ms border-color ease;
     cursor: pointer;
 
     &:hover, &:active, &:focus {
@@ -105,7 +106,7 @@ main {
     color: $white;
     border: 2px dashed transparent;
     outline: none;
-    background-color: $orange;
+    background-color: $dark-orange;
     margin: 10px;
 
     &:hover, &:active, &:focus {
@@ -122,7 +123,7 @@ main {
     display: flex;
     justify-content: space-between;
     padding: 5px 10px;
-    background-color: $dark-orange;
+    background-color: $orange;
     position: relative;
     margin-bottom: 20px;
 
@@ -151,16 +152,20 @@ main {
       cursor: pointer;
 
       &-front {
-        width: 100%;
+        background-color: $dark-orange;
+        height: 0;
         padding-bottom: 100%;
-        background-color: $orange;
       }
 
       &-back {
-        width: 100%;
+        background-color: $white;
+        height: 0;
         padding-bottom: 100%;
-        background-color: $dark-orange; // temporary until pictures are added
         display: none;
+
+        img {
+          padding: 10px;
+        }
       }
 
       &--flipped {
