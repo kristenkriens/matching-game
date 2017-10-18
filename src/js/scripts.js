@@ -14,6 +14,9 @@ $(function() {
 
   var difficulty = '';
 
+  var clickedItems = [];
+  var clickedIndexes = [];
+
   // Capitalizes words and turns dashes into spaces
   function prettify(string) {
     var words = string.match(/([^-]+)/g) || [];
@@ -84,17 +87,52 @@ $(function() {
     }
   }
 
+  // Checks if there is a match and removes flipped class if not or adds points if so
+  function checkMatch(that) {
+    var evenItem = '';
+    var oddItem = '';
+
+    var evenIndex = '';
+    var oddIndex = '';
+
+    clickedItems.slice(0, 2);
+
+    if(games.clicks % 2 !== 0) {
+      oddItem = that.find('img').attr('alt');
+      oddIndex = that.index();
+      clickedItems.push(oddItem);
+      clickedIndexes.push(oddIndex);
+    } else {
+      evenItem = that.find('img').attr('alt');
+      evenIndex = that.index();
+      clickedItems.push(evenItem);
+      clickedIndexes.push(evenIndex);
+    }
+
+    if(clickedItems.length > 2 || clickedIndexes.length > 2) {
+      clickedItems.splice(0, 2);
+      clickedIndexes.splice(0, 2);
+    }
+
+    if(clickedItems.length === 2 || clickedIndexes.length === 2) {
+      if(clickedItems[0] !== clickedItems[1]) {
+        setTimeout(function() {
+          $('.game__board-tile').eq(clickedIndexes[0]).removeClass('game__board-tile--flipped');
+          $('.game__board-tile').eq(clickedIndexes[1]).removeClass('game__board-tile--flipped');
+        }, 750);
+      } else {
+        games.score += 100;
+      }
+    }
+  }
+
   generateDifficulty();
   generateBoxes();
 
   $('input[type="radio"]').on('click', function() {
     generateDifficulty();
     generateBoxes();
-
-    games.clicks = 0;
-    games.score = 0;
-    $('.game__stats-clicks span').text(games.clicks);
-    $('.game__stats-score span').text(games.score);
+    reset();
   });
 
   $('.options__button--start').on('click', function(e) {
@@ -104,11 +142,14 @@ $(function() {
   });
 
   $('.game__board').on('click', '.game__board-tile', function() {
+    checkMatch($(this));
+
     if(!$(this).hasClass('game__board-tile--flipped')) {
       games.clicks++;
     }
 
     $('.game__stats-clicks span').text(games.clicks);
+    $('.game__stats-score span').text(games.score);
 
     $(this).addClass('game__board-tile--flipped');
   });
