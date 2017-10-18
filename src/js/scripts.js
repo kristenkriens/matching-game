@@ -198,7 +198,7 @@ $(function() {
     checkMatch($(this));
 
     games.clicks++;
-    games.score -= 5;
+    games.score -= 10;
 
     $('.game__stats-clicks span').text(games.clicks);
     $('.game__stats-score span').text(games.score);
