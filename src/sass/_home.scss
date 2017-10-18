@@ -5,8 +5,6 @@
 
   .game__board-tile {
     width: calc(calc(100% / 4) - 10px);
-    padding-bottom: calc(calc(100% / 4) - 10px);
-    height: 0;
     position: relative;
     margin: 5px;
   }
@@ -19,8 +17,6 @@
 
   .game__board-tile {
     width: calc(calc(100% / 5) - 8px);
-    padding-bottom: calc(calc(100% / 5) - 8px);
-    height: 0;
     position: relative;
     margin: 4px;
   }
@@ -33,8 +29,6 @@
 
   .game__board-tile {
     width: calc(calc(100% / 6) - 6px);
-    padding-bottom: calc(calc(100% / 6) - 6px);
-    height: 0;
     position: relative;
     margin: 3px;
   }
@@ -43,12 +37,12 @@
 main {
   .wrapper {
     margin: 50px auto;
-    max-width: 900px;
+    max-width: 1000px;
   }
 }
 
 .options {
-  width: calc(100% - 600px - 30px);
+  width: calc(25% - 15px);
   text-align: center;
 
   &__box {
@@ -101,8 +95,8 @@ main {
   }
 
   &__button {
-    width: 75px;
-    height: 75px;
+    width: 50%;
+    height: 65px;
     color: $white;
     border: 2px solid transparent;
     outline: none;
@@ -129,8 +123,7 @@ main {
 }
 
 .game {
-  width: 100%;
-  max-width: 600px;
+  width: calc(75% - 15px);
 
   &__stats {
     display: flex;

@@ -19,6 +19,10 @@ $(function() {
 
   var interval;
 
+  // Makes dynamic equal width boxes;
+  var tileWidth = $('.game__board-tile').width();
+  $('.game__board-tile').css({'height': tileWidth + 'px'});
+
   // Counts down timer from 2 minutes
   function countdown() {
     clearInterval(interval);
