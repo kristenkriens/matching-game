@@ -171,6 +171,8 @@ $(function() {
     $('.game__stats-timer').text(games.time);
 
     $('.game__board-tile').removeClass('game__board-tile--flipped');
+    $('.game__board').addClass('game__board--disabled');
+    $('.options__button--start').removeClass('options__button--active');
 
     clearInterval(interval);
   }
