@@ -20,7 +20,7 @@ $(function() {
   var clickedItems = [];
   var clickedIndexes = [];
 
-  // Makes dynamic equal width boxes;
+  // Makes dynamic equal width boxes
   var tileWidth = $('.game__board-tile').width();
   $('.game__board-tile').css({'height': tileWidth + 'px'});
 
@@ -67,7 +67,7 @@ $(function() {
     return array;
   }
 
-  // Generates random number from 1 to some number
+  // Generates random number from 1 to specified number
   function randomNum(num) {
     return Math.floor(Math.random() * num);
   }
@@ -123,7 +123,7 @@ $(function() {
     }
   }
 
-  // Checks if there is a match and removes flipped class if not or adds points if so
+  // Checks if there is a match and removes flipped class if not or adds points if there is
   function checkMatch(that) {
     var evenItem = '';
     var oddItem = '';
