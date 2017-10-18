@@ -17,6 +17,30 @@ $(function() {
   var clickedItems = [];
   var clickedIndexes = [];
 
+  var interval;
+
+  // Counts down timer from 2 minutes
+  function countdown() {
+    clearInterval(interval);
+    interval = setInterval( function() {
+      var timer = $('.game__stats-timer').text();
+      timer = timer.split(':');
+      var minutes = timer[0];
+      var seconds = timer[1];
+      seconds -= 1;
+      if (minutes < 0) return;
+      else if (seconds < 0 && minutes != 0) {
+          minutes -= 1;
+          seconds = 59;
+      }
+      else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
+
+      $('.game__stats-timer').text(minutes + ':' + seconds);
+
+      if (minutes == 0 && seconds == 0) clearInterval(interval);
+    }, 1000);
+  }
+
   // Capitalizes words and turns dashes into spaces
   function prettify(string) {
     var words = string.match(/([^-]+)/g) || [];
@@ -56,6 +80,9 @@ $(function() {
     games.score = 0;
     $('.game__stats-clicks span').text(games.clicks);
     $('.game__stats-score span').text(games.score);
+    $('.game__stats-timer').text('2:00');
+
+    clearInterval(interval);
   }
 
   // Generates required boxes as per chosen difficulty and fills with random animal images
@@ -147,6 +174,8 @@ $(function() {
     e.preventDefault();
 
     $('.game__board').removeClass('game__board--disabled');
+
+    countdown();
   });
 
   $('.options__button--restart').on('click', function(e) {
