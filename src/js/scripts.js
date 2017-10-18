@@ -8,8 +8,8 @@ $(function() {
 
   var difficultyBoxes = {
     easy: 16,
-    medium: 25,
-    hard: 36
+    medium: 20,
+    hard: 30
   }
 
   var difficulty = '';
