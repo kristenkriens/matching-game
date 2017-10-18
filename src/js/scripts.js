@@ -50,6 +50,14 @@ $(function() {
     $('main').removeClass().addClass(difficulty);
   }
 
+  // Resets game
+  function reset() {
+    games.clicks = 0;
+    games.score = 0;
+    $('.game__stats-clicks span').text(games.clicks);
+    $('.game__stats-score span').text(games.score);
+  }
+
   // Generates required boxes as per chosen difficulty and fills with random animal images
   function generateBoxes() {
     $('.game__board-tile').remove();
@@ -139,6 +147,12 @@ $(function() {
     e.preventDefault();
 
     $('.game__board').removeClass('game__board--disabled');
+  });
+
+  $('.options__button--restart').on('click', function(e) {
+    e.preventDefault();
+
+    reset();
   });
 
   $('.game__board').on('click', '.game__board-tile', function() {
