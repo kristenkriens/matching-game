@@ -100,7 +100,7 @@ $(function() {
   $('.options__button--start').on('click', function(e) {
     e.preventDefault();
 
-    $('.game__board').removeClass('game__board--disabled');
+    $('main').removeClass('disabled').addClass('enabled');
   });
 
   $('.game__board').on('click', '.game__board-tile', function() {

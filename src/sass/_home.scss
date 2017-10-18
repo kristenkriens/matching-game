@@ -40,6 +40,23 @@
   }
 }
 
+.disabled .game__board {
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.enabled .options__button {
+  border-style: dashed;
+}
+
 main {
   .wrapper {
     margin: 50px auto;
@@ -147,19 +164,6 @@ main {
     align-items: center;
     flex-wrap: wrap;
     margin: -5px;
-
-    &--disabled {
-      position: relative;
-
-      &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-      }
-    }
 
     &-tile {
       cursor: pointer;
