@@ -15,16 +15,16 @@ $(function() {
 
   var difficulty = '';
 
+  var interval;
+
   var clickedItems = [];
   var clickedIndexes = [];
-
-  var interval;
 
   // Makes dynamic equal width boxes;
   var tileWidth = $('.game__board-tile').width();
   $('.game__board-tile').css({'height': tileWidth + 'px'});
 
-  // Counts down timer from 2 minutes
+  // Counts down timer
   function countdown() {
     clearInterval(interval);
     interval = setInterval( function() {
@@ -199,8 +199,6 @@ $(function() {
 
   $('.options__button--restart').on('click', function(e) {
     e.preventDefault();
-
-    $('.options__button--start').removeClass('options__button--active');
 
     reset();
   });
