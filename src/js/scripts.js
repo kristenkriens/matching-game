@@ -188,12 +188,11 @@ $(function() {
     reset();
   });
 
-  $('.game__board').on('click', '.game__board-tile', function() {
+  $('.game__board').on('click', '.game__board-tile:not(.game__board-tile--flipped)', function() {
     checkMatch($(this));
 
-    if(!$(this).hasClass('game__board-tile--flipped')) {
-      games.clicks++;
-    }
+    games.clicks++;
+    games.score -= 5;
 
     $('.game__stats-clicks span').text(games.clicks);
     $('.game__stats-score span').text(games.score);
