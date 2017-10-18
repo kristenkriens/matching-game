@@ -86,6 +86,8 @@ $(function() {
     $('.game__stats-score span').text(games.score);
     $('.game__stats-timer').text('2:00');
 
+    $('.game__board-tile').removeClass('game__board-tile--flipped');
+
     clearInterval(interval);
   }
 
