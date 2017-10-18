@@ -4,8 +4,6 @@ $(function() {
     score: 0
   }
 
-
-  var chosenAnimals = [];
   var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin'];
 
   var difficultyBoxes = {
@@ -14,7 +12,7 @@ $(function() {
     hard: 36
   }
 
-  var difficulty = 'easy';
+  var difficulty = '';
 
   // Capitalizes words and turns dashes into spaces
   function prettify(string) {
@@ -46,18 +44,20 @@ $(function() {
   function generateDifficulty() {
     difficulty = $('input[type="radio"]:checked').val().toLowerCase();
 
-    console.log(difficulty);
-
     $('main').removeClass().addClass(difficulty);
   }
 
-  // Generates required boxes and fills with random animal images
-  function generateBoxes(difficultyBoxesObject) {
+  // Generates required boxes as per chosen difficulty and fills with random animal images
+  function generateBoxes() {
     $('.game__board-tile').remove();
+
+    var chosenAnimals = [];
+
+    var difficultyBoxesNum = difficultyBoxes[difficulty];
 
     var index = {};
 
-    for(var i = 0; i < difficultyBoxesObject[difficulty] / 2; i++) {
+    for(var i = 0; i < difficultyBoxesNum / 2; i++) {
       var animalNum;
       do {
         animalNum = randomNum(animals.length);
@@ -73,23 +73,23 @@ $(function() {
 
       shuffleArray(chosenAnimalsNew);
 
-      var boxesNum = difficultyBoxesObject[difficulty] - 1;
+      var boxesNum = difficultyBoxesNum - 1;
       var animalNumNew = randomNum(boxesNum);
     }
 
-    for(var i = 0; i < difficultyBoxesObject[difficulty]; i++) {
+    for(var i = 0; i < difficultyBoxesNum; i++) {
       var newAnimal = chosenAnimalsNew[i];
 
-      $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${capitalize(newAnimal)}"></div></div>`);
+      $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div>`);
     }
   }
 
   generateDifficulty();
-  generateBoxes(difficultyBoxes);
+  generateBoxes();
 
   $('input[type="radio"]').on('click', function() {
     generateDifficulty();
-    generateBoxes(difficultyBoxes);
+    generateBoxes();
 
     games.clicks = 0;
     games.score = 0;
