@@ -1,7 +1,8 @@
 $(function() {
   var games = {
     clicks: 0,
-    score: 0
+    score: 0,
+    time: '1:30'
   }
 
   var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin'];
@@ -71,24 +72,18 @@ $(function() {
     return Math.floor(Math.random() * num);
   }
 
+  // Generates stats markup
+  function generateStats() {
+    $('.game__stats').append(`<div class="game__stats-clicks">Clicks: <span>${games.clicks}</span></div>`);
+    $('.game__stats').append(`<div class="game__stats-timer">${games.time}</div>`);
+    $('.game__stats').append(`<div class="game__stats-score">Score: <span>${games.score}</span></div>`);
+  }
+
   // Takes users desired difficulty level and applies applicable classes
   function generateDifficulty() {
     difficulty = $('input[type="radio"]:checked').val().toLowerCase();
 
     $('main').removeClass().addClass(difficulty);
-  }
-
-  // Resets game
-  function reset() {
-    games.clicks = 0;
-    games.score = 0;
-    $('.game__stats-clicks span').text(games.clicks);
-    $('.game__stats-score span').text(games.score);
-    $('.game__stats-timer').text('2:00');
-
-    $('.game__board-tile').removeClass('game__board-tile--flipped');
-
-    clearInterval(interval);
   }
 
   // Generates required boxes as per chosen difficulty and fills with random animal images
@@ -167,6 +162,20 @@ $(function() {
     }
   }
 
+  // Resets game
+  function reset() {
+    games.clicks = 0;
+    games.score = 0;
+    $('.game__stats-clicks span').text(games.clicks);
+    $('.game__stats-score span').text(games.score);
+    $('.game__stats-timer').text('2:00');
+
+    $('.game__board-tile').removeClass('game__board-tile--flipped');
+
+    clearInterval(interval);
+  }
+
+  generateStats();
   generateDifficulty();
   generateBoxes();
 
