@@ -16,9 +16,13 @@ $(function() {
 
   var difficulty = 'easy';
 
-  // Capitalizes first letter in string
-  function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+  // Capitalizes words and turns dashes into spaces
+  function prettify(string) {
+    var words = string.match(/([^-]+)/g) || [];
+    words.forEach(function(word, i) {
+      words[i] = word[0].toUpperCase() + word.slice(1);
+    });
+    return words.join(' ');
   }
 
  // Randomizes array elements using Durstenfeld shuffle algorithm
