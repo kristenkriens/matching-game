@@ -43,7 +43,7 @@
 main {
   .wrapper {
     margin: 50px auto;
-    max-width: $lg-width - 15px;
+    max-width: 900px;
   }
 }
 
@@ -101,13 +101,26 @@ main {
   }
 
   &__button {
-    width: 50px;
-    height: 50px;
+    width: 75px;
+    height: 75px;
     color: $white;
     border: 2px solid transparent;
     outline: none;
     background-color: $dark-orange;
     margin: 10px;
+    position: relative;
+
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30px;
+    }
+
+    &--start i {
+      left: calc(50% + 1px);
+    }
 
     &:hover, &:active, &:focus {
       border-color: $white;
