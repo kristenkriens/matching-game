@@ -177,6 +177,8 @@ $(function() {
   $('.options__button--start').on('click', function(e) {
     e.preventDefault();
 
+    $(this).addClass('options__button--active');
+
     $('.game__board').removeClass('game__board--disabled');
 
     countdown();
@@ -184,6 +186,8 @@ $(function() {
 
   $('.options__button--restart').on('click', function(e) {
     e.preventDefault();
+
+    $('.options__button--start').removeClass('options__button--active');
 
     reset();
   });

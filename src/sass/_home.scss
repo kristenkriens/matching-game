@@ -81,7 +81,7 @@ main {
     transition: 200ms border-style ease, 200ms border-color ease;
     cursor: pointer;
 
-    &:hover, &:active, &:focus {
+    &:hover, &:active {
       border-style: solid;
       border-color: $white;
     }
@@ -116,7 +116,12 @@ main {
       left: calc(50% + 1px);
     }
 
-    &:hover, &:active, &:focus {
+    &--active {
+      border-color: $white;
+      border-style: dashed;
+    }
+
+    &:hover, &:active {
       border-color: $white;
     }
   }
