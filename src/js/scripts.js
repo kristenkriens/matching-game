@@ -168,7 +168,7 @@ $(function() {
     games.score = 0;
     $('.game__stats-clicks span').text(games.clicks);
     $('.game__stats-score span').text(games.score);
-    $('.game__stats-timer').text('2:00');
+    $('.game__stats-timer').text(games.time);
 
     $('.game__board-tile').removeClass('game__board-tile--flipped');
 
