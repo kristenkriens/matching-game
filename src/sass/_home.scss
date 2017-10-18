@@ -81,14 +81,14 @@ main {
   &__item {
     display: block;
     background-color: $dark-orange;
-    border: 2px solid transparent;
+    border: 2px dashed transparent;
     margin: 10px 0;
     padding: 5px 15px;
     transition: 200ms border-style ease, 200ms border-color ease;
     cursor: pointer;
 
     &:hover, &:active, &:focus {
-      border-style: dashed;
+      border-style: solid;
       border-color: $white;
     }
   }
@@ -104,7 +104,7 @@ main {
     width: 50px;
     height: 50px;
     color: $white;
-    border: 2px dashed transparent;
+    border: 2px solid transparent;
     outline: none;
     background-color: $dark-orange;
     margin: 10px;
