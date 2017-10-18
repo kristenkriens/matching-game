@@ -214,6 +214,8 @@ main {
       }
 
       &--flipped {
+        cursor: auto;
+
         .game__board-tile-front {
           display: none;
         }
