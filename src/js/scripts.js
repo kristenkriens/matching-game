@@ -97,6 +97,12 @@ $(function() {
     $('.game__stats-score span').text(games.score);
   });
 
+  $('.options__button--start').on('click', function(e) {
+    e.preventDefault();
+
+    $('.game__board').removeClass('game__board--disabled');
+  });
+
   $('.game__board').on('click', '.game__board-tile', function() {
     if(!$(this).hasClass('game__board-tile--flipped')) {
       games.clicks++;
