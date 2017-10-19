@@ -185,9 +185,9 @@ $(function() {
   generateBoxes();
 
   $('input[type="radio"]').on('click', function() {
+    reset();
     generateDifficulty();
     generateBoxes();
-    reset();
 
     $('.options__button--pause').removeClass('options__button--active');
   });
@@ -211,6 +211,7 @@ $(function() {
     if(!$('.game__board').hasClass('game__board--disabled')) {
       $(this).addClass('options__button--active');
       $('.options__button--start').removeClass('options__button--active');
+
       $('.game__board').addClass('game__board--disabled');
     }
 
