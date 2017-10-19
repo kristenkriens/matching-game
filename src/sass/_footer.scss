@@ -6,6 +6,10 @@
 
   .wrapper {
     padding: 15px 30px;
+
+    @media (max-width: $sm-width) {
+  		padding: 15px;
+  	}
   }
 
   p {
