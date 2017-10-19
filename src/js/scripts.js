@@ -231,7 +231,7 @@ $(function() {
     } else {
       setTimeout(function() {
         $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
-      }, 750);
+      }, 500);
     }
   }
 
