@@ -25,7 +25,7 @@ $(function() {
   var tileWidth = $('.game__board-tile').width();
   $('.game__board-tile').css({'height': tileWidth + 'px'});
 
-  // Counts down timer
+  // Starts game
   function start() {
     clearInterval(interval);
     interval = setInterval(function() {
@@ -56,6 +56,7 @@ $(function() {
     isPaused = false;
   }
 
+  // Pauses game
   function pause() {
     if(!$('.game__board').hasClass('game__board--disabled')) {
       $('.options__button--pause').addClass('options__button--active');
@@ -65,6 +66,21 @@ $(function() {
     }
 
     isPaused = true;
+  }
+
+  // Resets game
+  function reset() {
+    games.clicks = 0;
+    games.score = 0;
+    $('.game__stats-clicks span').text(games.clicks);
+    $('.game__stats-score span').text(games.score);
+    $('.game__stats-timer').text(games.time);
+
+    $('.game__board-tile').removeClass('game__board-tile--flipped');
+    $('.game__board').addClass('game__board--disabled');
+    $('.options__button').removeClass('options__button--active');
+
+    clearInterval(interval);
   }
 
   // Capitalizes words and turns dashes into spaces
