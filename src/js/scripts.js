@@ -222,25 +222,21 @@ $(function() {
     reset();
     generateDifficulty();
     generateBoxes();
-
-    $('.options__button--pause').removeClass('options__button--active');
   });
 
-  $('.options__button--start').on('click', function(e) {
+  $('.options__button').on('click', function(e) {
     e.preventDefault();
+  });
 
+  $('.options__button--start').on('click', function() {
     start();
   });
 
-  $('.options__button--pause').on('click', function(e) {
-    e.preventDefault();
-
+  $('.options__button--pause').on('click', function() {
     pause();
   });
 
-  $('.options__button--restart').on('click', function(e) {
-    e.preventDefault();
-
+  $('.options__button--restart').on('click', function() {
     reset();
   });
 
