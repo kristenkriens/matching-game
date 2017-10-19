@@ -229,10 +229,10 @@ $(function() {
     }
 
     if(context === 'pause') {
-      $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`);
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
     } else {
       setTimeout(function() {
-        $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
+        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(200);
       }, 500);
     }
   }
@@ -282,14 +282,16 @@ $(function() {
   $('main').on('click', '.overlay__button:not(.overlay__button--pause)', function() {
     reset();
 
-    $('.overlay').remove();
-
-    // Figure out why this is causing the pause overlay to appear
+    $('.overlay').fadeOut(200, function() {
+      $(this).remove();
+    });
   });
 
   $('main').on('click', '.overlay__button--pause', function() {
     start();
 
-    $('.overlay').remove();
+    $('.overlay').fadeOut(200, function() {
+      $(this).remove();
+    });
   });
 });
