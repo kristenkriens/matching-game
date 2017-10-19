@@ -220,7 +220,9 @@ $(function() {
       outcomeText = 'Time\'s Up!';
     }
 
-    $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${outcomeText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
+    setTimeout(function() {
+      $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${outcomeText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
+    }, 750)
   }
 
   generateStats();
