@@ -177,10 +177,6 @@ main {
     position: relative;
     margin-bottom: 20px;
 
-    @media (max-width: $sm-width) {
-      font-size: 18px;
-    }
-
     i {
       display: none;
 
@@ -207,12 +203,8 @@ main {
       font-size: 35px;
       text-align: center;
       padding: 7px 15px;
-      width: 110px;
-
-      @media (max-width: $sm-width) {
-        font-size: 30px;
-        width: 90px;
-      }
+      width: 100px;
+      text-align: center;
     }
   }
 
