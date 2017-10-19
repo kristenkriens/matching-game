@@ -214,19 +214,25 @@ $(function() {
     }
   }
 
-  // Generates outcome overlay based on if the user wins or time runs out
-  function generateOverlay(outcome) {
-    var outcomeText = '';
+  // Generates overlay based on if the user wins, time runs out, or the game is paused
+  function generateOverlay(context) {
+    var contextText = '';
 
-    if(outcome === 'win') {
-      outcomeText = 'You Win!';
+    if(context === 'win') {
+      contextText = 'You Win!';
+    } else if(context === 'lose') {
+      contextText = 'Time\'s Up!';
     } else {
-      outcomeText = 'Time\'s Up!';
+      contextText = 'Game Paused!';
     }
 
-    setTimeout(function() {
-      $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${outcomeText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
-    }, 750);
+    if(context === 'pause') {
+      $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`);
+    } else {
+      setTimeout(function() {
+        $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
+      }, 750);
+    }
   }
 
   generateStats();
@@ -239,7 +245,7 @@ $(function() {
     generateBoxes();
   });
 
-  $('.options__button').on('click', function(e) {
+  $('button').on('click', function(e) {
     e.preventDefault();
   });
 
@@ -249,6 +255,8 @@ $(function() {
 
   $('.options__button--pause').on('click', function() {
     pause();
+
+    generateOverlay('pause');
   });
 
   $('.options__button--restart').on('click', function() {
@@ -269,10 +277,17 @@ $(function() {
     checkOutcome();
   });
 
-  $('main').on('click', '.overlay__button', function() {
+  $('main').on('click', '.overlay__button:not(.overlay__button--pause)', function() {
     reset();
 
     $('.overlay').remove();
+
+    // Figure out why this is causing the pause overlay to appear
   });
 
+  $('main').on('click', '.overlay__button--pause', function() {
+    start();
+
+    $('.overlay').remove();
+  });
 });
