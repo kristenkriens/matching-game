@@ -205,9 +205,11 @@ $(function() {
 
       $('.options__button--pause').removeClass('options__button--active');
 
-      // Need to disable ability to click play and pause buttons and have them do anything. Also, maybe remove pointer from them on hover.
+      // Need to disable ability to click play and pause buttons and have them do anything
+      // Maybe remove pointer from them on hover
 
-      console.log('You Win!');
+      // Make this a pretty modal instead
+      alert('You Win!');
     }
   }
 
