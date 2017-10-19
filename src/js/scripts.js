@@ -26,7 +26,7 @@ $(function() {
   $('.game__board-tile').css({'height': tileWidth + 'px'});
 
   // Counts down timer
-  function countdown() {
+  function start() {
     clearInterval(interval);
     interval = setInterval(function() {
       if(!isPaused) {
@@ -47,6 +47,13 @@ $(function() {
         if (minutes == 0 && seconds == 0) clearInterval(interval);
       }
     }, 1000);
+
+    $('.options__button--start').addClass('options__button--active');
+    $('.options__button--pause').removeClass('options__button--active');
+
+    $('.game__board').removeClass('game__board--disabled');
+
+    isPaused = false;
   }
 
   function pause() {
@@ -206,14 +213,7 @@ $(function() {
   $('.options__button--start').on('click', function(e) {
     e.preventDefault();
 
-    $(this).addClass('options__button--active');
-    $('.options__button--pause').removeClass('options__button--active');
-
-    $('.game__board').removeClass('game__board--disabled');
-
-    isPaused = false;
-
-    countdown();
+    start();
   });
 
   $('.options__button--pause').on('click', function(e) {
