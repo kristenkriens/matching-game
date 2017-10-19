@@ -70,6 +70,8 @@ $(function() {
 
   // Resets game
   function reset() {
+    generateBoxes();
+
     games.clicks = 0;
     games.score = 0;
     $('.game__stats-clicks .clicks').text(games.clicks);
