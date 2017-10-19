@@ -84,6 +84,8 @@ $(function() {
     $('.game__board').addClass('game__board--disabled');
     $('.options__button').removeClass('options__button--active');
 
+    $('.ark__inner').children().remove();
+
     clearInterval(interval);
   }
 
@@ -94,6 +96,12 @@ $(function() {
       words[i] = word[0].toUpperCase() + word.slice(1);
     });
     return words.join(' ');
+  }
+
+  // Makes words lower case and turns spaces into dashes
+  function uglify(string) {
+    var string = string.replace(/\s+/g, '-').toLowerCase();
+    return string;
   }
 
  // Randomizes array elements using Durstenfeld shuffle algorithm
@@ -199,6 +207,7 @@ $(function() {
         }, 750);
       } else {
         games.score += 100;
+        $('.ark__inner').append(`<img src="dist/images/${uglify(clickedItems[0])}.svg" class="ark__animal">`);
       }
     }
   }

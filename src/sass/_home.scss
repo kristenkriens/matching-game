@@ -48,8 +48,43 @@
 
 main {
   .wrapper {
-    margin: 50px auto;
     max-width: 1000px;
+  }
+}
+
+.ark {
+  width: 100%;
+
+  &__inner {
+    width: 275px;
+    height: 195px;
+    margin: 0 auto 50px;
+    background-image: url(../images/ark.svg);
+    background-position: center center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__animal {
+    position: relative;
+    width: 100%;
+
+    .easy & {
+      top: -25px;
+      max-width: 40px;
+    }
+
+    .medium & {
+      top: -17px;
+      max-width: 20px;
+    }
+
+    .hard & {
+      top: -15px;
+      max-width: 15px;
+    }
   }
 }
 
