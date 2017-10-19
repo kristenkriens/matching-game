@@ -16,6 +16,7 @@ $(function() {
   var difficulty = '';
 
   var interval;
+  var isPaused = false;
 
   var clickedItems = [];
   var clickedIndexes = [];
@@ -27,22 +28,24 @@ $(function() {
   // Counts down timer
   function countdown() {
     clearInterval(interval);
-    interval = setInterval( function() {
-      var timer = $('.game__stats-timer').text();
-      timer = timer.split(':');
-      var minutes = timer[0];
-      var seconds = timer[1];
-      seconds -= 1;
-      if (minutes < 0) return;
-      else if (seconds < 0 && minutes != 0) {
-          minutes -= 1;
-          seconds = 59;
+    interval = setInterval(function() {
+      if(!isPaused) {
+        var timer = $('.game__stats-timer').text();
+        timer = timer.split(':');
+        var minutes = timer[0];
+        var seconds = timer[1];
+        seconds -= 1;
+        if (minutes < 0) return;
+        else if (seconds < 0 && minutes != 0) {
+            minutes -= 1;
+            seconds = 59;
+        }
+        else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
+
+        $('.game__stats-timer').text(minutes + ':' + seconds);
+
+        if (minutes == 0 && seconds == 0) clearInterval(interval);
       }
-      else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
-
-      $('.game__stats-timer').text(minutes + ':' + seconds);
-
-      if (minutes == 0 && seconds == 0) clearInterval(interval);
     }, 1000);
   }
 
@@ -172,7 +175,7 @@ $(function() {
 
     $('.game__board-tile').removeClass('game__board-tile--flipped');
     $('.game__board').addClass('game__board--disabled');
-    $('.options__button--start').removeClass('options__button--active');
+    $('.options__button').removeClass('options__button--active');
 
     clearInterval(interval);
   }
@@ -185,16 +188,33 @@ $(function() {
     generateDifficulty();
     generateBoxes();
     reset();
+
+    $('.options__button--pause').removeClass('options__button--active');
   });
 
   $('.options__button--start').on('click', function(e) {
     e.preventDefault();
 
     $(this).addClass('options__button--active');
+    $('.options__button--pause').removeClass('options__button--active');
 
     $('.game__board').removeClass('game__board--disabled');
 
+    isPaused = false;
+
     countdown();
+  });
+
+  $('.options__button--pause').on('click', function(e) {
+    e.preventDefault();
+
+    if(!$('.game__board').hasClass('game__board--disabled')) {
+      $(this).addClass('options__button--active');
+      $('.options__button--start').removeClass('options__button--active');
+      $('.game__board').addClass('game__board--disabled');
+    }
+
+    isPaused = true;
   });
 
   $('.options__button--restart').on('click', function(e) {
