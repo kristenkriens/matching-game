@@ -44,7 +44,11 @@ $(function() {
 
         $('.game__stats-timer').text(minutes + ':' + seconds);
 
-        if (minutes == 0 && seconds == 0) clearInterval(interval);
+        if (minutes == 0 && seconds == 0) {
+          clearInterval(interval);
+
+          generateOverlay('lose');
+        }
       }
     }, 1000);
 
@@ -199,18 +203,28 @@ $(function() {
     }
   }
 
-  function checkForWin() {
-    if ($('.game__board').children('.game__board-tile').length == $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
+  // Checks if all of the matches have been made and calls the generateOverlay() function
+  function checkOutcome() {
+    if ($('.game__board').children('.game__board-tile').length === $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
       pause();
 
       $('.options__button--pause').removeClass('options__button--active');
 
-      // Need to disable ability to click play and pause buttons and have them do anything
-      // Maybe remove pointer from them on hover
-
-      // Make this a pretty modal instead
-      alert('You Win!');
+      generateOverlay('win');
     }
+  }
+
+  // Generates outcome overlay based on if the user wins or time runs out
+  function generateOverlay(outcome) {
+    var outcomeText = '';
+
+    if(outcome === 'win') {
+      outcomeText = 'You Win!';
+    } else {
+      outcomeText = 'Time\'s Up!';
+    }
+
+    $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${outcomeText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
   }
 
   generateStats();
@@ -250,6 +264,12 @@ $(function() {
 
     $(this).addClass('game__board-tile--flipped');
 
-    checkForWin();
+    checkOutcome();
+  });
+
+  $('main').on('click', '.overlay__button', function() {
+    reset();
+
+    $('.overlay').remove();
   });
 });
