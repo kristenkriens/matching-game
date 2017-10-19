@@ -199,19 +199,10 @@ $(function() {
     }
   }
 
-  // Resets game
-  function reset() {
-    games.clicks = 0;
-    games.score = 0;
-    $('.game__stats-clicks span').text(games.clicks);
-    $('.game__stats-score span').text(games.score);
-    $('.game__stats-timer').text(games.time);
-
-    $('.game__board-tile').removeClass('game__board-tile--flipped');
-    $('.game__board').addClass('game__board--disabled');
-    $('.options__button').removeClass('options__button--active');
-
-    clearInterval(interval);
+  function checkForWin() {
+    if ($('.game__board').children('.game__board-tile').length == $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
+      pause();
+    }
   }
 
   generateStats();
@@ -250,5 +241,7 @@ $(function() {
     $('.game__stats-score span').text(games.score);
 
     $(this).addClass('game__board-tile--flipped');
+
+    checkForWin();
   });
 });
