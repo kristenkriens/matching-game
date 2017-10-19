@@ -202,6 +202,12 @@ $(function() {
   function checkForWin() {
     if ($('.game__board').children('.game__board-tile').length == $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
       pause();
+
+      $('.options__button--pause').removeClass('options__button--active');
+
+      // Need to disable ability to click play and pause buttons and have them do anything. Also, maybe remove pointer from them on hover.
+
+      console.log('You Win!');
     }
   }
 
