@@ -7,6 +7,10 @@
     width: calc(calc(100% / 4) - 10px);
     position: relative;
     margin: 5px;
+
+    @media (max-width: $sm-width) {
+      width: calc(calc(100% / 3) - 10px);
+    }
   }
 }
 
@@ -19,6 +23,10 @@
     width: calc(calc(100% / 5) - 8px);
     position: relative;
     margin: 4px;
+
+    @media (max-width: $sm-width) {
+      width: calc(calc(100% / 4) - 8px);
+    }
   }
 }
 
@@ -31,6 +39,10 @@
     width: calc(calc(100% / 6) - 6px);
     position: relative;
     margin: 3px;
+
+    @media (max-width: $sm-width) {
+      width: calc(calc(100% / 5) - 6px);
+    }
   }
 }
 
@@ -50,13 +62,21 @@ main {
     margin-bottom: 45px;
   }
 
+  @media (max-width: $sm-width) {
+    margin-bottom: 30px;
+  }
+
   &__box {
     background-color: $orange;
     padding: 20px;
     width: 100%;
     margin: 0 auto;
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
+
+    @media (max-width: $sm-width) {
+      padding: 15px;
+    }
   }
 
   &__title {
@@ -100,7 +120,7 @@ main {
       width: calc(33.33% - 13px);
     }
 
-    &:hover, &:active {
+    &:hover {
       border-style: solid;
       border-color: $white;
     }
@@ -138,7 +158,7 @@ main {
       border-style: dashed;
     }
 
-    &:hover, &:active {
+    &:hover {
       border-color: $white;
     }
   }
@@ -159,6 +179,10 @@ main {
     position: relative;
     margin-bottom: 20px;
 
+    @media (max-width: $sm-width) {
+      font-size: 18px;
+    }
+
     &-timer {
       background-color: $white;
       color: $black;
@@ -169,7 +193,12 @@ main {
       font-size: 35px;
       text-align: center;
       padding: 0 15px;
-      width: 115px;
+      width: 110px;
+
+      @media (max-width: $sm-width) {
+        font-size: 30px;
+        width: 85px;
+      }
     }
   }
 

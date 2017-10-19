@@ -34,10 +34,10 @@ img {
 	max-width: 1200px;
 	width: 100%;
 	margin: 0 auto;
-	padding: 0 30px;
+	padding: 30px;
 
 	@media (max-width: $sm-width) {
-		padding: 0 15px;
+		padding: 30px 15px;
 	}
 }
 
