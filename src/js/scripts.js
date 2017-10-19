@@ -116,7 +116,7 @@ $(function() {
   // Generates stats markup
   function generateStats() {
     $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${games.clicks}</span></div>`);
-    $('.game__stats').append(`<div class="game__stats-timer"><span class="accessible">Timer</span>${games.time}</div>`);
+    $('.game__stats').append(`<div class="game__stats-timer">${games.time}</div>`);
     $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${games.score}</span></div>`);
   }
 
