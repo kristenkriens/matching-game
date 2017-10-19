@@ -21,10 +21,6 @@ $(function() {
   var clickedItems = [];
   var clickedIndexes = [];
 
-  // Makes dynamic equal width boxes
-  var tileWidth = $('.game__board-tile').width();
-  $('.game__board-tile').css({'height': tileWidth + 'px'});
-
   // Starts game
   function start() {
     clearInterval(interval);
@@ -160,7 +156,7 @@ $(function() {
     for(var i = 0; i < difficultyBoxesNum; i++) {
       var newAnimal = chosenAnimalsNew[i];
 
-      $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div>`);
+      $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div></div>`);
     }
   }
 
@@ -272,4 +268,8 @@ $(function() {
 
     $('.overlay').remove();
   });
+
+  // Makes dynamic equal width boxes
+  var tileWidth = $('.game__board-tile').width();
+  $('.game__board-tile').css({'height': tileWidth + 'px'});
 });
