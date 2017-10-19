@@ -80,9 +80,7 @@ main {
   }
 
   &__title {
-    margin-top: -10px;
-    margin-bottom: 20px;
-    position: relative;
+    margin: -5px 0 25px;
 
     &:before {
       content: '-';
@@ -112,7 +110,7 @@ main {
     background-color: $dark-orange;
     border: 2px dashed transparent;
     margin-bottom: 10px;
-    padding: 5px 15px;
+    padding: 7px 15px;
     transition: 200ms border-style ease, 200ms border-color ease;
     cursor: pointer;
 
@@ -134,7 +132,7 @@ main {
 
   &__button {
     width: calc(33.33% - 8px);
-    height: 48px;
+    height: 43px;
     color: $white;
     border: 2px solid transparent;
     outline: none;
@@ -174,7 +172,7 @@ main {
   &__stats {
     display: flex;
     justify-content: space-between;
-    padding: 5px 10px;
+    padding: 7px 10px;
     background-color: $orange;
     position: relative;
     margin-bottom: 20px;
@@ -192,7 +190,7 @@ main {
       transform: translate(-50%, -50%);
       font-size: 35px;
       text-align: center;
-      padding: 0 15px;
+      padding: 7px 15px;
       width: 110px;
 
       @media (max-width: $sm-width) {
