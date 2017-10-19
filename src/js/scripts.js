@@ -49,6 +49,17 @@ $(function() {
     }, 1000);
   }
 
+  function pause() {
+    if(!$('.game__board').hasClass('game__board--disabled')) {
+      $('.options__button--pause').addClass('options__button--active');
+      $('.options__button--start').removeClass('options__button--active');
+
+      $('.game__board').addClass('game__board--disabled');
+    }
+
+    isPaused = true;
+  }
+
   // Capitalizes words and turns dashes into spaces
   function prettify(string) {
     var words = string.match(/([^-]+)/g) || [];
@@ -208,14 +219,7 @@ $(function() {
   $('.options__button--pause').on('click', function(e) {
     e.preventDefault();
 
-    if(!$('.game__board').hasClass('game__board--disabled')) {
-      $(this).addClass('options__button--active');
-      $('.options__button--start').removeClass('options__button--active');
-
-      $('.game__board').addClass('game__board--disabled');
-    }
-
-    isPaused = true;
+    pause();
   });
 
   $('.options__button--restart').on('click', function(e) {
