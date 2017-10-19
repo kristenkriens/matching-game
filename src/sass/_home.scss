@@ -181,6 +181,22 @@ main {
       font-size: 18px;
     }
 
+    i {
+      display: none;
+
+      @media (max-width: 480px) {
+        display: inline;
+      }
+    }
+
+    .text {
+      display: inline;
+
+      @media (max-width: 480px) {
+        display: none;
+      }
+    }
+
     &-timer {
       background-color: $white;
       color: $black;
@@ -195,7 +211,7 @@ main {
 
       @media (max-width: $sm-width) {
         font-size: 30px;
-        width: 85px;
+        width: 90px;
       }
     }
   }

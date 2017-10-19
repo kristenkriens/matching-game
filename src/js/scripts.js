@@ -76,8 +76,8 @@ $(function() {
   function reset() {
     games.clicks = 0;
     games.score = 0;
-    $('.game__stats-clicks span').text(games.clicks);
-    $('.game__stats-score span').text(games.score);
+    $('.game__stats-clicks .clicks').text(games.clicks);
+    $('.game__stats-score .score').text(games.score);
     $('.game__stats-timer').text(games.time);
 
     $('.game__board-tile').removeClass('game__board-tile--flipped');
@@ -115,9 +115,9 @@ $(function() {
 
   // Generates stats markup
   function generateStats() {
-    $('.game__stats').append(`<div class="game__stats-clicks">Clicks: <span>${games.clicks}</span></div>`);
+    $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${games.clicks}</span></div>`);
     $('.game__stats').append(`<div class="game__stats-timer">${games.time}</div>`);
-    $('.game__stats').append(`<div class="game__stats-score">Score: <span>${games.score}</span></div>`);
+    $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${games.score}</span></div>`);
   }
 
   // Takes users desired difficulty level and applies applicable classes
@@ -259,8 +259,8 @@ $(function() {
     games.clicks++;
     games.score -= 10;
 
-    $('.game__stats-clicks span').text(games.clicks);
-    $('.game__stats-score span').text(games.score);
+    $('.game__stats-clicks .clicks').text(games.clicks);
+    $('.game__stats-score .score').text(games.score);
 
     $(this).addClass('game__board-tile--flipped');
 
