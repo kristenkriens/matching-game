@@ -4,6 +4,10 @@
   font-size: 14px;
   letter-spacing: normal;
 
+  .wrapper {
+    padding: 15px 30px;
+  }
+
   p {
     @media (max-width: $sm-width) {
       width: 100%;
