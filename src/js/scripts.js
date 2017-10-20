@@ -91,6 +91,8 @@ $(function() {
 
   // Resets game
   function reset() {
+    $('.ark__animal').remove();
+
     generateBoxes();
 
     games.clicks = 0;
@@ -184,6 +186,12 @@ $(function() {
       $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div></div>`);
     }
 
+    for(var i = 0; i < difficultyBoxesNum / 2; i++) {
+      var oldAnimal = chosenAnimals[i];
+
+      $('.ark__animals').append(`<img src="dist/images/${oldAnimal}.svg" alt="${oldAnimal}" class="ark__animal">`);
+    }
+
     equalHeightWidth();
 
     $(window).resize(function() {
@@ -265,7 +273,7 @@ $(function() {
       setTimeout(function() {
         $('html, body').css('overflow', 'hidden');
 
-        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(1000);
+        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
       }, 500);
     }
   }

@@ -66,6 +66,29 @@ main {
     margin-bottom: 30px;
   }
 
+  .ark {
+    &__main {
+      margin: 30px 0 15px;
+    }
+
+    &__animals {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    &__animals {
+      margin: 0 -5px;
+    }
+
+    &__animal {
+      margin-bottom: 5px;
+      padding: 5px;
+      width: calc(100% / 6);
+    }
+  }
+
   &__box {
     background-color: $orange;
     padding: 20px;
