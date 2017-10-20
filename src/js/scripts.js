@@ -93,7 +93,7 @@ $(function() {
   function reset() {
     $('.ark__animal').remove();
 
-    generateBoxes();
+    generateAnimals();
 
     games.clicks = 0;
     games.score = 0;
@@ -151,7 +151,8 @@ $(function() {
   }
 
   // Generates required boxes as per chosen difficulty and fills with random animal images
-  function generateBoxes() {
+  // Also generates animals in current game underneath the ark image
+  function generateAnimals() {
     $('.game__board-tile').remove();
 
     var chosenAnimals = [];
@@ -185,6 +186,8 @@ $(function() {
 
       $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div></div>`);
     }
+
+    $('.ark__animal').remove();
 
     for(var i = 0; i < difficultyBoxesNum / 2; i++) {
       var oldAnimal = chosenAnimals[i];
@@ -280,12 +283,12 @@ $(function() {
 
   generateStats();
   generateDifficulty();
-  generateBoxes();
+  generateAnimals();
 
   $('input[type="radio"]').on('click', function() {
     reset();
     generateDifficulty();
-    generateBoxes();
+    generateAnimals();
   });
 
   $('button').on('click', function(e) {
