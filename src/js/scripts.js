@@ -203,9 +203,13 @@ $(function() {
 
     if(clickedItems.length === 2 || clickedIndexes.length === 2) {
       if(clickedItems[0] !== clickedItems[1]) {
+        $('.game__board-tile').css("pointer-events", "none");
+
         setTimeout(function() {
           $('.game__board-tile').eq(clickedIndexes[0]).removeClass('game__board-tile--flipped');
           $('.game__board-tile').eq(clickedIndexes[1]).removeClass('game__board-tile--flipped');
+
+          $('.game__board-tile').css("pointer-events", "auto");
         }, 750);
       } else {
         games.score += 100;
