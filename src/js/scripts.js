@@ -2,7 +2,7 @@ $(function() {
   var games = {
     clicks: 0,
     score: 0,
-    time: '1:30'
+    time: '0:10'
   }
 
   var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin'];
@@ -17,6 +17,8 @@ $(function() {
 
   var interval;
   var isPaused = false;
+  var minutes = '';
+  var seconds = '';
 
   var clickedItems = [];
   var clickedIndexes = [];
@@ -34,8 +36,8 @@ $(function() {
       if(!isPaused) {
         var timer = $('.game__stats-timer').text();
         timer = timer.split(':');
-        var minutes = timer[0];
-        var seconds = timer[1];
+        minutes = timer[0];
+        seconds = timer[1];
         seconds -= 1;
         if (minutes < 0) return;
         else if (seconds < 0 && minutes != 0) {
@@ -49,7 +51,7 @@ $(function() {
         if (minutes == 0 && seconds == 0) {
           clearInterval(interval);
 
-          generateOverlay('lose');
+          generateOverlay('lose', '', '');
         }
       }
     }, 1000);
@@ -224,12 +226,12 @@ $(function() {
 
       $('.options__button--pause').removeClass('options__button--active');
 
-      generateOverlay('win');
+      generateOverlay('win', '', '');
     }
   }
 
   // Generates overlay based on if the user wins, time runs out, or the game is paused
-  function generateOverlay(context) {
+  function generateOverlay(context, mins, secs) {
     var contextText = '';
 
     if(context === 'win') {
@@ -241,14 +243,16 @@ $(function() {
     }
 
     if(context === 'pause') {
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+      $('html, body').css('overflow', 'hidden');
+
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Time Left: ${minutes}:${seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
     } else {
       setTimeout(function() {
+        $('html, body').css('overflow', 'hidden');
+
         $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(200);
       }, 250);
     }
-
-    $('html, body').css('overflow', 'hidden');
   }
 
   generateStats();
@@ -271,7 +275,7 @@ $(function() {
 
   $('.options__buttons').on('click', '.options__button--pause', function() {
     if(!$('.game__board').hasClass('game__board--disabled')) {
-      generateOverlay('pause');
+      generateOverlay('pause', minutes, seconds);
     }
 
     pause();
