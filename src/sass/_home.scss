@@ -265,18 +265,36 @@ main {
 
     &-tile {
       cursor: pointer;
+      perspective: 1000px;
+
+      &-inner {
+        height: 100%;
+        position: relative;
+        transition: 500ms all ease;
+      	transform-style: preserve-3d;
+      }
 
       &-front {
         background-color: $dark-orange;
-        height: 0;
-        padding-bottom: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        backface-visibility: hidden;
+        transform: rotateY(0deg);
+        z-index: 2;
       }
 
       &-back {
         background-color: $white;
-        height: 0;
-        padding-bottom: 100%;
-        display: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        backface-visibility: hidden;
+        transform: rotateY(180deg);
 
         img {
           padding: 10px;
@@ -286,12 +304,8 @@ main {
       &--flipped {
         cursor: auto;
 
-        .game__board-tile-front {
-          display: none;
-        }
-
-        .game__board-tile-back {
-          display: block;
+        .game__board-tile-inner {
+          transform: rotateY(180deg);
         }
       }
     }
@@ -299,7 +313,7 @@ main {
 }
 
 .overlay {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.75);
   position: fixed;
   top: 0;
   bottom: 0;

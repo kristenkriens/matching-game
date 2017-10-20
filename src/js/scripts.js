@@ -21,10 +21,6 @@ $(function() {
   var clickedItems = [];
   var clickedIndexes = [];
 
-  // Makes dynamic equal width boxes
-  var tileWidth = $('.game__board-tile').width();
-  $('.game__board-tile').css({'height': tileWidth + 'px'});
-
   // Starts game
   function start() {
     clearInterval(interval);
@@ -74,6 +70,8 @@ $(function() {
 
   // Resets game
   function reset() {
+    generateBoxes();
+
     games.clicks = 0;
     games.score = 0;
     $('.game__stats-clicks .clicks').text(games.clicks);
@@ -168,8 +166,12 @@ $(function() {
     for(var i = 0; i < difficultyBoxesNum; i++) {
       var newAnimal = chosenAnimalsNew[i];
 
-      $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div>`);
+      $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div></div>`);
     }
+
+    // Makes dynamic equal width boxes
+    var tileWidth = $('.game__board-tile').width();
+    $('.game__board-tile').css({'height': tileWidth + 'px'});
   }
 
   // Checks if there is a match and removes flipped class if not or adds points if there is
@@ -223,17 +225,25 @@ $(function() {
     }
   }
 
-  // Generates outcome overlay based on if the user wins or time runs out
-  function generateOverlay(outcome) {
-    var outcomeText = '';
+  // Generates overlay based on if the user wins, time runs out, or the game is paused
+  function generateOverlay(context) {
+    var contextText = '';
 
-    if(outcome === 'win') {
-      outcomeText = 'You Win!';
+    if(context === 'win') {
+      contextText = 'You Win!';
+    } else if(context === 'lose') {
+      contextText = 'Time\'s Up!';
     } else {
-      outcomeText = 'Time\'s Up!';
+      contextText = 'Game Paused!';
     }
 
-    $('main').append(`<div class="overlay"><div class="overlay__contents"><h2>${outcomeText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`);
+    if(context === 'pause') {
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+    } else {
+      setTimeout(function() {
+        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(200);
+      }, 250);
+    }
   }
 
   generateStats();
@@ -246,7 +256,7 @@ $(function() {
     generateBoxes();
   });
 
-  $('.options__button').on('click', function(e) {
+  $('button').on('click', function(e) {
     e.preventDefault();
   });
 
@@ -256,6 +266,8 @@ $(function() {
 
   $('.options__button--pause').on('click', function() {
     pause();
+
+    generateOverlay('pause');
   });
 
   $('.options__button--restart').on('click', function() {
@@ -276,9 +288,19 @@ $(function() {
     checkOutcome();
   });
 
-  $('main').on('click', '.overlay__button', function() {
+  $('main').on('click', '.overlay__button:not(.overlay__button--pause)', function() {
     reset();
 
-    $('.overlay').remove();
+    $('.overlay').fadeOut(200, function() {
+      $(this).remove();
+    });
+  });
+
+  $('main').on('click', '.overlay__button--pause', function() {
+    start();
+
+    $('.overlay').fadeOut(200, function() {
+      $(this).remove();
+    });
   });
 });
