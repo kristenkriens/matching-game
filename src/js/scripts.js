@@ -247,6 +247,8 @@ $(function() {
         $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(200);
       }, 250);
     }
+
+    $('html, body').css('overflow', 'hidden');
   }
 
   generateStats();
@@ -293,17 +295,17 @@ $(function() {
 
   $('main').on('click', '.overlay__button:not(.overlay__button--pause)', function() {
     reset();
-
-    $('.overlay').fadeOut(200, function() {
-      $(this).remove();
-    });
   });
 
   $('main').on('click', '.overlay__button--pause', function() {
     start();
+  });
 
+  $('main').on('click', '.overlay__button', function() {
     $('.overlay').fadeOut(200, function() {
       $(this).remove();
     });
+
+    $('html, body').css('overflow', 'auto');
   });
 });
