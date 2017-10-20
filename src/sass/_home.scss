@@ -205,6 +205,15 @@ main {
       padding: 7px 15px;
       width: 100px;
       text-align: center;
+      transition: 200ms background-color ease;
+
+      &--yellow {
+        background-color: $yellow;
+      }
+
+      &--red {
+        background-color: $red;
+      }
     }
   }
 

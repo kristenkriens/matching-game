@@ -2,7 +2,7 @@ $(function() {
   var games = {
     clicks: 0,
     score: 0,
-    time: '0:10'
+    time: '1:30'
   }
 
   var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin'];
@@ -48,10 +48,23 @@ $(function() {
 
         $('.game__stats-timer').text(minutes + ':' + seconds);
 
+        if (minutes == 0 && seconds < 31) {
+          $('.game__stats-timer').addClass('game__stats-timer--yellow');
+        }
+
+        if (minutes == 0 && seconds < 11) {
+          $('.game__stats-timer').removeClass('game__stats-timer--yellow');
+          $('.game__stats-timer').addClass('game__stats-timer--red');
+        }
+
         if (minutes == 0 && seconds == 0) {
           clearInterval(interval);
 
-          generateOverlay('lose', '', '');
+          generateOverlay('lose');
+
+          setTimeout(function() {
+            $('.game__stats-timer').removeClass();
+          }, 500);
         }
       }
     }, 1000);
@@ -226,7 +239,7 @@ $(function() {
 
       $('.options__button--pause').removeClass('options__button--active');
 
-      generateOverlay('win', '', '');
+      generateOverlay('win');
     }
   }
 
