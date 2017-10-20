@@ -21,6 +21,12 @@ $(function() {
   var clickedItems = [];
   var clickedIndexes = [];
 
+  // Makes dynamic equal width and height boxes
+  function equalHeightWidth() {
+    var tileWidth = $('.game__board-tile').width();
+    $('.game__board-tile').css({'height': tileWidth + 'px'});
+  }
+
   // Starts game
   function start() {
     clearInterval(interval);
@@ -161,9 +167,11 @@ $(function() {
       $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div></div>`);
     }
 
-    // Makes dynamic equal width boxes
-    var tileWidth = $('.game__board-tile').width();
-    $('.game__board-tile').css({'height': tileWidth + 'px'});
+    equalHeightWidth();
+
+    $(window).resize(function() {
+      equalHeightWidth();
+    });
   }
 
   // Checks if there is a match and removes flipped class if not or adds points if there is
