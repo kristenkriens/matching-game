@@ -69,9 +69,9 @@ $(function() {
       $('.options__button--start').removeClass('options__button--active');
 
       $('.game__board').addClass('game__board--disabled');
-    }
 
-    isPaused = true;
+      isPaused = true;
+    }
   }
 
   // Resets game
@@ -269,10 +269,12 @@ $(function() {
     start();
   });
 
-  $('.options__button--pause').on('click', function() {
-    pause();
+  $('.options__buttons').on('click', '.options__button--pause', function() {
+    if(!$('.game__board').hasClass('game__board--disabled')) {
+      generateOverlay('pause');
+    }
 
-    generateOverlay('pause');
+    pause();
   });
 
   $('.options__button--restart').on('click', function() {
