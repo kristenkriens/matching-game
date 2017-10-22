@@ -189,7 +189,7 @@ $(function() {
     for(var i = 0; i < difficultyBoxesNum / 2; i++) {
       var oldAnimal = chosenAnimals[i];
 
-      $(`<img src="dist/images/${oldAnimal}.svg" alt="${oldAnimal}" class="ark__animal">`).hide().appendTo('.ark__animals').fadeIn(500);
+      $(`<img src="dist/images/${oldAnimal}.svg" alt="${oldAnimal}" class="ark__animal">`).hide().appendTo('.ark__animals').fadeIn(250);
     }
 
     equalHeightWidth();
