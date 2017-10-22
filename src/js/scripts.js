@@ -64,7 +64,7 @@ $(function() {
 
           setTimeout(function() {
             $('.game__stats-timer').removeClass('game__stats-timer--red');
-          }, 500);
+          }, 250);
         }
       }
     }, 1000);
@@ -105,7 +105,7 @@ $(function() {
     $('.game__board').addClass('game__board--disabled');
     $('.options__button').removeClass('options__button--active');
 
-    $('.game__stats-timer').removeClass('game__stats-timer--yellow').removeClass('game__stats-timer--red');
+    $('.game__stats-timer').removeClass('game__stats-timer--yellow game__stats-timer--red');
 
     clearInterval(interval);
   }
