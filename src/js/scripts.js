@@ -274,6 +274,16 @@ $(function() {
         $('html, body').css('overflow', 'hidden');
 
         $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
+
+        if(context === 'win') {
+          setTimeout(function() {
+            $('.overlay__contents h2').addClass('animated tada');
+          }, 350);
+        } else {
+          setTimeout(function() {
+            $('.overlay__contents h2').addClass('animated rubberBand');
+          }, 350);
+        }
       }, 500);
     }
   }
