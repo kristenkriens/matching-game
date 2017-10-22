@@ -176,9 +176,6 @@ $(function() {
       var chosenAnimalsNew = chosenAnimals.concat(chosenAnimalsClone);
 
       shuffleArray(chosenAnimalsNew);
-
-      var boxesNum = difficultyBoxesNum - 1;
-      var animalNumNew = randomNum(boxesNum);
     }
 
     for(var i = 0; i < difficultyBoxesNum; i++) {
