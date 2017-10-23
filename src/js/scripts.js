@@ -268,20 +268,20 @@ $(function() {
     if(context === 'pause') {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Time Left: ${minutes}:${seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+      $(`<div class="overlay"><div class="overlay__contents"><h3>${contextText}</h3><p>Time Left: ${minutes}:${seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
     } else {
       setTimeout(function() {
         $('html, body').css('overflow', 'hidden');
 
-        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
+        $(`<div class="overlay"><div class="overlay__contents"><h3>${contextText}</h3><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
         if(context === 'win') {
           setTimeout(function() {
-            $('.overlay__contents h2').addClass('animated tada');
+            $('.overlay__contents h3').addClass('animated tada');
           }, 350);
         } else {
           setTimeout(function() {
-            $('.overlay__contents h2').addClass('animated rubberBand');
+            $('.overlay__contents h3').addClass('animated rubberBand');
           }, 350);
         }
       }, 500);
