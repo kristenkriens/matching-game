@@ -9,6 +9,8 @@ $(function() {
 
   var foods = ['cheese', 'pie', 'salami', 'pizza', 'apple', 'asparagus', 'avocado', 'bacon', 'baguette', 'banana', 'blueberries', 'bread', 'broccoli', 'cake', 'carrot', 'cauliflower', 'cherries', 'chili', 'chocolate', 'cookies', 'corn', 'croissant', 'cupcake', 'doughnut', 'egg', 'eggplant', 'fries', 'grapes', 'green-beans', 'ham', 'hamburger', 'hot-dog', 'ice-cream-bar', 'ice-cream-cone', 'kebab', 'leeks', 'lemon', 'lettuce', 'lime', 'noodles', 'olives', 'onion', 'orange', 'peach', 'pear', 'pickle', 'pineapple', 'potatoes', 'raddish', 'raspberry', 'rice', 'sandwich', 'spaghetti', 'steak', 'strawberry', 'sub-sandwich', 'tomato', 'turkey', 'waffles', 'watermelon'];
 
+  var flowers = ['almond', 'alstroemeria', 'anemone', 'anthurium', 'aster', 'astrantia', 'bluebell', 'bougainvillea', 'broom', 'calla', 'carnation', 'crysanthemum', 'clematis', 'daffodil', 'dahlia', 'daisy', 'gladiolus', 'hyacinth', 'hydrangea', 'hypericum', 'iris', 'jasmine', 'jonquil', 'knapweed', 'lily', 'lotus', 'magnolia', 'mimosa', 'narcissus', 'nymphea', 'oleander', 'orchid', 'pansy', 'pear', 'peony', 'petunia', 'poinsettia', 'poppy', 'protea', 'rose', 'sisyrinchium', 'sunflower', 'wallflower', 'wedelia', 'zinnia'];
+
   var difficultyBoxes = {
     easy: 12,
     medium: 20,
@@ -161,10 +163,12 @@ $(function() {
 
     var itemArray;
 
-    if(type === 'animals') {
+    if (type === 'animals') {
       itemArray = animals.slice();
-    } else {
+    } else if (type === 'foods') {
       itemArray = foods.slice();
+    } else {
+      itemArray = flowers.slice();
     }
 
     var chosenItems = [];
