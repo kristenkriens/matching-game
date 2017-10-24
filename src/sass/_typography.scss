@@ -16,14 +16,6 @@ h1 {
 }
 
 h2 {
-  font-size: 55px;
-
-  @media (max-width: $sm-width) {
-    font-size: 40px;
-  }
-}
-
-h3 {
   font-size: 26px;
 
   @media (max-width: $sm-width) {

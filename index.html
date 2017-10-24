@@ -15,24 +15,31 @@
   <header class="header">
     <div class="wrapper">
       <h1>Memory Game</h1>
-      <h2>Noah's Ark</h2>
     </div>
   </header>
   <main id="main">
     <div class="wrapper">
       <div class="options">
         <div class="options__box">
-          <h3 class="options__title">Options</h3>
+          <h2 class="options__title">Options</h2>
           <form id="options">
             <div class="options__items">
+              <label for="animals" class="options__item">
+                <input type="radio" id="animals" name="type" value="Animals" checked>Animals
+              </label>
+              <label for="foods" class="options__item">
+                <input type="radio" id="foods" name="type" value="Foods">Foods
+              </label>
+            </div>
+            <div class="options__items">
               <label for="easy" class="options__item">
-                <input type="radio" id="easy" name="options" value="Easy" checked>Easy
+                <input type="radio" id="easy" name="difficulty" value="Easy" checked>Easy
               </label>
               <label for="medium" class="options__item">
-                <input type="radio" id="medium" name="options" value="Medium">Medium
+                <input type="radio" id="medium" name="difficulty" value="Medium">Medium
               </label>
               <label for="hard" class="options__item">
-                <input type="radio" id="hard" name="options" value="Hard">Hard
+                <input type="radio" id="hard" name="difficulty" value="Hard">Hard
               </label>
             </div>
             <div class="options__buttons">
@@ -42,9 +49,8 @@
             </div>
           </form>
         </div>
-        <div class="ark">
-          <img src="dist/images/ark.svg" alt="Ark" class="ark__main">
-          <div class="ark__animals"></div>
+        <div class="options__list">
+          <div class="options__list-items"></div>
         </div>
       </div>
       <div class="game">
@@ -55,7 +61,7 @@
   </main>
   <footer class="footer">
     <div class="wrapper">
-      <p>Animal icons designed by <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a></p>
+      <p>Icons designed by <a href="https://www.flaticon.com/authors/freepik" target="_blank">Freepik</a></p>
       <p>&copy; <a href="http://kristenkriens.com" target="_blank">Kristen Kriens</a> 2017</p>
     </div>
   </footer>

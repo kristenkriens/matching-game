@@ -5,21 +5,5 @@
 
   h1 {
     width: 100%;
-    margin-bottom: 25px;
-  }
-
-  h2 {
-    width: 100%;
-    position: relative;
-
-    &:before {
-      content: '-';
-      margin-right: 5px;
-    }
-
-    &:after {
-      content: '-';
-      margin-left: 5px;
-    }
   }
 }

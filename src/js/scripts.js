@@ -7,12 +7,15 @@ $(function() {
 
   var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin', 'albatross', 'bullfinch', 'crane'];
 
+  var foods = ['cheese', 'pie', 'salami', 'pizza', 'apple', 'asparagus', 'avocado', 'bacon', 'baguette', 'banana', 'blueberries', 'bread', 'broccoli', 'cake', 'carrot', 'cauliflower', 'cherries', 'chili', 'chocolate', 'cookies', 'corn', 'croissant', 'cupcake', 'doughnut', 'egg', 'eggplant', 'fries', 'grapes', 'green-beans', 'ham', 'hamburger', 'hot-dog', 'ice-cream-bar', 'ice-cream-cone', 'kebab', 'leeks', 'lemon', 'lettuce', 'lime', 'noodles', 'olives', 'onion', 'orange', 'peach', 'pear', 'pickle', 'pineapple', 'potatoes', 'raddish', 'raspberry', 'rice', 'sandwich', 'spaghetti', 'steak', 'strawberry', 'sub-sandwich', 'tomato', 'turkey', 'waffles', 'watermelon'];
+
   var difficultyBoxes = {
     easy: 12,
     medium: 20,
     hard: 30
   }
 
+  var type = '';
   var difficulty = '';
 
   var interval;
@@ -91,9 +94,9 @@ $(function() {
 
   // Resets game
   function reset() {
-    $('.ark__animal').remove();
+    $('.options__list-item').remove();
 
-    generateAnimals();
+    setOptions();
 
     games.clicks = 0;
     games.score = 0;
@@ -143,53 +146,62 @@ $(function() {
     $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${games.score}</span></div>`);
   }
 
-  // Takes users desired difficulty level and applies applicable classes
-  function generateDifficulty() {
-    difficulty = $('input[type="radio"]:checked').val().toLowerCase();
+  // Takes users desired type and difficulty level and applies applicable classes
+  function getOptions() {
+    difficulty = $('input[name="difficulty"]:checked').val().toLowerCase();
+    type = $('input[name="type"]:checked').val().toLowerCase();
 
-    $('main').removeClass().addClass(difficulty);
+    $('main').removeClass().addClass(difficulty).addClass(type);
   }
 
-  // Generates required boxes as per chosen difficulty and fills with random animal images
-  // Also generates animals in current game underneath the ark image
-  function generateAnimals() {
+  // Generates required boxes as per chosen difficulty and fills with random images
+  // Also generates images in current game underneath the ark image
+  function setOptions() {
     $('.game__board-tile').remove();
 
-    var chosenAnimals = [];
+    var itemArray;
+
+    if(type === 'animals') {
+      itemArray = animals.slice();
+    } else {
+      itemArray = foods.slice();
+    }
+
+    var chosenItems = [];
 
     var difficultyBoxesNum = difficultyBoxes[difficulty];
 
     var index = {};
 
     for(var i = 0; i < difficultyBoxesNum / 2; i++) {
-      var animalNum;
+      var itemNum;
       do {
-        animalNum = randomNum(animals.length);
-      } while (index.hasOwnProperty(animalNum));
-      index[animalNum] = true;
+        itemNum = randomNum(itemArray.length);
+      } while (index.hasOwnProperty(itemNum));
+      index[itemNum] = true;
 
-      var animal = animals[animalNum];
+      var singleItem = itemArray[itemNum];
 
-      chosenAnimals.push(animal);
+      chosenItems.push(singleItem);
 
-      var chosenAnimalsClone = chosenAnimals.slice();
-      var chosenAnimalsNew = chosenAnimals.concat(chosenAnimalsClone);
+      var chosenItemsCopy = chosenItems.slice();
+      var chosenItemsNew = chosenItems.concat(chosenItemsCopy);
 
-      shuffleArray(chosenAnimalsNew);
+      shuffleArray(chosenItemsNew);
     }
 
     for(var i = 0; i < difficultyBoxesNum; i++) {
-      var newAnimal = chosenAnimalsNew[i];
+      var tileItem = chosenItemsNew[i];
 
-      $('.game__board').append(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${newAnimal}.svg" alt="${prettify(newAnimal)}"></div></div></div>`);
+      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
     }
 
-    $('.ark__animal').remove();
+    $('.options__list-item').remove();
 
     for(var i = 0; i < difficultyBoxesNum / 2; i++) {
-      var oldAnimal = chosenAnimals[i];
+      var listItem = chosenItems[i];
 
-      $(`<img src="dist/images/${oldAnimal}.svg" alt="${oldAnimal}" class="ark__animal">`).hide().appendTo('.ark__animals').fadeIn(250);
+      $(`<img src="dist/images/${type}/${listItem}.svg" alt="${listItem}" class="options__list-item">`).hide().appendTo('.options__list-items').fadeIn(1000);
     }
 
     equalHeightWidth();
@@ -268,20 +280,20 @@ $(function() {
     if(context === 'pause') {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h3>${contextText}</h3><p>Time Left: ${minutes}:${seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Time Left: ${minutes}:${seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
     } else {
       setTimeout(function() {
         $('html, body').css('overflow', 'hidden');
 
-        $(`<div class="overlay"><div class="overlay__contents"><h3>${contextText}</h3><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
+        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
         if(context === 'win') {
           setTimeout(function() {
-            $('.overlay__contents h3').addClass('animated tada');
+            $('.overlay__contents h2').addClass('animated tada');
           }, 350);
         } else {
           setTimeout(function() {
-            $('.overlay__contents h3').addClass('animated rubberBand');
+            $('.overlay__contents h2').addClass('animated rubberBand');
           }, 350);
         }
       }, 500);
@@ -289,13 +301,13 @@ $(function() {
   }
 
   generateStats();
-  generateDifficulty();
-  generateAnimals();
+  getOptions();
+  setOptions();
 
   $('input[type="radio"]').on('click', function() {
     reset();
-    generateDifficulty();
-    generateAnimals();
+    getOptions();
+    setOptions();
   });
 
   $('button').on('click', function(e) {
