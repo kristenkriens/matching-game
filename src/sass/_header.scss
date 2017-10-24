@@ -7,11 +7,13 @@
     width: 100%;
 
     &:before {
-      content: '- ';
+      content: '-';
+      margin-right: 10px;
     }
 
     &:after {
-      content: ' -';
+      content: '-';
+      margin-left: 10px;
     }
   }
 }
