@@ -5,5 +5,13 @@
 
   h1 {
     width: 100%;
+
+    &:before {
+      content: '- ';
+    }
+
+    &:after {
+      content: ' -';
+    }
   }
 }
