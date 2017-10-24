@@ -9,9 +9,13 @@ $(function() {
 
   var foods = ['cheese', 'pie', 'salami', 'pizza', 'apple', 'asparagus', 'avocado', 'bacon', 'baguette', 'banana', 'blueberries', 'bread', 'broccoli', 'cake', 'carrot', 'cauliflower', 'cherries', 'chili', 'chocolate', 'cookies', 'corn', 'croissant', 'cupcake', 'doughnut', 'egg', 'eggplant', 'fries', 'grapes', 'green-beans', 'ham', 'hamburger', 'hot-dog', 'ice-cream-bar', 'ice-cream-cone', 'kebab', 'leeks', 'lemon', 'lettuce', 'lime', 'noodles', 'olives', 'onion', 'orange', 'peach', 'pear', 'pickle', 'pineapple', 'potatoes', 'raddish', 'raspberry', 'rice', 'sandwich', 'spaghetti', 'steak', 'strawberry', 'sub-sandwich', 'tomato', 'turkey', 'waffles', 'watermelon'];
 
-  var flowers = ['almond', 'alstroemeria', 'anemone', 'anthurium', 'aster', 'astrantia', 'bluebell', 'bougainvillea', 'broom', 'calla', 'carnation', 'crysanthemum', 'clematis', 'daffodil', 'dahlia', 'daisy', 'gladiolus', 'hyacinth', 'hydrangea', 'hypericum', 'iris', 'jasmine', 'jonquil', 'knapweed', 'lily', 'lotus', 'magnolia', 'mimosa', 'narcissus', 'nymphea', 'oleander', 'orchid', 'pansy', 'pear', 'peony', 'petunia', 'poinsettia', 'poppy', 'protea', 'rose', 'sisyrinchium', 'sunflower', 'wallflower', 'wedelia', 'zinnia'];
+  var flowers = ['almond', 'alstroemeria', 'anemone', 'anthurium', 'aster', 'astrantia', 'bluebell', 'bougainvillea', 'broom', 'calla', 'carnation', 'chrysanthemum', 'clematis', 'daffodil', 'dahlia', 'daisy', 'gladiolus', 'hyacinth', 'hydrangea', 'hypericum', 'iris', 'jasmine', 'jonquil', 'knapweed', 'lily', 'lotus', 'magnolia', 'mimosa', 'narcissus', 'nymphea', 'oleander', 'orchid', 'pansy', 'pear', 'peony', 'petunia', 'poinsettia', 'poppy', 'protea', 'rose', 'sisyrinchium', 'sunflower', 'wallflower', 'wedelia', 'zinnia'];
 
   var clothes = ['athletic-jacket', 'ballet-flats', 'baseball-cap', 'basketball-jersey', 'bathrobe', 'belt', 'blouse', 'boots', 'bow-tie', 'bra', 'cargo-pants', 'coat', 'dress', 'gloves', 'hat', 'high-heels', 'hoodie', 'jacket', 'jeans', 'long-sleeved-dress', 'long-sleeved-shirt', 'mens-blazer', 'mens-swimsuit', 'mens-underwear', 'mittens', 'overalls', 'oxford-shoes', 'panties', 'polo', 'puffy-jacket', 'pullover', 'scarf', 'short-sleeved-shirt', 'shorts', 'skirt', 'slippers', 'sneakers', 'socks', 'strappy-high-heels', 'sundress', 't-shirt', 'tank-top', 'tie', 'trench-coat', 'uggs', 'vest', 'winter-hat', 'womens-blazer', 'womens-swimsuit', 'work-boots'];
+
+  var flagsAL = ['afghanistan', 'albania', 'algeria', 'argentina', 'armenia', 'aruba', 'australia', 'austria', 'bahamas', 'bangladesh', 'barbados', 'belarus', 'belgium', 'belize', 'bermuda', 'bosnia-and-herzegovina', 'botswana', 'brazil', 'bulgaria', 'cambodia', 'canada', 'canary-islands', 'cayman-islands', 'chile', 'china', 'colombia', 'costa-rica', 'croatia', 'cuba', 'czech-republic', 'democratic-republic-of-congo', 'denmark', 'dominican-republic', 'ecuador', 'egypt', 'ethiopia', 'falkland-islands', 'fiji', 'finland', 'france', 'galapagos-islands', 'gambia', 'germany', 'ghana', 'greece', 'greenland', 'grenada', 'guam', 'guatemala', 'guyana', 'haiti', 'hungary', 'iceland', 'india', 'indonesia', 'iran', 'iraq', 'israel', 'italy', 'jamaica', 'japan', 'jordan', 'kazakhstan', 'kenya', 'latvia', 'lebanon', 'liberia', 'libya', 'liechtenstein', 'lithuania', 'luxembourg'];
+
+  var flagsMZ = ['madagascar', 'malaysia', 'maldives', 'malta', 'mexico', 'monaco', 'mongolia', 'montenegro', 'morocco', 'mozambique', 'namibia', 'nepal', 'netherlands', 'new-zealand', 'nicaragua', 'nigeria', 'north-korea', 'norway', 'pakistan', 'palestine', 'panama', 'papua-new-guinea', 'paraguay', 'peru', 'philippines', 'portugal', 'puerto-rico', 'republic-of-macedonia', 'republic-of-poland', 'romania', 'russia', 'rwanda', 'saint-kitts-and-nevis', 'samoa', 'saudi-arabia', 'serbia', 'sierra-leone', 'singapore', 'slovakia', 'slovenia', 'somalia', 'south-africa', 'south-korea', 'spain', 'sri-lanka', 'st-barts', 'st-lucia', 'sudan', 'swaziland', 'sweden', 'switzerland', 'syria', 'taiwan', 'tanzania', 'tibet', 'trinidad-and-tobago', 'turkey', 'turks-and-caicos', 'uganda', 'ukraine', 'united-arab-emirates', 'united-kingdom', 'united-states-of-america', 'uruguay', 'venezuela', 'vietnam', 'zambia', 'zimbabwe'];
 
   var difficultyBoxes = {
     easy: 12,
@@ -152,8 +156,8 @@ $(function() {
 
   // Takes users desired type and difficulty level and applies applicable classes
   function getOptions() {
-    difficulty = $('input[name="difficulty"]:checked').val().toLowerCase();
-    type = $('input[name="type"]:checked').val().toLowerCase();
+    difficulty = $('input[name="difficulty"]:checked').attr('id');
+    type = $('input[name="type"]:checked').attr('id');
 
     $('main').removeClass().addClass(difficulty).addClass(type);
   }
@@ -171,8 +175,12 @@ $(function() {
       itemArray = foods.slice();
     } else if (type === 'flowers') {
       itemArray = flowers.slice();
-    } else {
+    } else if (type === 'clothes') {
       itemArray = clothes.slice();
+    } else if (type === 'flagsAL') {
+      itemArray = flagsAL.slice();
+    } else {
+      itemArray = flagsMZ.slice();
     }
 
     var chosenItems = [];

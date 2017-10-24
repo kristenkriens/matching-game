@@ -70,6 +70,18 @@
   }
 }
 
+.flagsAL {
+  label[for="flagsAL"] {
+    border-color: $white;
+  }
+}
+
+.flagsMZ {
+  label[for="flagsMZ"] {
+    border-color: $white;
+  }
+}
+
 main {
   .wrapper {
     margin: 0 auto 25px;
@@ -112,7 +124,7 @@ main {
     width: 100%;
     margin: 0 auto;
     width: 100%;
-    max-width: 450px;
+    max-width: 550px;
     margin-bottom: 20px;
 
     @media (max-width: $sm-width) {
