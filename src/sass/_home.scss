@@ -64,6 +64,12 @@
   }
 }
 
+.clothes {
+  label[for="clothes"] {
+    border-color: $white;
+  }
+}
+
 main {
   .wrapper {
     margin: 0 auto 25px;
