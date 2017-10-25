@@ -102,7 +102,7 @@ $(function() {
 
   // Resets game
   function reset() {
-    $('.game__types-item').remove();
+    $('.types__list-item').remove();
 
     setOptions();
 
@@ -212,12 +212,12 @@ $(function() {
       $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="${prettify(tileItem)}" title="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
     }
 
-    $('.game__types-item').remove();
+    $('.types__list-item').remove();
 
     for(var i = 0; i < difficultyBoxesNum / 2; i++) {
       var listItem = chosenItems[i];
 
-      $(`<div class="game__types-item"><img src="dist/images/${type}/${listItem}.svg" alt="${prettify(listItem)}" title="${prettify(listItem)}"><p>${prettify(listItem)}</p></div>`).hide().appendTo('.game__types-list').fadeIn(1000);
+      $(`<div class="types__list-item"><img src="dist/images/${type}/${listItem}.svg" alt="${prettify(listItem)}" title="${prettify(listItem)}"><p>${prettify(listItem)}</p></div>`).hide().appendTo('.types__list').fadeIn(1000);
     }
 
     equalHeightWidth();
