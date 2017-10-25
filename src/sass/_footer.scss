@@ -1,8 +1,10 @@
 .footer {
   background-color: $dark-orange;
-  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  letter-spacing: normal;
+
+  @media (max-width: $sm-width) {
+    font-size: 12px;
+  }
 
   .wrapper {
     padding: 15px 30px;

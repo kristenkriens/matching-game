@@ -354,6 +354,10 @@ main {
         left: 50%;
         transform: translateX(-50%);
         margin-bottom: 5px;
+
+        @media (max-width: $sm-width) {
+      		width: 40px;
+        }
       }
 
       p {
