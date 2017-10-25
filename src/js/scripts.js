@@ -102,7 +102,7 @@ $(function() {
 
   // Resets game
   function reset() {
-    $('.options__list-item').remove();
+    $('.types__list-item').remove();
 
     setOptions();
 
@@ -212,12 +212,12 @@ $(function() {
       $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="${prettify(tileItem)}" title="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
     }
 
-    $('.options__list-item').remove();
+    $('.types__list-item').remove();
 
     for(var i = 0; i < difficultyBoxesNum / 2; i++) {
       var listItem = chosenItems[i];
 
-      $(`<img src="dist/images/${type}/${listItem}.svg" alt="${prettify(listItem)}" title="${prettify(listItem)}" class="options__list-item">`).hide().appendTo('.options__list-items').fadeIn(1000);
+      $(`<img src="dist/images/${type}/${listItem}.svg" alt="${prettify(listItem)}" title="${prettify(listItem)}" class="types__list-item">`).hide().appendTo('.types__list').fadeIn(1000);
     }
 
     equalHeightWidth();
