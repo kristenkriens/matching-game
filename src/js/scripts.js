@@ -266,6 +266,12 @@ $(function() {
         }, 750);
       } else {
         games.score += 100;
+
+        var matching = $('.current__list-item img').filter(function(){
+           return $(this).attr('alt') == clickedItems[0];
+        });
+
+        matching.parent().fadeTo(200, 0.5);
       }
     }
   }
