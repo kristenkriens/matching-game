@@ -336,43 +336,38 @@ main {
   }
 }
 
-.types {
+.current {
   margin: 30px 0 0;
-  padding: 10px 20px 0 20px;
+  padding: 10px 10px 5px 10px;
   width: 100%;
   background-color: $orange;
 
   &__list {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     flex-wrap: wrap;
     margin: 0 -10px;
 
     &-item {
+      width: 125px;
+      margin-bottom: 5px;
       padding: 10px;
-      margin-bottom: 10px 0;
-      min-width: 100px;
-      max-width: 135px;
 
       img {
-        width: 50px;
+        width: 65px;
         position: relative;
         left: 50%;
         transform: translateX(-50%);
         margin-bottom: 5px;
 
         @media (max-width: $sm-width) {
-          width: 40px;
+          width: 50px;
         }
       }
 
       p {
         text-align: center;
-        font-size: 14px;
-
-        @media (max-width: $sm-width) {
-          font-size: 12px;
-        }
+        font-size: 12px;
       }
     }
   }
