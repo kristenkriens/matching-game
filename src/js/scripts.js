@@ -356,7 +356,7 @@ $(function() {
     checkMatch($(this));
 
     games.clicks++;
-    games.score -= 10;
+    games.score -= 5;
 
     $('.game__stats-clicks .clicks').text(games.clicks);
     $('.game__stats-score .score').text(games.score);
