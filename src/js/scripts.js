@@ -45,10 +45,10 @@ $(function() {
     clearInterval(interval);
     interval = setInterval(function() {
       if(!isPaused) {
-        var timer = $('.game__stats-timer').text();
-        timer = timer.split(':');
-        minutes = timer[0];
-        seconds = timer[1];
+        var time = $('.game__stats-timer').text();
+        time = time.split(':');
+        minutes = time[0];
+        seconds = time[1];
         seconds -= 1;
         if (minutes < 0) return;
         else if (seconds < 0 && minutes != 0) {
@@ -265,7 +265,7 @@ $(function() {
           $('.game__board-tile').css("pointer-events", "auto");
         }, 750);
       } else {
-        games.score += 100;
+        games.score += (parseInt(minutes) * 60) + parseInt(seconds);
 
         var matching = $('.current__list-item img').filter(function(){
            return $(this).attr('alt') == clickedItems[0];
