@@ -28,6 +28,8 @@ $(function() {
 
   var interval;
   var isPaused = false;
+  var pausedMinute = '';
+  var pausedSecond = '';
   var minutes = '';
   var seconds = '';
 
@@ -273,12 +275,13 @@ $(function() {
   function checkOutcome() {
     if ($('.game__board').children('.game__board-tile').length === $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
       generateOverlay('win');
-      pause();
     }
   }
 
   // Generates overlay based on if the user wins, time runs out, or the game is paused
   function generateOverlay(context, mins, secs) {
+    pause();
+
     var contextText = '';
 
     if(context === 'win') {
@@ -333,7 +336,6 @@ $(function() {
   $('.options__items').on('click', '.options__item[for="pause"]', function() {
     if (games.clicks > 0) {
       generateOverlay('pause', minutes, seconds);
-      pause();
     }
   });
 
@@ -342,7 +344,10 @@ $(function() {
   });
 
   $('.game__board').on('click', '.game__board-tile:not(.game__board-tile--flipped)', function() {
-    start();
+    if (games.clicks === 0 || (pausedMinute === minutes && pausedSecond === seconds)) {
+      start();
+    }
+
     checkMatch($(this));
 
     games.clicks++;
@@ -358,6 +363,11 @@ $(function() {
 
   $('main').on('click', '.overlay__button:not(.overlay__button--pause)', function() {
     reset();
+  });
+
+  $('main').on('click', '.overlay__button--pause', function() {
+    pausedMinute = minutes;
+    pausedSecond = seconds;
   });
 
   $('main').on('click', '.overlay__button', function() {
