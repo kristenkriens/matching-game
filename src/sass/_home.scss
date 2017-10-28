@@ -1,85 +1,41 @@
-.easy {
-  label[for="easy"] {
-    border-color: $white;
-  }
+.easy .game__board-tile {
+  width: calc(calc(100% / 4) - 10px);
+  margin: 5px;
 
-  .game__board-tile {
-    width: calc(calc(100% / 4) - 10px);
-    position: relative;
-    margin: 5px;
-
-    @media (max-width: $sm-width) {
-      width: calc(calc(100% / 3) - 10px);
-    }
+  @media (max-width: $sm-width) {
+    width: calc(calc(100% / 3) - 10px);
   }
 }
 
-.medium {
-  label[for="medium"] {
-    border-color: $white;
-  }
+.medium .game__board-tile {
+  width: calc(calc(100% / 5) - 8px);
+  margin: 4px;
 
-  .game__board-tile {
-    width: calc(calc(100% / 5) - 8px);
-    position: relative;
-    margin: 4px;
-
-    @media (max-width: $sm-width) {
-      width: calc(calc(100% / 4) - 8px);
-    }
+  @media (max-width: $sm-width) {
+    width: calc(calc(100% / 4) - 8px);
   }
 }
 
-.hard {
-  label[for="hard"] {
-    border-color: $white;
-  }
+.hard .game__board-tile {
+  width: calc(calc(100% / 6) - 6px);
+  margin: 3px;
 
-  .game__board-tile {
-    width: calc(calc(100% / 6) - 6px);
-    position: relative;
-    margin: 3px;
-
-    @media (max-width: $sm-width) {
-      width: calc(calc(100% / 5) - 6px);
-    }
+  @media (max-width: $sm-width) {
+    width: calc(calc(100% / 5) - 6px);
   }
 }
 
-.animals {
-  label[for="animals"] {
-    border-color: $white;
-  }
-}
-
-.foods {
-  label[for="foods"] {
-    border-color: $white;
-  }
-}
-
-.flowers {
-  label[for="flowers"] {
-    border-color: $white;
-  }
-}
-
-.clothes {
-  label[for="clothes"] {
-    border-color: $white;
-  }
-}
-
-.flagsAL {
-  label[for="flagsAL"] {
-    border-color: $white;
-  }
-}
-
-.flagsMZ {
-  label[for="flagsMZ"] {
-    border-color: $white;
-  }
+.easy label[for="easy"],
+.medium label[for="medium"],
+.hard label[for="hard"],
+.animals label[for="animals"],
+.foods label[for="foods"],
+.flowers label[for="flowers"],
+.clothes label[for="clothes"],
+.flagsAL label[for="flagsAL"],
+.flagsMZ label[for="flagsMZ"],
+.paused label[for="pause"] {
+  border-color: $white;
 }
 
 main {
@@ -94,6 +50,10 @@ main {
 
   @media (max-width: $lg-width) {
     width: 100%;
+
+    p i {
+      transform: rotate(90deg);
+    }
   }
 
   &__box {
@@ -145,58 +105,37 @@ main {
   &__item {
     width: 100%;
     background-color: $dark-orange;
-    border: 2px dashed transparent;
+    border: 2px solid transparent;
     margin-bottom: 10px;
     padding: 7px 15px;
     transition: 200ms border-style ease, 200ms border-color ease;
     cursor: pointer;
 
+    .options__items--controls & {
+      position: relative;
+      width: calc(50% - 5px);
+      height: 43px;
+      margin-bottom: 5px;
+
+      &[for="start"] {
+        i {
+          left: 52%;
+        }
+      }
+
+      i {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
     @media (min-width: $sm-width-plus) and (max-width: $lg-width) {
-      width: calc(33.33% - 8px);
+      width: calc(33.33% - calc(13px / 2));
     }
 
-    &:hover {
-      border-style: solid;
-      border-color: $white;
-    }
-  }
-
-  &__buttons {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__button {
-    width: calc(33.33% - 8px);
-    height: 43px;
-    color: $white;
-    border: 2px solid transparent;
-    outline: none;
-    background-color: $dark-orange;
-    position: relative;
-
-    @media (max-width: $sm-width) {
-      height: 40px;
-    }
-
-    i {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    &--start i {
-      left: calc(50% + 1px);
-    }
-
-    &--active {
-      border-color: $white;
-      border-style: dashed;
-    }
-
-    &:hover {
+    &:hover, &:active, &:focus {
       border-color: $white;
     }
   }
@@ -274,21 +213,9 @@ main {
     flex-wrap: wrap;
     margin: -5px;
 
-    &--disabled {
-      position: relative;
-
-      &:after {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-      }
-    }
-
     &-tile {
       cursor: pointer;
+      position: relative;
       perspective: 1000px;
 
       &-inner {

@@ -40,15 +40,17 @@ $(function() {
     $('.game__board-tile').css({'height': tileWidth + 'px'});
   }
 
-  // Starts game
+  // Starts timer countdown and game
   function start() {
     clearInterval(interval);
+
+    var time = $('.game__stats-timer').text();
+    time = time.split(':');
+    minutes = time[0];
+    seconds = time[1];
+
     interval = setInterval(function() {
       if(!isPaused) {
-        var time = $('.game__stats-timer').text();
-        time = time.split(':');
-        minutes = time[0];
-        seconds = time[1];
         seconds -= 1;
         if (minutes < 0) return;
         else if (seconds < 0 && minutes != 0) {
@@ -80,24 +82,16 @@ $(function() {
       }
     }, 1000);
 
-    $('.options__button--start').addClass('options__button--active');
-    $('.options__button--pause').removeClass('options__button--active');
-
-    $('.game__board').removeClass('game__board--disabled');
-
     isPaused = false;
+
+    $('main').removeClass('paused');
   }
 
   // Pauses game
   function pause() {
-    if(!$('.game__board').hasClass('game__board--disabled')) {
-      $('.options__button--pause').addClass('options__button--active');
-      $('.options__button--start').removeClass('options__button--active');
+    isPaused = true;
 
-      $('.game__board').addClass('game__board--disabled');
-
-      isPaused = true;
-    }
+    $('main').addClass('paused');
   }
 
   // Resets game
@@ -113,8 +107,7 @@ $(function() {
     $('.game__stats-timer').text(games.time);
 
     $('.game__board-tile').removeClass('game__board-tile--flipped');
-    $('.game__board').addClass('game__board--disabled');
-    $('.options__button').removeClass('options__button--active');
+    $('.options__item').removeClass('options__item--active');
 
     $('.game__stats-timer').removeClass('game__stats-timer--yellow game__stats-timer--red');
 
@@ -158,8 +151,6 @@ $(function() {
   function getOptions() {
     difficulty = $('input[name="difficulty"]:checked').attr('id');
     type = $('input[name="type"]:checked').attr('id');
-
-    $('main').removeClass().addClass(difficulty).addClass(type);
   }
 
   // Generates required boxes as per chosen difficulty and fills with random images
@@ -220,6 +211,8 @@ $(function() {
       $(`<div class="current__list-item"><img src="dist/images/${type}/${listItem}.svg" alt="${prettify(listItem)}" title="${prettify(listItem)}"><p>${prettify(listItem)}</p></div>`).hide().appendTo('.current__list').fadeIn(1000);
     }
 
+    $('main').removeClass().addClass('paused').addClass(difficulty).addClass(type);
+
     equalHeightWidth();
 
     $(window).resize(function() {
@@ -279,11 +272,8 @@ $(function() {
   // Checks if all of the matches have been made and calls the generateOverlay() function
   function checkOutcome() {
     if ($('.game__board').children('.game__board-tile').length === $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
-      pause();
-
-      $('.options__button--pause').removeClass('options__button--active');
-
       generateOverlay('win');
+      pause();
     }
   }
 
@@ -326,7 +316,7 @@ $(function() {
   getOptions();
   setOptions();
 
-  $('input[type="radio"]').on('click', function() {
+  $('.options__items:not(.options__items--controls) input[type="radio"]').on('click', function() {
     reset();
     getOptions();
     setOptions();
@@ -336,23 +326,23 @@ $(function() {
     e.preventDefault();
   });
 
-  $('.options__button--start').on('click', function() {
+  $('.options__item[for="start"]').on('click', function() {
     start();
   });
 
-  $('.options__buttons').on('click', '.options__button--pause', function() {
-    if(!$('.game__board').hasClass('game__board--disabled')) {
+  $('.options__items').on('click', '.options__item[for="pause"]', function() {
+    if (games.clicks > 0) {
       generateOverlay('pause', minutes, seconds);
+      pause();
     }
-
-    pause();
   });
 
-  $('.options__button--restart').on('click', function() {
+  $('.options__item[for="restart"]').on('click', function() {
     reset();
   });
 
   $('.game__board').on('click', '.game__board-tile:not(.game__board-tile--flipped)', function() {
+    start();
     checkMatch($(this));
 
     games.clicks++;
@@ -368,10 +358,6 @@ $(function() {
 
   $('main').on('click', '.overlay__button:not(.overlay__button--pause)', function() {
     reset();
-  });
-
-  $('main').on('click', '.overlay__button--pause', function() {
-    start();
   });
 
   $('main').on('click', '.overlay__button', function() {
