@@ -227,7 +227,7 @@ $(function() {
     for(var i = 0; i < difficultyBoxesNum; i++) {
       var tileItem = chosenItemsNew[i];
 
-      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="Hidden" title="Hidden"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
+      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="Hidden" title="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
     }
 
     $('.current__list-item').remove();
@@ -274,13 +274,15 @@ $(function() {
       clickedIndexes.splice(0, 2);
     }
 
+    that.find('img').attr('alt', that.find('img').attr('title'));
+
     if(clickedItems.length === 2 || clickedIndexes.length === 2) {
       if(clickedItems[0] !== clickedItems[1]) {
         $('.game__board-tile').css("pointer-events", "none");
 
         setTimeout(function() {
-          $('.game__board-tile').eq(clickedIndexes[0]).removeClass('game__board-tile--flipped');
-          $('.game__board-tile').eq(clickedIndexes[1]).removeClass('game__board-tile--flipped');
+          $('.game__board-tile').eq(clickedIndexes[0]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
+          $('.game__board-tile').eq(clickedIndexes[1]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
 
           $('.game__board-tile').css("pointer-events", "auto");
         }, 750);
