@@ -2,7 +2,8 @@ $(function() {
   var games = {
     clicks: 0,
     score: 0,
-    time: '1:30'
+    minutes: 1,
+    seconds: 30
   }
 
   var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin', 'albatross', 'bullfinch', 'crane'];
@@ -42,26 +43,44 @@ $(function() {
     $('.game__board-tile').css({'height': tileWidth + 'px'});
   }
 
+  // Figures out if minutes and seconds are plural at current time and adjust text accordingly
+  function timeUnits(mins, secs) {
+    if (mins == 1) {
+      $('.game__stats-timer .minutes + .accessible').text('Minute');
+    } else {
+      $('.game__stats-timer .minutes + .accessible').text('Minutes');
+    }
+
+    if (secs == 1) {
+      $('.game__stats-timer .seconds + .accessible').text('Second');
+    } else {
+      $('.game__stats-timer .seconds + .accessible').text('Seconds');
+    }
+  }
+
   // Starts timer countdown and game
   function start() {
     clearInterval(interval);
 
-    var time = $('.game__stats-timer').text();
-    time = time.split(':');
-    minutes = time[0];
-    seconds = time[1];
+    minutes = $('.game__stats-timer .minutes').text();
+    seconds = $('.game__stats-timer .seconds').text();
 
     interval = setInterval(function() {
       if(!isPaused) {
         seconds -= 1;
-        if (minutes < 0) return;
-        else if (seconds < 0 && minutes != 0) {
-            minutes -= 1;
-            seconds = 59;
+        if (minutes < 0) {
+          return;
+        } else if (seconds < 0 && minutes != 0) {
+          minutes -= 1;
+          seconds = 59;
+        } else if (seconds < 10 && length.seconds != 2) {
+          seconds = '0' + seconds;
         }
-        else if (seconds < 10 && length.seconds != 2) seconds = '0' + seconds;
 
-        $('.game__stats-timer').text(minutes + ':' + seconds);
+        $('.game__stats-timer .minutes').text(minutes);
+        $('.game__stats-timer .seconds').text(seconds);
+
+        timeUnits(minutes, seconds);
 
         if (minutes == 0 && seconds < 31) {
           $('.game__stats-timer').addClass('game__stats-timer--yellow');
@@ -104,9 +123,13 @@ $(function() {
 
     games.clicks = 0;
     games.score = 0;
+
     $('.game__stats-clicks .clicks').text(games.clicks);
     $('.game__stats-score .score').text(games.score);
-    $('.game__stats-timer').text(games.time);
+    $('.game__stats-timer .minutes').text(games.minutes);
+    $('.game__stats-timer .seconds').text(games.seconds);
+
+    timeUnits(games.minutes, games.seconds);
 
     $('.game__board-tile').removeClass('game__board-tile--flipped');
     $('.options__item').removeClass('options__item--active');
@@ -145,8 +168,10 @@ $(function() {
   // Generates stats markup
   function generateStats() {
     $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${games.clicks}</span></div>`);
-    $('.game__stats').append(`<div class="game__stats-timer">${games.time}</div>`);
+    $('.game__stats').append(`<div class="game__stats-timer"><span class="minutes">${games.minutes}</span><span class="accessible"></span>:<span class="seconds">${games.seconds}</span><span class="accessible"></span></div>`);
     $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${games.score}</span></div>`);
+
+    timeUnits(games.minutes, games.seconds);
   }
 
   // Takes users desired type and difficulty level and applies applicable classes
@@ -260,7 +285,7 @@ $(function() {
           $('.game__board-tile').css("pointer-events", "auto");
         }, 750);
       } else {
-        games.score += (parseInt(minutes) * 60) + parseInt(seconds);
+        games.score += (minutes * 60) + parseInt(seconds);
 
         var matching = $('.current__list-item img').filter(function(){
            return $(this).attr('alt') == clickedItems[0];
