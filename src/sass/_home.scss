@@ -75,7 +75,7 @@ main {
   }
 
   &__title {
-    margin: -5px 0 30px;
+    margin: -5px 0 25px;
 
     &:before {
       content: '-';
@@ -88,10 +88,6 @@ main {
     }
   }
 
-  input[type="radio"] {
-    display: none;
-  }
-
   &__items {
     border: none;
     display: flex;
@@ -99,6 +95,7 @@ main {
     align-items: center;
     flex-wrap: wrap;
     margin-bottom: 20px;
+    width: 100%;
     padding: 0;
   }
 
@@ -112,9 +109,9 @@ main {
     cursor: pointer;
 
     .options__items--controls & {
+      height: 43px;
       position: relative;
       width: calc(50% - 5px);
-      height: 43px;
       margin-bottom: 5px;
 
       &[for="start"] {
@@ -135,8 +132,12 @@ main {
       width: calc(33.33% - calc(13px / 2));
     }
 
-    &:hover, &:active, &:focus {
+    &:hover, &:focus {
       border-color: $white;
+    }
+
+    &:focus {
+      border-style: dashed;
     }
   }
 }
@@ -355,8 +356,12 @@ main {
     outline: none;
     border: 2px solid transparent;
 
-    &:hover, &:active, &:focus {
+    &:hover, &:focus {
       border-color: $white;
+    }
+
+    &:focus {
+      border-style: dashed;
     }
   }
 }
