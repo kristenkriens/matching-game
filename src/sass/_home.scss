@@ -76,16 +76,6 @@ main {
 
   &__title {
     margin: -5px 0 25px;
-
-    &:before {
-      content: '-';
-      margin-right: 5px;
-    }
-
-    &:after {
-      content: '-';
-      margin-left: 5px;
-    }
   }
 
   &__items {
@@ -277,7 +267,6 @@ main {
 
     &-item {
       width: 125px;
-      margin-bottom: 5px;
       padding: 10px;
 
       img {

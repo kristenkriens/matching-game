@@ -167,9 +167,9 @@ $(function() {
 
   // Generates stats markup
   function generateStats() {
-    $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${games.clicks}</span></div>`);
-    $('.game__stats').append(`<div class="game__stats-timer"><span class="minutes">${games.minutes}</span><span class="accessible"></span>:<span class="seconds">${games.seconds}</span><span class="accessible"></span></div>`);
-    $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${games.score}</span></div>`);
+    $('.game__stats').append(`<div class="game__stats-clicks" role="alert"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${games.clicks}</span></div>`);
+    $('.game__stats').append(`<div class="game__stats-timer" role="timer"><span class="minutes">${games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${games.seconds}</span><span class="accessible"></span></div>`);
+    $('.game__stats').append(`<div class="game__stats-score" role="alert"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${games.score}</span></div>`);
 
     timeUnits(games.minutes, games.seconds);
   }
@@ -227,7 +227,7 @@ $(function() {
     for(var i = 0; i < difficultyBoxesNum; i++) {
       var tileItem = chosenItemsNew[i];
 
-      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="${prettify(tileItem)}" title="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
+      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
     }
 
     $('.current__list-item').remove();

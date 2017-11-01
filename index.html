@@ -14,14 +14,14 @@
   <a href="#main" class="skipnav accessible">Skip to Main Content</a>
   <header class="header">
     <div class="wrapper">
-      <h1>Memory Game</h1>
+      <h1><span aria-hidden="true">-</span> Memory Game <span aria-hidden="true">-</span></h1>
     </div>
   </header>
   <main id="main">
     <div class="wrapper">
-      <div class="options">
+      <aside class="options">
         <div class="options__box">
-          <h2 class="options__title">Options</h2>
+          <h2 class="options__title"><span aria-hidden="true">-</span> Options <span aria-hidden="true">-</span></h2>
           <form id="options">
             <div class="options__items" role="group">
               <legend class="accessible">Image Type</legend>
@@ -66,16 +66,16 @@
               </label>
             </div>
           </form>
-          <p>Click on a square to start playing <i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
+          <p role="note">Click on a square to start playing <i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
         </div>
-      </div>
-      <div class="game">
+      </aside>
+      <section class="game">
         <div class="game__stats"></div>
         <div class="game__board"></div>
-      </div>
-      <div class="current">
+      </section>
+      <section class="current">
         <div class="current__list"></div>
-      </div>
+      </section>
     </div>
   </main>
   <footer class="footer">
