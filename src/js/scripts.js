@@ -227,7 +227,7 @@ $(function() {
     for(var i = 0; i < difficultyBoxesNum; i++) {
       var tileItem = chosenItemsNew[i];
 
-      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="${prettify(tileItem)}" title="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
+      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
     }
 
     $('.current__list-item').remove();
@@ -258,12 +258,12 @@ $(function() {
     clickedItems.slice(0, 2);
 
     if(games.clicks % 2 !== 0) {
-      oddItem = that.find('img').attr('alt');
+      oddItem = that.find('img').attr('src');
       oddIndex = that.index();
       clickedItems.push(oddItem);
       clickedIndexes.push(oddIndex);
     } else {
-      evenItem = that.find('img').attr('alt');
+      evenItem = that.find('img').attr('src');
       evenIndex = that.index();
       clickedItems.push(evenItem);
       clickedIndexes.push(evenIndex);
@@ -288,7 +288,7 @@ $(function() {
         games.score += (minutes * 60) + parseInt(seconds);
 
         var matching = $('.current__list-item img').filter(function(){
-           return $(this).attr('alt') == clickedItems[0];
+           return $(this).attr('src') == clickedItems[0];
         });
 
         matching.parent().fadeTo(200, 0.5);
