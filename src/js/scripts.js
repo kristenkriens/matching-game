@@ -258,12 +258,12 @@ $(function() {
     clickedItems.slice(0, 2);
 
     if(games.clicks % 2 !== 0) {
-      oddItem = that.find('img').attr('src');
+      oddItem = that.find('img').attr('title');
       oddIndex = that.index();
       clickedItems.push(oddItem);
       clickedIndexes.push(oddIndex);
     } else {
-      evenItem = that.find('img').attr('src');
+      evenItem = that.find('img').attr('title');
       evenIndex = that.index();
       clickedItems.push(evenItem);
       clickedIndexes.push(evenIndex);
@@ -290,7 +290,7 @@ $(function() {
         games.score += (minutes * 60) + parseInt(seconds);
 
         var matching = $('.current__list-item img').filter(function(){
-           return $(this).attr('src') == clickedItems[0];
+           return $(this).attr('title') == clickedItems[0];
         });
 
         matching.parent().fadeTo(200, 0.5);
