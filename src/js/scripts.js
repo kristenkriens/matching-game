@@ -37,6 +37,8 @@ $(function() {
   var clickedItems = [];
   var clickedIndexes = [];
 
+  var highscore = true;
+
   // Makes dynamic equal width and height boxes
   function equalHeightWidth() {
     var tileWidth = $('.game__board-tile').width();
@@ -327,7 +329,13 @@ $(function() {
       setTimeout(function() {
         $('html, body').css('overflow', 'hidden');
 
-        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><p>Time Left: ${minutes}:${seconds}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
+        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><p>Time Taken: ${games.minutes - minutes}:${games.seconds - seconds}</p></div></div>`).hide().appendTo('main').fadeIn(750);
+
+        if(highscore === true) {
+          $('<div class="overlay__input"><label for="name">Name:</label><input type="text" id="name" name="controls"></div>').hide().appendTo('.overlay__contents').fadeIn(750);
+        } else {
+          $('<button class="overlay__button">Play Again</button>').hide().appendTo('.overlay__contents').fadeIn(750);
+        }
 
         if(context === 'win') {
           setTimeout(function() {

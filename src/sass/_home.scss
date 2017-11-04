@@ -337,14 +337,26 @@ main {
     }
   }
 
-  &__button {
+  &__button, &__input {
+    display: inline-block;
     font-size: 30px;
     margin-top: 15px;
-    color: $white;
-    padding: 7px 20px;
     background-color: $dark-orange;
+    color: $white;
+
+    @media (max-width: $md-width) {
+      font-size: 25px;
+    }
+
+    @media (max-width: $sm-width) {
+      font-size: 20px;
+    }
+  }
+
+  &__button {
     outline: none;
     border: 2px solid transparent;
+    padding: 7px 20px;
 
     &:hover, &:focus {
       border-color: $white;
@@ -353,13 +365,21 @@ main {
     &:focus {
       border-style: dashed;
     }
+  }
 
-    @media (max-width: $md-width) {
-      font-size: 25px;
+  &__input {
+    padding: 7px 20px;
+
+    label {
+      margin-right: 5px;
     }
 
-    @media (max-width: $sm-width) {
-      font-size: 20px;
+    input {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      border-bottom: 2px solid $white;
+      line-height: 1;
     }
   }
 }
