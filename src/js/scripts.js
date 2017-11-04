@@ -1,45 +1,48 @@
+const app = {};
+
 $(function() {
-  var games = {
+  app.games = {
     clicks: 0,
     score: 0,
     minutes: 1,
     seconds: 30
   }
 
-  var animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin', 'albatross', 'bullfinch', 'crane'];
+  app.animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin', 'albatross', 'bullfinch', 'crane'];
 
-  var foods = ['cheese', 'pie', 'salami', 'pizza', 'apple', 'asparagus', 'avocado', 'bacon', 'baguette', 'banana', 'blueberries', 'bread', 'broccoli', 'cake', 'carrot', 'cauliflower', 'cherries', 'chili', 'chocolate', 'cookies', 'corn', 'croissant', 'cupcake', 'doughnut', 'egg', 'eggplant', 'fries', 'grapes', 'green-beans', 'ham', 'hamburger', 'hot-dog', 'ice-cream-bar', 'ice-cream-cone', 'kebab', 'leeks', 'lemon', 'lettuce', 'lime', 'noodles', 'olives', 'onion', 'orange', 'peach', 'pear', 'pickle', 'pineapple', 'potatoes', 'raddish', 'raspberry', 'rice', 'sandwich', 'spaghetti', 'steak', 'strawberry', 'sub-sandwich', 'tomato', 'turkey', 'waffles', 'watermelon'];
+  app.foods = ['cheese', 'pie', 'salami', 'pizza', 'apple', 'asparagus', 'avocado', 'bacon', 'baguette', 'banana', 'blueberries', 'bread', 'broccoli', 'cake', 'carrot', 'cauliflower', 'cherries', 'chili', 'chocolate', 'cookies', 'corn', 'croissant', 'cupcake', 'doughnut', 'egg', 'eggplant', 'fries', 'grapes', 'green-beans', 'ham', 'hamburger', 'hot-dog', 'ice-cream-bar', 'ice-cream-cone', 'kebab', 'leeks', 'lemon', 'lettuce', 'lime', 'noodles', 'olives', 'onion', 'orange', 'peach', 'pear', 'pickle', 'pineapple', 'potatoes', 'raddish', 'raspberry', 'rice', 'sandwich', 'spaghetti', 'steak', 'strawberry', 'sub-sandwich', 'tomato', 'turkey', 'waffles', 'watermelon'];
 
-  var flowers = ['almond', 'alstroemeria', 'anemone', 'anthurium', 'aster', 'astrantia', 'bluebell', 'bougainvillea', 'broom', 'calla', 'carnation', 'chrysanthemum', 'clematis', 'daffodil', 'dahlia', 'daisy', 'gladiolus', 'hyacinth', 'hydrangea', 'hypericum', 'iris', 'jasmine', 'jonquil', 'knapweed', 'lily', 'lotus', 'magnolia', 'mimosa', 'narcissus', 'nymphea', 'oleander', 'orchid', 'pansy', 'pear', 'peony', 'petunia', 'poinsettia', 'poppy', 'protea', 'rose', 'sisyrinchium', 'sunflower', 'wallflower', 'wedelia', 'zinnia'];
+  app.flowers = ['almond', 'alstroemeria', 'anemone', 'anthurium', 'aster', 'astrantia', 'bluebell', 'bougainvillea', 'broom', 'calla', 'carnation', 'chrysanthemum', 'clematis', 'daffodil', 'dahlia', 'daisy', 'gladiolus', 'hyacinth', 'hydrangea', 'hypericum', 'iris', 'jasmine', 'jonquil', 'knapweed', 'lily', 'lotus', 'magnolia', 'mimosa', 'narcissus', 'nymphea', 'oleander', 'orchid', 'pansy', 'pear', 'peony', 'petunia', 'poinsettia', 'poppy', 'protea', 'rose', 'sisyrinchium', 'sunflower', 'wallflower', 'wedelia', 'zinnia'];
 
-  var clothes = ['athletic-jacket', 'ballet-flats', 'baseball-cap', 'basketball-jersey', 'bathrobe', 'belt', 'blouse', 'boots', 'bow-tie', 'bra', 'cargo-pants', 'coat', 'dress', 'gloves', 'hat', 'high-heels', 'hoodie', 'jacket', 'jeans', 'long-sleeved-dress', 'long-sleeved-shirt', 'mens-blazer', 'mens-swimsuit', 'mens-underwear', 'mittens', 'overalls', 'oxford-shoes', 'panties', 'polo', 'puffy-jacket', 'pullover', 'scarf', 'short-sleeved-shirt', 'shorts', 'skirt', 'slippers', 'sneakers', 'socks', 'strappy-high-heels', 'sundress', 't-shirt', 'tank-top', 'tie', 'trench-coat', 'uggs', 'vest', 'winter-hat', 'womens-blazer', 'womens-swimsuit', 'work-boots'];
+  app.clothes = ['athletic-jacket', 'ballet-flats', 'baseball-cap', 'basketball-jersey', 'bathrobe', 'belt', 'blouse', 'boots', 'bow-tie', 'bra', 'cargo-pants', 'coat', 'dress', 'gloves', 'hat', 'high-heels', 'hoodie', 'jacket', 'jeans', 'long-sleeved-dress', 'long-sleeved-shirt', 'mens-blazer', 'mens-swimsuit', 'mens-underwear', 'mittens', 'overalls', 'oxford-shoes', 'panties', 'polo', 'puffy-jacket', 'pullover', 'scarf', 'short-sleeved-shirt', 'shorts', 'skirt', 'slippers', 'sneakers', 'socks', 'strappy-high-heels', 'sundress', 't-shirt', 'tank-top', 'tie', 'trench-coat', 'uggs', 'vest', 'winter-hat', 'womens-blazer', 'womens-swimsuit', 'work-boots'];
 
-  var flagsAL = ['afghanistan', 'albania', 'algeria', 'argentina', 'armenia', 'aruba', 'australia', 'austria', 'bahamas', 'bangladesh', 'barbados', 'belarus', 'belgium', 'belize', 'bermuda', 'bosnia-and-herzegovina', 'botswana', 'brazil', 'bulgaria', 'cambodia', 'canada', 'canary-islands', 'cayman-islands', 'chile', 'china', 'colombia', 'costa-rica', 'croatia', 'cuba', 'czech-republic', 'democratic-republic-of-congo', 'denmark', 'dominican-republic', 'ecuador', 'egypt', 'ethiopia', 'falkland-islands', 'fiji', 'finland', 'france', 'galapagos-islands', 'germany', 'ghana', 'greece', 'greenland', 'grenada', 'guam', 'guatemala', 'haiti', 'hungary', 'iceland', 'india', 'indonesia', 'iran', 'iraq', 'ireland', 'israel', 'italy', 'jamaica', 'japan', 'jordan', 'kazakhstan', 'kenya', 'latvia', 'lebanon', 'liberia', 'libya', 'liechtenstein', 'lithuania', 'luxembourg'];
+  app.flagsAL = ['afghanistan', 'albania', 'algeria', 'argentina', 'armenia', 'aruba', 'australia', 'austria', 'bahamas', 'bangladesh', 'barbados', 'belarus', 'belgium', 'belize', 'bermuda', 'bosnia-and-herzegovina', 'botswana', 'brazil', 'bulgaria', 'cambodia', 'canada', 'canary-islands', 'cayman-islands', 'chile', 'china', 'colombia', 'costa-rica', 'croatia', 'cuba', 'czech-republic', 'democratic-republic-of-congo', 'denmark', 'dominican-republic', 'ecuador', 'egypt', 'ethiopia', 'falkland-islands', 'fiji', 'finland', 'france', 'galapagos-islands', 'germany', 'ghana', 'greece', 'greenland', 'grenada', 'guam', 'guatemala', 'haiti', 'hungary', 'iceland', 'india', 'indonesia', 'iran', 'iraq', 'ireland', 'israel', 'italy', 'jamaica', 'japan', 'jordan', 'kazakhstan', 'kenya', 'latvia', 'lebanon', 'liberia', 'libya', 'liechtenstein', 'lithuania', 'luxembourg'];
 
-  var flagsMZ = ['madagascar', 'malaysia', 'maldives', 'malta', 'mexico', 'monaco', 'mongolia', 'montenegro', 'morocco', 'mozambique', 'namibia', 'nepal', 'netherlands', 'new-zealand', 'nicaragua', 'nigeria', 'north-korea', 'norway', 'pakistan', 'palestine', 'panama', 'papua-new-guinea', 'paraguay', 'peru', 'philippines', 'poland', 'portugal', 'puerto-rico', 'republic-of-macedonia', 'romania', 'russia', 'rwanda', 'saint-kitts-and-nevis', 'samoa', 'saudi-arabia', 'scotland', 'serbia', 'sierra-leone', 'singapore', 'slovakia', 'slovenia', 'somalia', 'south-africa', 'south-korea', 'spain', 'sri-lanka', 'st-barts', 'st-lucia', 'sudan', 'swaziland', 'sweden', 'switzerland', 'syria', 'taiwan', 'tanzania', 'tibet', 'trinidad-and-tobago', 'turkey', 'turks-and-caicos', 'uganda', 'ukraine', 'united-arab-emirates', 'united-kingdom', 'united-states-of-america', 'uruguay', 'venezuela', 'vietnam', 'zambia', 'zimbabwe'];
+  app.flagsMZ = ['madagascar', 'malaysia', 'maldives', 'malta', 'mexico', 'monaco', 'mongolia', 'montenegro', 'morocco', 'mozambique', 'namibia', 'nepal', 'netherlands', 'new-zealand', 'nicaragua', 'nigeria', 'north-korea', 'norway', 'pakistan', 'palestine', 'panama', 'papua-new-guinea', 'paraguay', 'peru', 'philippines', 'poland', 'portugal', 'puerto-rico', 'republic-of-macedonia', 'romania', 'russia', 'rwanda', 'saint-kitts-and-nevis', 'samoa', 'saudi-arabia', 'scotland', 'serbia', 'sierra-leone', 'singapore', 'slovakia', 'slovenia', 'somalia', 'south-africa', 'south-korea', 'spain', 'sri-lanka', 'st-barts', 'st-lucia', 'sudan', 'swaziland', 'sweden', 'switzerland', 'syria', 'taiwan', 'tanzania', 'tibet', 'trinidad-and-tobago', 'turkey', 'turks-and-caicos', 'uganda', 'ukraine', 'united-arab-emirates', 'united-kingdom', 'united-states-of-america', 'uruguay', 'venezuela', 'vietnam', 'zambia', 'zimbabwe'];
 
-  var difficultyBoxes = {
+  app.difficultyBoxes = {
     easy: 12,
     medium: 20,
     hard: 30
   }
 
-  var type = '';
-  var difficulty = '';
+  // May not need these anymore
+  app.type = '';
+  app.difficulty = '';
 
-  var interval;
-  var isPaused = false;
-  var pausedMinute = '';
-  var pausedSecond = '';
-  var minutes = '';
-  var seconds = '';
+  app.interval;
+  app.isPaused = false;
+  app.pausedMinute = '';
+  app.pausedSecond = '';
+  app.minutes = '';
+  app.seconds = '';
 
-  var clickedItems = [];
-  var clickedIndexes = [];
+  app.clickedItems = [];
+  app.clickedIndexes = [];
 
   // Makes dynamic equal width and height boxes
   function equalHeightWidth() {
-    var tileWidth = $('.game__board-tile').width();
+    let tileWidth = $('.game__board-tile').width();
     $('.game__board-tile').css({'height': tileWidth + 'px'});
   }
 
@@ -60,39 +63,39 @@ $(function() {
 
   // Starts timer countdown and game
   function start() {
-    clearInterval(interval);
+    clearInterval(app.interval);
 
-    minutes = $('.game__stats-timer .minutes').text();
-    seconds = $('.game__stats-timer .seconds').text();
+    app.minutes = $('.game__stats-timer .minutes').text();
+    app.seconds = $('.game__stats-timer .seconds').text();
 
-    interval = setInterval(function() {
-      if(!isPaused) {
-        seconds -= 1;
-        if (minutes < 0) {
+    app.interval = setInterval(function() {
+      if(!app.isPaused) {
+        app.seconds -= 1;
+        if (app.minutes < 0) {
           return;
-        } else if (seconds < 0 && minutes != 0) {
-          minutes -= 1;
-          seconds = 59;
-        } else if (seconds < 10 && length.seconds != 2) {
-          seconds = '0' + seconds;
+        } else if (app.seconds < 0 && app.minutes != 0) {
+          app.minutes -= 1;
+          app.seconds = 59;
+        } else if (app.seconds < 10 && app.seconds.length != 2) {
+          app.seconds = '0' + app.seconds;
         }
 
-        $('.game__stats-timer .minutes').text(minutes);
-        $('.game__stats-timer .seconds').text(seconds);
+        $('.game__stats-timer .minutes').text(app.minutes);
+        $('.game__stats-timer .seconds').text(app.seconds);
 
-        timeUnits(minutes, seconds);
+        timeUnits(app.minutes, app.seconds);
 
-        if (minutes == 0 && seconds < 31) {
+        if (app.minutes == 0 && app.seconds < 31) {
           $('.game__stats-timer').addClass('game__stats-timer--yellow');
         }
 
-        if (minutes == 0 && seconds < 11) {
+        if (app.minutes == 0 && app.seconds < 11) {
           $('.game__stats-timer').removeClass('game__stats-timer--yellow');
           $('.game__stats-timer').addClass('game__stats-timer--red');
         }
 
-        if (minutes == 0 && seconds == 0) {
-          clearInterval(interval);
+        if (app.minutes == 0 && app.seconds == 0) {
+          clearInterval(app.interval);
 
           generateOverlay('lose');
 
@@ -103,14 +106,14 @@ $(function() {
       }
     }, 1000);
 
-    isPaused = false;
+    app.isPaused = false;
 
     $('main').removeClass('paused');
   }
 
   // Pauses game
   function pause() {
-    isPaused = true;
+    app.isPaused = true;
 
     $('main').addClass('paused');
   }
@@ -121,27 +124,27 @@ $(function() {
 
     setOptions();
 
-    games.clicks = 0;
-    games.score = 0;
+    app.games.clicks = 0;
+    app.games.score = 0;
 
-    $('.game__stats-clicks .clicks').text(games.clicks);
-    $('.game__stats-score .score').text(games.score);
-    $('.game__stats-timer .minutes').text(games.minutes);
-    $('.game__stats-timer .seconds').text(games.seconds);
+    $('.game__stats-clicks .clicks').text(app.games.clicks);
+    $('.game__stats-score .score').text(app.games.score);
+    $('.game__stats-timer .minutes').text(app.games.minutes);
+    $('.game__stats-timer .seconds').text(app.games.seconds);
 
-    timeUnits(games.minutes, games.seconds);
+    timeUnits(app.games.minutes, app.games.seconds);
 
     $('.game__board-tile').removeClass('game__board-tile--flipped');
     $('.options__item').removeClass('options__item--active');
 
     $('.game__stats-timer').removeClass('game__stats-timer--yellow game__stats-timer--red');
 
-    clearInterval(interval);
+    clearInterval(app.interval);
   }
 
   // Capitalizes words and turns dashes into spaces
   function prettify(string) {
-    var words = string.match(/([^-]+)/g) || [];
+    let words = string.match(/([^-]+)/g) || [];
     words.forEach(function(word, i) {
       words[i] = word[0].toUpperCase() + word.slice(1);
     });
@@ -150,9 +153,9 @@ $(function() {
 
  // Randomizes array elements using Durstenfeld shuffle algorithm
   function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-      var j = Math.floor(Math.random() * (i + 1));
-      var temp = array[i];
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      let temp = array[i];
       array[i] = array[j];
       array[j] = temp;
     }
@@ -167,17 +170,17 @@ $(function() {
 
   // Generates stats markup
   function generateStats() {
-    $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${games.clicks}</span></div>`);
-    $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><span class="minutes">${games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${games.seconds}</span><span class="accessible"></span></div>`);
-    $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${games.score}</span></div>`);
+    $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${app.games.clicks}</span></div>`);
+    $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${app.games.seconds}</span><span class="accessible"></span></div>`);
+    $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${app.games.score}</span></div>`);
 
-    timeUnits(games.minutes, games.seconds);
+    timeUnits(app.games.minutes, app.games.seconds);
   }
 
   // Takes users desired type and difficulty level and applies applicable classes
   function getOptions() {
-    difficulty = $('input[name="difficulty"]:checked').attr('id');
-    type = $('input[name="type"]:checked').attr('id');
+    app.difficulty = $('input[name="difficulty"]:checked').attr('id');
+    app.type = $('input[name="type"]:checked').attr('id');
   }
 
   // Generates required boxes as per chosen difficulty and fills with random images
@@ -185,60 +188,61 @@ $(function() {
   function setOptions() {
     $('.game__board-tile').remove();
 
-    var itemArray;
+    let itemArray;
 
-    if (type === 'animals') {
-      itemArray = animals.slice();
-    } else if (type === 'foods') {
-      itemArray = foods.slice();
-    } else if (type === 'flowers') {
-      itemArray = flowers.slice();
-    } else if (type === 'clothes') {
-      itemArray = clothes.slice();
-    } else if (type === 'flagsAL') {
-      itemArray = flagsAL.slice();
+    if (app.type === 'animals') {
+      itemArray = app.animals.slice();
+    } else if (app.type === 'foods') {
+      itemArray = app.foods.slice();
+    } else if (app.type === 'flowers') {
+      itemArray = app.flowers.slice();
+    } else if (app.type === 'clothes') {
+      itemArray = app.clothes.slice();
+    } else if (app.type === 'flagsAL') {
+      itemArray = app.flagsAL.slice();
     } else {
-      itemArray = flagsMZ.slice();
+      itemArray = app.flagsMZ.slice();
     }
 
-    var chosenItems = [];
+    let chosenItems = [];
+    let chosenItemsNew = [];
 
-    var difficultyBoxesNum = difficultyBoxes[difficulty];
+    let difficultyBoxesNum = app.difficultyBoxes[app.difficulty];
 
-    var index = {};
+    let index = {};
 
-    for(var i = 0; i < difficultyBoxesNum / 2; i++) {
-      var itemNum;
+    for(let i = 0; i < difficultyBoxesNum / 2; i++) {
+      let itemNum;
       do {
         itemNum = randomNum(itemArray.length);
       } while (index.hasOwnProperty(itemNum));
       index[itemNum] = true;
 
-      var singleItem = itemArray[itemNum];
+      let singleItem = itemArray[itemNum];
 
       chosenItems.push(singleItem);
 
-      var chosenItemsCopy = chosenItems.slice();
-      var chosenItemsNew = chosenItems.concat(chosenItemsCopy);
+      let chosenItemsCopy = chosenItems.slice();
+      chosenItemsNew = [...chosenItems, ...chosenItemsCopy];
 
       shuffleArray(chosenItemsNew);
     }
 
-    for(var i = 0; i < difficultyBoxesNum; i++) {
-      var tileItem = chosenItemsNew[i];
+    for(let i = 0; i < difficultyBoxesNum; i++) {
+      let tileItem = chosenItemsNew[i];
 
-      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${type}/${tileItem}.svg" alt="Hidden" title="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
+      $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${app.type}/${tileItem}.svg" alt="Hidden" title="${prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
     }
 
     $('.current__list-item').remove();
 
-    for(var i = 0; i < difficultyBoxesNum / 2; i++) {
-      var listItem = chosenItems[i];
+    for(let i = 0; i < difficultyBoxesNum / 2; i++) {
+      let listItem = chosenItems[i];
 
-      $(`<div class="current__list-item"><img src="dist/images/${type}/${listItem}.svg" alt="${prettify(listItem)}" title="${prettify(listItem)}"><p>${prettify(listItem)}</p></div>`).hide().appendTo('.current__list').fadeIn(1000);
+      $(`<div class="current__list-item"><img src="dist/images/${app.type}/${listItem}.svg" alt="${prettify(listItem)}" title="${prettify(listItem)}"><p>${prettify(listItem)}</p></div>`).hide().appendTo('.current__list').fadeIn(1000);
     }
 
-    $('main').removeClass().addClass('paused').addClass(difficulty).addClass(type);
+    $('main').removeClass().addClass('paused').addClass(app.difficulty).addClass(app.type);
 
     equalHeightWidth();
 
@@ -249,48 +253,48 @@ $(function() {
 
   // Checks if there is a match and removes flipped class if not or adds points if there is
   function checkMatch(that) {
-    var evenItem = '';
-    var oddItem = '';
+    let evenItem = '';
+    let oddItem = '';
 
-    var evenIndex = '';
-    var oddIndex = '';
+    let evenIndex = '';
+    let oddIndex = '';
 
-    clickedItems.slice(0, 2);
+    app.clickedItems.slice(0, 2);
 
-    if(games.clicks % 2 !== 0) {
+    if(app.games.clicks % 2 !== 0) {
       oddItem = that.find('img').attr('title');
       oddIndex = that.index();
-      clickedItems.push(oddItem);
-      clickedIndexes.push(oddIndex);
+      app.clickedItems.push(oddItem);
+      app.clickedIndexes.push(oddIndex);
     } else {
       evenItem = that.find('img').attr('title');
       evenIndex = that.index();
-      clickedItems.push(evenItem);
-      clickedIndexes.push(evenIndex);
+      app.clickedItems.push(evenItem);
+      app.clickedIndexes.push(evenIndex);
     }
 
-    if(clickedItems.length > 2 || clickedIndexes.length > 2) {
-      clickedItems.splice(0, 2);
-      clickedIndexes.splice(0, 2);
+    if(app.clickedItems.length > 2 || app.clickedIndexes.length > 2) {
+      app.clickedItems.splice(0, 2);
+      app.clickedIndexes.splice(0, 2);
     }
 
     that.find('img').attr('alt', that.find('img').attr('title'));
 
-    if(clickedItems.length === 2 || clickedIndexes.length === 2) {
-      if(clickedItems[0] !== clickedItems[1]) {
+    if(app.clickedItems.length === 2 || app.clickedIndexes.length === 2) {
+      if(app.clickedItems[0] !== app.clickedItems[1]) {
         $('.game__board-tile').css("pointer-events", "none");
 
         setTimeout(function() {
-          $('.game__board-tile').eq(clickedIndexes[0]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
-          $('.game__board-tile').eq(clickedIndexes[1]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
+          $('.game__board-tile').eq(app.clickedIndexes[0]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
+          $('.game__board-tile').eq(app.clickedIndexes[1]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
 
           $('.game__board-tile').css("pointer-events", "auto");
         }, 750);
       } else {
-        games.score += (minutes * 60) + parseInt(seconds);
+        app.games.score += (app.minutes * 60) + parseInt(app.seconds);
 
-        var matching = $('.current__list-item img').filter(function(){
-           return $(this).attr('title') == clickedItems[0];
+        let matching = $('.current__list-item img').filter(function(){
+           return $(this).attr('title') == app.clickedItems[0];
         });
 
         matching.parent().fadeTo(200, 0.5);
@@ -309,7 +313,7 @@ $(function() {
   function generateOverlay(context, mins, secs) {
     pause();
 
-    var contextText = '';
+    let contextText = '';
 
     if(context === 'win') {
       contextText = 'You Win!';
@@ -322,12 +326,12 @@ $(function() {
     if(context === 'pause') {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><p>Time Left: ${minutes}:${seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Left: ${app.minutes}:${app.seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
     } else {
       setTimeout(function() {
         $('html, body').css('overflow', 'hidden');
 
-        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${games.clicks}</p><p>Score: ${games.score}</p><p>Time Taken: ${games.minutes - minutes}:${games.seconds - seconds}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
+        $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Taken: ${app.games.minutes - app.minutes}:${app.games.seconds - app.seconds}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
         if(context === 'win') {
           setTimeout(function() {
@@ -361,8 +365,8 @@ $(function() {
   });
 
   $('.options__items').on('click', '.options__item[for="pause"]', function() {
-    if (games.clicks > 0) {
-      generateOverlay('pause', minutes, seconds);
+    if (app.games.clicks > 0) {
+      generateOverlay('pause', app.minutes, app.seconds);
     }
   });
 
@@ -371,17 +375,17 @@ $(function() {
   });
 
   $('.game__board').on('click', '.game__board-tile:not(.game__board-tile--flipped)', function() {
-    if (games.clicks === 0 || (pausedMinute === minutes && pausedSecond === seconds)) {
+    if (app.games.clicks === 0 || (app.pausedMinute === app.minutes && app.pausedSecond === app.seconds)) {
       start();
     }
 
     checkMatch($(this));
 
-    games.clicks++;
-    games.score -= 5;
+    app.games.clicks++;
+    app.games.score -= 5;
 
-    $('.game__stats-clicks .clicks').text(games.clicks);
-    $('.game__stats-score .score').text(games.score);
+    $('.game__stats-clicks .clicks').text(app.games.clicks);
+    $('.game__stats-score .score').text(app.games.score);
 
     $(this).addClass('game__board-tile--flipped');
 
@@ -393,8 +397,8 @@ $(function() {
   });
 
   $('main').on('click', '.overlay__button--pause', function() {
-    pausedMinute = minutes;
-    pausedSecond = seconds;
+    app.pausedMinute = app.minutes;
+    app.pausedSecond = app.seconds;
   });
 
   $('main').on('click', '.overlay__button', function() {
