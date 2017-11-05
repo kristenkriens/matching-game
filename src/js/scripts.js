@@ -241,6 +241,12 @@ app.setOptions = function() {
   }
 
   $('main').removeClass().addClass('paused').addClass(app.difficulty).addClass(app.type);
+
+  app.equalHeightWidth();
+
+  $(window).resize(function() {
+    app.equalHeightWidth();
+  });
 }
 
 // Checks if there is a match and removes flipped class if not or adds points if there is
@@ -342,11 +348,6 @@ app.init = function() {
   app.generateStats();
   app.getOptions();
   app.setOptions();
-  app.equalHeightWidth();
-
-  $(window).resize(function() {
-    app.equalHeightWidth();
-  });
 
   $('.options__items:not(.options__items--controls) input[type="radio"]').on('click', function() {
     app.reset();
