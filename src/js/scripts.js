@@ -3,8 +3,8 @@ const app = {};
 app.games = {
   clicks: 0,
   score: 0,
-  minutes: 1,
-  seconds: 30
+  minutes: 0,
+  seconds: 35
 }
 
 app.animals = ['bear', 'beaver', 'cat', 'cow', 'deer', 'dog', 'eagle', 'elephant', 'fox', 'frog', 'giraffe', 'hedgehog', 'hippo', 'koala', 'lion', 'llama', 'monkey', 'mouse', 'owl', 'panda', 'parrot', 'penguin', 'pig', 'raccoon', 'seal', 'sheep', 'sloth', 'squirrel', 'tiger', 'wolf', 'anteater', 'baboon', 'bison', 'boar', 'capybara', 'crocodile', 'dove', 'duck', 'fennec-fox', 'goat', 'guinea-pig', 'horse', 'kangaroo', 'lemur', 'mole', 'moose', 'ostrich', 'platypus', 'rabbit', 'rooster', 'skunk', 'snake', 'sparrow', 'swan', 'turtle', 'chameleon', 'puffin', 'albatross', 'bullfinch', 'crane'];
@@ -83,13 +83,18 @@ app.start = function() {
 
       app.timeUnits(app.minutes, app.seconds);
 
+      let timePercentage = 100 - (((60 * app.minutes) + parseInt(app.seconds)) / ((60 * app.games.minutes) + app.games.seconds)) * 100 + '%';
+
+      $('.game__stats-timer-overlay').css('width', timePercentage);
+
       if (app.minutes == 0 && app.seconds < 31) {
-        $('.game__stats-timer').addClass('game__stats-timer--yellow');
+        $('.game__stats-timer-overlay').removeClass('game__stats-timer-overlay--green');
+        $('.game__stats-timer-overlay').addClass('game__stats-timer-overlay--yellow');
       }
 
       if (app.minutes == 0 && app.seconds < 11) {
-        $('.game__stats-timer').removeClass('game__stats-timer--yellow');
-        $('.game__stats-timer').addClass('game__stats-timer--red');
+        $('.game__stats-timer-overlay').removeClass('game__stats-timer-overlay--yellow');
+        $('.game__stats-timer-overlay').addClass('game__stats-timer-overlay--red');
       }
 
       if (app.minutes == 0 && app.seconds == 0) {
@@ -98,7 +103,7 @@ app.start = function() {
         app.generateOverlay('lose');
 
         setTimeout(function() {
-          $('.game__stats-timer').removeClass('game__stats-timer--red');
+          $('.game__stats-timer-overlay');
         }, 250);
       }
     }
@@ -107,6 +112,8 @@ app.start = function() {
   app.isPaused = false;
 
   $('main').removeClass('paused');
+
+  $('.game__stats-timer-overlay').addClass('game__stats-timer-overlay--green')
 }
 
 // Pauses game
@@ -135,7 +142,7 @@ app.reset = function() {
   $('.game__board-tile').removeClass('game__board-tile--flipped');
   $('.options__item').removeClass('options__item--active');
 
-  $('.game__stats-timer').removeClass('game__stats-timer--yellow game__stats-timer--red');
+  $('.game__stats-timer-overlay').removeClass('game__stats-timer-overlay--yellow game__stats-timer-overlay--red').css('width', 0);
 
   clearInterval(app.interval);
 }
@@ -169,7 +176,7 @@ app.randomNum = function(num) {
 // Generates stats markup
 app.generateStats = function() {
   $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${app.games.clicks}</span></div>`);
-  $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${app.games.seconds}</span><span class="accessible"></span></div>`);
+  $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><div class="game__stats-timer-overlay"></div><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${app.games.seconds}</span><span class="accessible"></span></div>`);
   $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${app.games.score}</span></div>`);
 
   app.timeUnits(app.games.minutes, app.games.seconds);

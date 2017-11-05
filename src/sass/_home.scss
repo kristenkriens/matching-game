@@ -181,22 +181,40 @@ main {
       transform: translate(-50%, -50%);
       font-size: 35px;
       text-align: center;
-      padding: 15px 25px;
+      padding: 15px 20px;
       text-align: center;
       transition: 200ms background-color ease;
-      width: auto;
+      width: 115px;
+
+      &-overlay {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        &--green {
+          background-color: $green;
+        }
+
+        &--yellow {
+          background-color: $yellow;
+        }
+
+        &--red {
+          background-color: $red;
+        }
+      }
+
+      span {
+        position: relative;
+        z-index: 10;
+      }
 
       @media (max-width: $sm-width) {
         font-size: 30px;
-        padding: 7px 15px;
-      }
-
-      &--yellow {
-        background-color: $yellow;
-      }
-
-      &--red {
-        background-color: $red;
+        padding: 7px 10px;
+        width: 90px;
       }
     }
   }
