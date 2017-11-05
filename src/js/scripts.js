@@ -83,7 +83,7 @@ app.start = function() {
 
       app.timeUnits(app.minutes, app.seconds);
 
-      let timePercentage = 100 - (((60 * app.minutes) + parseInt(app.seconds)) / ((60 * app.games.minutes) + app.games.seconds)) * 100 + '%';
+      let timePercentage = 100 - (((60 * app.minutes) + parseInt(app.seconds)) / ((60 * app.games.minutes) + parseInt(app.games.seconds))) * 100 + '%';
 
       $('.game__stats-timer-overlay').css('width', timePercentage);
 
@@ -176,10 +176,14 @@ app.randomNum = function(num) {
 // Generates stats markup
 app.generateStats = function() {
   $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${app.games.clicks}</span></div>`);
-  $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><div class="game__stats-timer-overlay"></div><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${app.games.seconds}</span><span class="accessible"></span></div>`);
+  $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><div class="game__stats-timer-overlay"></div><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${(app.games.seconds < 10 ? '0' + app.games.seconds : app.games.seconds)}</span><span class="accessible"></span></div>`);
   $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${app.games.score}</span></div>`);
 
   app.timeUnits(app.games.minutes, app.games.seconds);
+
+  if (app.games.seconds < 10 && app.games.seconds.length != 2) {
+    app.games.seconds = '0' + app.games.seconds;
+  }
 }
 
 // Takes users desired type and difficulty level and applies applicable classes
@@ -336,7 +340,7 @@ app.generateOverlay = function(context, mins, secs) {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Taken: ${app.games.minutes - app.minutes}:${app.games.seconds - app.seconds}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Taken: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
       if(context === 'win') {
         setTimeout(function() {
