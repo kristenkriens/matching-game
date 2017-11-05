@@ -349,18 +349,14 @@ app.init = function() {
   app.getOptions();
   app.setOptions();
 
-  $('.options__items:not(.options__items--controls) input[type="radio"]').on('click', function() {
-    app.reset();
-    app.getOptions();
-    app.setOptions();
-  });
-
   $('button').on('click', function(e) {
     e.preventDefault();
   });
 
-  $('.options__item[for="start"]').on('click', function() {
-    app.start();
+  $('.options__items:not(.options__items--controls) input[type="radio"]').on('click', function() {
+    app.reset();
+    app.getOptions();
+    app.setOptions();
   });
 
   $('.options__items').on('click', '.options__item[for="pause"]', function() {
