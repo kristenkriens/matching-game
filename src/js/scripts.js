@@ -376,7 +376,7 @@ app.saveScore = function() {
   }
 
   // These are the max number of points possible if all matches are made in under 1 second, assuming 90 seconds in total
-  if(app.games.score > 100) {
+  if((app.games.score > 540 && app.level === 'easy') || (app.games.score > 900 && app.level === 'medium') || (app.games.score > 1350 && app.level === 'hard')) {
     alert(`I see you ${app.name}, NO CHEATING!`);
   } else {
     firebase.database().ref().push({
