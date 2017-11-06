@@ -437,8 +437,6 @@ app.setScores = function(context) {
 
   if(context === 'highscore') {
     $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
-  } else if (context === 'highscores-button') {
-    $(`<button class="overlay__button overlay__button--pause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
 }
 
@@ -450,7 +448,9 @@ app.generateHighscoreOverlay = function(context) {
 
   if(context === 'highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-  } else if (context !== 'highscores-button') {
+  }  else if (context === 'highscores-button') {
+    $(`<button class="overlay__button overlay__button--pause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+  } else {
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
 }
