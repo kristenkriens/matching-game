@@ -453,8 +453,6 @@ app.checkScores = function(context) {
     context = 'new-highscore';
   }
 
-  console.log(minScore)
-
   app.setScores(context, app.highscores);
 }
 
@@ -463,7 +461,11 @@ app.setScores = function(context) {
   app.generateHighscoreOverlay(context, app.highscores);
 
   for(let item in app.highscores) {
-    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores:not(.highscores--new)').fadeIn(200);
+    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(200);
+  }
+
+  if(app.games.clicks < 1) {
+    context = 'highscores';
   }
 
   if(context === 'new-highscore') {
@@ -476,6 +478,10 @@ app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
   $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+
+  if(app.games.clicks < 1) {
+    context = 'highscores';
+  }
 
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
