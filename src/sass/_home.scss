@@ -403,10 +403,14 @@ main {
   width: 100%;
   max-width: 500px;
   margin: 50px auto 25px;
-  background-color: $light-orange;
 
-  &__new td:nth-of-type(2) {
-    background-color: $white;
+  tr {
+    background-color: $light-orange;
+
+    &.spacer {
+      height: 20px;
+      background-color: transparent;
+    }
   }
 
   tr:first-of-type {
@@ -430,6 +434,12 @@ main {
     font-size: 85%;
   }
 
+  &__new {
+    td:nth-of-type(2) {
+      background-color: $white;
+    }
+  }
+
   input {
     color: $black;
     background-color: transparent;
@@ -445,6 +455,12 @@ main {
 
     @media (max-width: $sm-width) {
       height: 15px;
+    }
+  }
+
+  @media (max-width: $md-width) {
+    td:nth-of-type(5) {
+      display: none;
     }
   }
 

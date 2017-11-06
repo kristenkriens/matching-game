@@ -1,5 +1,14 @@
 const app = {};
 
+app.config = {
+  apiKey: "AIzaSyB2vc_pgRgpTpPhEwnlylBHCt9Q3pbiXBM",
+  authDomain: "memory-game-kristen.firebaseapp.com",
+  databaseURL: "https://memory-game-kristen.firebaseio.com",
+  projectId: "memory-game-kristen",
+  storageBucket: "memory-game-kristen.appspot.com",
+  messagingSenderId: "886103719583"
+};
+
 app.games = {
   clicks: 0,
   score: 0,
@@ -19,14 +28,15 @@ app.flagsAL = ['afghanistan', 'albania', 'algeria', 'argentina', 'armenia', 'aru
 
 app.flagsMZ = ['madagascar', 'malaysia', 'maldives', 'malta', 'mexico', 'monaco', 'mongolia', 'montenegro', 'morocco', 'mozambique', 'namibia', 'nepal', 'netherlands', 'new-zealand', 'nicaragua', 'nigeria', 'north-korea', 'norway', 'pakistan', 'palestine', 'panama', 'papua-new-guinea', 'paraguay', 'peru', 'philippines', 'poland', 'portugal', 'puerto-rico', 'republic-of-macedonia', 'romania', 'russia', 'rwanda', 'saint-kitts-and-nevis', 'samoa', 'saudi-arabia', 'scotland', 'serbia', 'sierra-leone', 'singapore', 'slovakia', 'slovenia', 'somalia', 'south-africa', 'south-korea', 'spain', 'sri-lanka', 'st-barts', 'st-lucia', 'sudan', 'swaziland', 'sweden', 'switzerland', 'syria', 'taiwan', 'tanzania', 'tibet', 'trinidad-and-tobago', 'turkey', 'turks-and-caicos', 'uganda', 'ukraine', 'united-arab-emirates', 'united-kingdom', 'united-states-of-america', 'uruguay', 'venezuela', 'vietnam', 'zambia', 'zimbabwe'];
 
-app.difficultyBoxes = {
+app.levelBoxes = {
   easy: 12,
   medium: 20,
   hard: 30
 }
 
+app.name = '';
 app.type = '';
-app.difficulty = '';
+app.level = '';
 
 app.interval;
 app.isPaused = false;
@@ -39,6 +49,7 @@ app.clickedItems = [];
 app.clickedIndexes = [];
 
 app.highscore = true;
+app.highscores = {};
 
 // Makes dynamic equal width and height boxes
 app.equalHeightWidth = function() {
@@ -188,13 +199,13 @@ app.generateStats = function() {
   }
 }
 
-// Takes users desired type and difficulty level and applies applicable classes
+// Takes users desired type and level level and applies applicable classes
 app.getOptions = function() {
-  app.difficulty = $('input[name="difficulty"]:checked').attr('id');
+  app.level = $('input[name="level"]:checked').attr('id');
   app.type = $('input[name="type"]:checked').attr('id');
 }
 
-// Generates required boxes as per chosen difficulty and fills with random images
+// Generates required boxes as per chosen level and fills with random images
 // Also generates images in current game underneath the ark image
 app.setOptions = function() {
   $('.game__board-tile').remove();
@@ -218,11 +229,11 @@ app.setOptions = function() {
   let chosenItems = [];
   let chosenItemsNew = [];
 
-  let difficultyBoxesNum = app.difficultyBoxes[app.difficulty];
+  let levelBoxesNum = app.levelBoxes[app.level];
 
   let index = {};
 
-  for(let i = 0; i < difficultyBoxesNum / 2; i++) {
+  for(let i = 0; i < levelBoxesNum / 2; i++) {
     let itemNum;
     do {
       itemNum = app.randomNum(itemArray.length);
@@ -239,7 +250,7 @@ app.setOptions = function() {
     app.shuffleArray(chosenItemsNew);
   }
 
-  for(let i = 0; i < difficultyBoxesNum; i++) {
+  for(let i = 0; i < levelBoxesNum; i++) {
     let tileItem = chosenItemsNew[i];
 
     $(`<div class="game__board-tile"><div class="game__board-tile-inner"><div class="game__board-tile-front"></div><div class="game__board-tile-back"><img src="dist/images/${app.type}/${tileItem}.svg" alt="Hidden" title="${app.prettify(tileItem)}"></div></div></div>`).hide().appendTo('.game__board').fadeIn(1000);
@@ -247,13 +258,13 @@ app.setOptions = function() {
 
   $('.current__list-item').remove();
 
-  for(let i = 0; i < difficultyBoxesNum / 2; i++) {
+  for(let i = 0; i < levelBoxesNum / 2; i++) {
     let listItem = chosenItems[i];
 
     $(`<div class="current__list-item"><img src="dist/images/${app.type}/${listItem}.svg" alt="${app.prettify(listItem)}" title="${app.prettify(listItem)}"><p>${app.prettify(listItem)}</p></div>`).hide().appendTo('.current__list').fadeIn(1000);
   }
 
-  $('main').removeClass().addClass('paused').addClass(app.difficulty).addClass(app.type);
+  $('main').removeClass().addClass('paused').addClass(app.level).addClass(app.type);
 
   app.equalHeightWidth();
 
@@ -317,8 +328,6 @@ app.checkMatch = function(that) {
 app.checkOutcome = function() {
   if ($('.game__board').children('.game__board-tile').length === $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
     app.generateOverlay('win');
-
-    app.saveScores();
   }
 }
 
@@ -339,7 +348,7 @@ app.generateOverlay = function(context, mins, secs) {
   if(context === 'pause') {
     $('html, body').css('overflow', 'hidden');
 
-    $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Left: ${app.minutes}:${app.seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+    $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Left: ${app.minutes}:${app.seconds}</p><button class="overlay__button overlay__button--highscores">Highscores</button><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
   } else {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
@@ -369,37 +378,55 @@ app.generateOverlay = function(context, mins, secs) {
 app.generateHighscoreOverlay = function() {
   $('html, body').css('overflow', 'hidden');
 
-  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Clicks</td><td>Time</td></tr><tr><td>1</td><td>Kristen</td><td>500</td><td>20</td><td>1:17</td></tr><tr><td>2</td><td>Kristen</td><td>350</td><td>25</td><td>1:13</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Clicks</td><td>Time</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(app.highscore === true) {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-
-    $(`<tr class="highscores__new"><td>3</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>300</td><td>30</td><td>1:10</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
   } else {
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
 }
 
-app.placeholderBlinker = function() {
-  if ($('input[type=text]').attr('placeholder')) {
-    $('input[type=text]').attr('placeholder', '');
-  } else {
-    $('input[type=text]').attr('placeholder', 'Enter name');
-  }
-
-  setTimeout(app.placeholderBlinker, 500);
-}
-
 app.saveScores = function() {
-  firebase.database().push({
+  firebase.database().ref().push({
+    name: app.name,
     score: app.games.score,
+    level: app.level,
     clicks: app.games.clicks,
-    minutes: app.minutes,
-    seconds: app.seconds
+    minutes: app.games.minutes - app.minutes,
+    seconds: app.games.seconds - app.seconds
   });
 }
 
+app.getScores = function() {
+  let postId = firebase.database().ref().push().key;
+  console.log(postId);
+
+  firebase.database().ref().orderByChild('score').limitToFirst(5).once('value', function(snapshot) {
+		app.highscores = snapshot.val();
+
+    app.highscores = $.map(app.highscores, function(value) {
+      return [value];
+    });
+
+    app.setScores(app.highscores);
+	});
+}
+
+app.setScores = function() {
+  app.generateHighscoreOverlay(app.highscores);
+
+  for(let item in app.highscores) {
+    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].clicks}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td></tr>`).hide().appendTo('.highscores:not(.highscores--new)').fadeIn(200);
+  }
+
+  if(app.highscore === true) {
+    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.clicks}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
+  }
+}
+
 app.init = function() {
+  firebase.initializeApp(app.config);
   app.generateStats();
   app.getOptions();
   app.setOptions();
@@ -456,13 +483,17 @@ app.init = function() {
   });
 
   $('main').on('click', '.overlay__button--play-again', function() {
+    app.name = $('.highscores__new input').val();
+    if(!app.name) {
+      app.name = 'Anonymous';
+    }
+
+    app.saveScores();
     app.reset();
   });
 
   $('main').on('click', '.overlay__button--highscores', function() {
-    app.generateHighscoreOverlay();
-
-    app.placeholderBlinker();
+    app.getScores();
   });
 }
 
