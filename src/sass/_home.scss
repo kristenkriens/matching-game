@@ -344,6 +344,19 @@ main {
     @media (max-width: $sm-width) {
       font-size: 75px;
     }
+
+    &.long {
+      font-size: 100px;
+      margin-bottom: 15px;
+
+      @media (max-width: $md-width) {
+        font-size: 75px;
+      }
+
+      @media (max-width: $sm-width) {
+        font-size: 50px;
+      }
+    }
   }
 
   p {
@@ -361,7 +374,7 @@ main {
 
   &__button {
     font-size: 30px;
-    margin-top: 15px;
+    margin: 15px 10px 0;
     background-color: $dark-orange;
     color: $white;
     outline: none;
@@ -382,6 +395,63 @@ main {
 
     @media (max-width: $sm-width) {
       font-size: 20px;
+    }
+  }
+}
+
+.highscores {
+  width: 100%;
+  max-width: 500px;
+  margin: 50px auto 25px;
+  background-color: $light-orange;
+
+  &__new td:nth-of-type(2) {
+    background-color: $white;
+  }
+
+  tr:first-of-type {
+    background-color: $dark-orange;
+
+    td {
+      padding: 10px 15px;
+    }
+  }
+
+  td {
+    padding: 5px 10px;
+    border: 2px solid $dark-orange;
+
+    &:first-of-type {
+      background-color: $dark-orange;
+    }
+  }
+
+  tr:not(:first-of-type) {
+    font-size: 85%;
+  }
+
+  input {
+    color: $black;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    text-align: center;
+    height: 20px;
+    width: 100%;
+
+    &::placeholder {
+      color: $black;
+    }
+
+    @media (max-width: $sm-width) {
+      height: 15px;
+    }
+  }
+
+  @media (max-width: $sm-width) {
+    td:nth-of-type(4),
+    td:nth-of-type(5) {
+      display: none;
     }
   }
 }

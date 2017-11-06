@@ -76,3 +76,11 @@ img {
 		margin: inherit;
 	}
 }
+
+::-webkit-input-placeholder,
+:-moz-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder {
+  color: $black;
+	opacity: 1;
+}

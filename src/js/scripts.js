@@ -38,6 +38,8 @@ app.seconds = '';
 app.clickedItems = [];
 app.clickedIndexes = [];
 
+app.highscore = true;
+
 // Makes dynamic equal width and height boxes
 app.equalHeightWidth = function() {
   let tileWidth = $('.game__board-tile').width();
@@ -315,6 +317,8 @@ app.checkMatch = function(that) {
 app.checkOutcome = function() {
   if ($('.game__board').children('.game__board-tile').length === $('.game__board').children('.game__board-tile.game__board-tile--flipped').length) {
     app.generateOverlay('win');
+
+    app.saveScores();
   }
 }
 
@@ -340,7 +344,13 @@ app.generateOverlay = function(context, mins, secs) {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Taken: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p><button class="overlay__button">Play Again</button></div></div>`).hide().appendTo('main').fadeIn(750);
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Taken: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p></div></div>`).hide().appendTo('main').fadeIn(750);
+
+      if(app.highscore === true) {
+        $(`<button class="overlay__button overlay__button--highscores">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+      } else {
+        $(`<button class="overlay__button overlay__button--highscores">Highscores</button><button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+      }
 
       if(context === 'win') {
         setTimeout(function() {
@@ -353,6 +363,40 @@ app.generateOverlay = function(context, mins, secs) {
       }
     }, 500);
   }
+}
+
+// Generates overlay if the user got a high score
+app.generateHighscoreOverlay = function() {
+  $('html, body').css('overflow', 'hidden');
+
+  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Clicks</td><td>Time</td></tr><tr><td>1</td><td>Kristen</td><td>500</td><td>20</td><td>1:17</td></tr><tr><td>2</td><td>Kristen</td><td>350</td><td>25</td><td>1:13</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+
+  if(app.highscore === true) {
+    $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+
+    $(`<tr class="highscores__new"><td>3</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>300</td><td>30</td><td>1:10</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
+  } else {
+    $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+  }
+}
+
+app.placeholderBlinker = function() {
+  if ($('input[type=text]').attr('placeholder')) {
+    $('input[type=text]').attr('placeholder', '');
+  } else {
+    $('input[type=text]').attr('placeholder', 'Enter name');
+  }
+
+  setTimeout(app.placeholderBlinker, 500);
+}
+
+app.saveScores = function() {
+  firebase.database().push({
+    score: app.games.score,
+    clicks: app.games.clicks,
+    minutes: app.minutes,
+    seconds: app.seconds
+  });
 }
 
 app.init = function() {
@@ -398,8 +442,12 @@ app.init = function() {
     app.checkOutcome();
   });
 
-  $('main').on('click', '.overlay__button:not(.overlay__button--pause)', function() {
-    app.reset();
+  $('main').on('click', '.overlay__button', function() {
+    $('.overlay').fadeOut(200, function() {
+      $(this).remove();
+    });
+
+    $('html, body').css('overflow', 'auto');
   });
 
   $('main').on('click', '.overlay__button--pause', function() {
@@ -407,12 +455,14 @@ app.init = function() {
     app.pausedSecond = app.seconds;
   });
 
-  $('main').on('click', '.overlay__button', function() {
-    $('.overlay').fadeOut(200, function() {
-      $(this).remove();
-    });
+  $('main').on('click', '.overlay__button--play-again', function() {
+    app.reset();
+  });
 
-    $('html, body').css('overflow', 'auto');
+  $('main').on('click', '.overlay__button--highscores', function() {
+    app.generateHighscoreOverlay();
+
+    app.placeholderBlinker();
   });
 }
 
