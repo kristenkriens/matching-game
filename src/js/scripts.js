@@ -429,7 +429,7 @@ app.sortScores = function(context) {
   });
 
   if(app.highscores.length > 5) {
-    app.highscores.splice(5, 6);
+    app.highscores.splice(5, Infinity);
   }
 
   app.checkScores(context, app.highscores);
