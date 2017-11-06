@@ -369,35 +369,45 @@ app.generateOverlay = function(context, mins, secs) {
 
 // Saves scores to firebase
 app.saveScore = function() {
-  firebase.database().ref().push({
-    name: app.name,
-    score: app.games.score,
-    level: app.level,
-    minutes: app.games.minutes - app.minutes,
-    seconds: app.games.seconds - app.seconds,
-    clicks: app.games.clicks
-  });
+  app.name = $('.highscores__new input').val();
+
+  if(!app.name) {
+    app.name = 'Anonymous';
+  }
+
+  // These are the max number of points possible if all matches are made in under 1 second, assuming 90 seconds in total
+  if(app.games.score > 100) {
+    alert(`I see you ${app.name}, NO CHEATING!`);
+  } else {
+    firebase.database().ref().push({
+      name: app.name,
+      score: app.games.score,
+      level: app.level,
+      minutes: app.games.minutes - app.minutes,
+      seconds: app.games.seconds - app.seconds,
+      clicks: app.games.clicks
+    });
+  }
 }
 
-// Need to hook up to something else
-app.updateScore = function() {
-	let postData = {
-    name: app.name,
-    score: app.games.score,
-    level: app.level,
-    minutes: app.games.minutes - app.minutes,
-    seconds: app.games.seconds - app.seconds,
-    clicks: app.games.clicks
-  };
-
-	// Get key for new post
-	var newPostKey = firebase.database().ref().push().key;
-
-	// Write new data in the posts list
-	var updates = {};
-	updates[newPostKey] = postData;
-	return firebase.database().ref().update(updates);
-}
+// app.updateScore = function() {
+// 	let postData = {
+//     name: app.name,
+//     score: app.games.score,
+//     level: app.level,
+//     minutes: app.games.minutes - app.minutes,
+//     seconds: app.games.seconds - app.seconds,
+//     clicks: app.games.clicks
+//   };
+//
+// 	// Get key for new post
+// 	var newPostKey = firebase.database().ref().push().key;
+//
+// 	// Write new data in the posts list
+// 	var updates = {};
+// 	updates[newPostKey] = postData;
+// 	return firebase.database().ref().update(updates);
+// }
 
 // Gets scores from firebase
 app.getScores = function(context) {
@@ -423,8 +433,6 @@ app.sortScores = function(context) {
   }
 
   app.setScores(context, app.highscores);
-
-  // Add "I see you, ${app.name}. No cheating!" message if score is too high and don't add to highscores
 }
 
 // Puts scores from firebase in highscores table and shows input for name if user gets a high score
@@ -519,11 +527,6 @@ app.init = function() {
   });
 
   $('main').on('click', '.overlay__button--play-again', function() {
-    app.name = $('.highscores__new input').val();
-    if(!app.name) {
-      app.name = 'Anonymous';
-    }
-
     app.saveScore();
     app.reset();
   });
