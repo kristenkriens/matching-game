@@ -440,7 +440,7 @@ app.setScores = function(context) {
   }
 }
 
-// Generates overlay if the user got a high score
+// Generates highscore overlay and adjusts button text if they got a highscore
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
