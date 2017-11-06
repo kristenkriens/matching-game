@@ -353,7 +353,7 @@ app.generateOverlay = function(context, mins, secs) {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Taken: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p></div></div>`).hide().appendTo('main').fadeIn(750);
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p></div></div>`).hide().appendTo('main').fadeIn(750);
 
       if(app.highscore === true) {
         $(`<button class="overlay__button overlay__button--highscores">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -378,7 +378,7 @@ app.generateOverlay = function(context, mins, secs) {
 app.generateHighscoreOverlay = function() {
   $('html, body').css('overflow', 'hidden');
 
-  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Clicks</td><td>Time</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(app.highscore === true) {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -387,41 +387,76 @@ app.generateHighscoreOverlay = function() {
   }
 }
 
-app.saveScores = function() {
+// Saves scores to firebase
+app.saveScore = function() {
   firebase.database().ref().push({
     name: app.name,
     score: app.games.score,
     level: app.level,
-    clicks: app.games.clicks,
     minutes: app.games.minutes - app.minutes,
-    seconds: app.games.seconds - app.seconds
+    seconds: app.games.seconds - app.seconds,
+    clicks: app.games.clicks
   });
 }
 
-app.getScores = function() {
-  let postId = firebase.database().ref().push().key;
-  console.log(postId);
+// Need to hook up to something else
+app.updateScore = function() {
+	let postData = {
+    name: app.name,
+    score: app.games.score,
+    level: app.level,
+    minutes: app.games.minutes - app.minutes,
+    seconds: app.games.seconds - app.seconds,
+    clicks: app.games.clicks
+  };
 
-  firebase.database().ref().orderByChild('score').limitToFirst(5).once('value', function(snapshot) {
+	// Get key for new post
+	var newPostKey = firebase.database().ref().push().key;
+
+	// Write new data in the posts list
+	var updates = {};
+	updates[newPostKey] = postData;
+	return firebase.database().ref().update(updates);
+}
+
+// Gets scores from firebase
+app.getScores = function() {
+  firebase.database().ref().once('value', function(snapshot) {
 		app.highscores = snapshot.val();
 
     app.highscores = $.map(app.highscores, function(value) {
       return [value];
     });
 
-    app.setScores(app.highscores);
+    app.sortScores(app.highscores);
 	});
 }
 
+// Sorts scores from firebase and only shows top 5
+app.sortScores = function() {
+  app.highscores.sort(function(a,b) {
+      return b.score - a.score;
+  });
+
+  if(app.highscores.length > 5) {
+    app.highscores.splice(5, 6);
+  }
+
+  app.setScores(app.highscores);
+
+  // Add "I see you, ${app.name}. No cheating!" message if score is too high and don't add to highscores
+}
+
+// Puts scores from firebase in highscores table and shows input for name ifuser gets a high score
 app.setScores = function() {
   app.generateHighscoreOverlay(app.highscores);
 
   for(let item in app.highscores) {
-    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].clicks}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td></tr>`).hide().appendTo('.highscores:not(.highscores--new)').fadeIn(200);
+    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores:not(.highscores--new)').fadeIn(200);
   }
 
   if(app.highscore === true) {
-    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.clicks}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
+    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
   }
 }
 
@@ -488,12 +523,13 @@ app.init = function() {
       app.name = 'Anonymous';
     }
 
-    app.saveScores();
+    app.saveScore();
     app.reset();
   });
 
   $('main').on('click', '.overlay__button--highscores', function() {
     app.getScores();
+    // or app.updateScore() if entry needs to be updated - maye?
   });
 }
 
