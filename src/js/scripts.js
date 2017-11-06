@@ -437,17 +437,23 @@ app.sortScores = function(context) {
 
 // Checks if score is in the top 5 and sets context if it is
 app.checkScores = function(context) {
-  let scoreArray = [];
+  let scoreArray = ['0'];
 
   for(let item in app.highscores) {
     scoreArray.push(app.highscores[item].score);
   }
 
+  if(app.highscores.length > 1) {
+    scoreArray.splice(0,1);
+  }
+
   let minScore = Math.min.apply(null, scoreArray);
 
-  if(app.games.score > minScore) {
+  if(app.games.score >= minScore) {
     context = 'new-highscore';
   }
+
+  console.log(minScore)
 
   app.setScores(context, app.highscores);
 }
