@@ -367,19 +367,6 @@ app.generateOverlay = function(context, mins, secs) {
   }
 }
 
-// Generates overlay if the user got a high score
-app.generateHighscoreOverlay = function(context) {
-  $('html, body').css('overflow', 'hidden');
-
-  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
-
-  if(context === 'highscore') {
-    $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-  } else if (context !== 'highscores-button') {
-    $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-  }
-}
-
 // Saves scores to firebase
 app.saveScore = function() {
   firebase.database().ref().push({
@@ -431,13 +418,9 @@ app.sortScores = function(context) {
       return b.score - a.score;
   });
 
-  console.log(app.highscores);
-
   if(app.highscores.length > 5) {
     app.highscores.splice(5, 6);
   }
-
-  console.log(app.highscores);
 
   app.setScores(context, app.highscores);
 
@@ -456,6 +439,19 @@ app.setScores = function(context) {
     $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
   } else if (context === 'highscores-button') {
     $(`<button class="overlay__button overlay__button--pause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+  }
+}
+
+// Generates overlay if the user got a high score
+app.generateHighscoreOverlay = function(context) {
+  $('html, body').css('overflow', 'hidden');
+
+  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+
+  if(context === 'highscore') {
+    $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+  } else if (context !== 'highscores-button') {
+    $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
 }
 
