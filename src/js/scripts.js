@@ -440,7 +440,7 @@ app.setScores = function(context) {
   }
 }
 
-// Generates highscore overlay and adjusts button text if they got a highscore
+// Generates highscore overlay and adjusts button text according to context
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
@@ -448,7 +448,7 @@ app.generateHighscoreOverlay = function(context) {
 
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-  }  else if (context === 'highscores') {
+  } else if (context === 'highscores') {
     $(`<button class="overlay__button overlay__button--pause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else {
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
