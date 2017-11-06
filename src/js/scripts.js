@@ -432,6 +432,23 @@ app.sortScores = function(context) {
     app.highscores.splice(5, 6);
   }
 
+  app.checkScores(context, app.highscores);
+}
+
+// Checks if score is in the top 5 and sets context if it is
+app.checkScores = function(context) {
+  let scoreArray = [];
+
+  for(let item in app.highscores) {
+    scoreArray.push(app.highscores[item].score);
+  }
+
+  let minScore = Math.min.apply(null, scoreArray);
+
+  if(app.games.score > minScore) {
+    context = 'new-highscore';
+  }
+
   app.setScores(context, app.highscores);
 }
 
@@ -536,7 +553,7 @@ app.init = function() {
   });
 
   $('main').on('click', '.overlay__button--highscores', function() {
-    app.getScores('new-highscore');
+    app.getScores();
     // or app.updateScore() if entry needs to be updated - maye?
   });
 
