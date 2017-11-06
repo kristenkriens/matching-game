@@ -435,7 +435,7 @@ app.setScores = function(context) {
     $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores:not(.highscores--new)').fadeIn(200);
   }
 
-  if(context === 'highscore') {
+  if(context === 'highscore-new') {
     $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
   }
 }
@@ -446,9 +446,9 @@ app.generateHighscoreOverlay = function(context) {
 
   $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
 
-  if(context === 'highscore') {
+  if(context === 'highscore-new') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-  }  else if (context === 'highscores-button') {
+  }  else if (context === 'highscores') {
     $(`<button class="overlay__button overlay__button--pause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else {
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -483,7 +483,7 @@ app.init = function() {
 
   $('.options__item[for="highscores"]').on('click', function() {
     if (app.games.clicks < 1) {
-      app.getScores('highscores-button');
+      app.getScores('highscores');
     }
   });
 
@@ -529,7 +529,7 @@ app.init = function() {
   });
 
   $('main').on('click', '.overlay__button--highscores', function() {
-    app.getScores('highscore');
+    app.getScores('highscore-new');
     // or app.updateScore() if entry needs to be updated - maye?
   });
 }
