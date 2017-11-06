@@ -48,7 +48,6 @@ app.seconds = '';
 app.clickedItems = [];
 app.clickedIndexes = [];
 
-app.highscore = true;
 app.highscores = {};
 
 // Makes dynamic equal width and height boxes
@@ -190,7 +189,7 @@ app.randomNum = function(num) {
 app.generateStats = function() {
   $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${app.games.clicks}</span></div>`);
   $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><div class="game__stats-timer-overlay"></div><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${(app.games.seconds < 10 ? '0' + app.games.seconds : app.games.seconds)}</span><span class="accessible"></span></div>`);
-  $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-trophy" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${app.games.score}</span></div>`);
+  $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-star" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${app.games.score}</span></div>`);
 
   app.timeUnits(app.games.minutes, app.games.seconds);
 
@@ -348,18 +347,12 @@ app.generateOverlay = function(context, mins, secs) {
   if(context === 'pause') {
     $('html, body').css('overflow', 'hidden');
 
-    $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Left: ${app.minutes}:${app.seconds}</p><button class="overlay__button overlay__button--highscores">Highscores</button><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+    $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Left: ${app.minutes}:${app.seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
   } else {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p></div></div>`).hide().appendTo('main').fadeIn(750);
-
-      if(app.highscore === true) {
-        $(`<button class="overlay__button overlay__button--highscores">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-      } else {
-        $(`<button class="overlay__button overlay__button--highscores">Highscores</button><button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-      }
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p><button class="overlay__button overlay__button--highscores">Continue</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
       if(context === 'win') {
         setTimeout(function() {
@@ -375,14 +368,14 @@ app.generateOverlay = function(context, mins, secs) {
 }
 
 // Generates overlay if the user got a high score
-app.generateHighscoreOverlay = function() {
+app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
   $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
 
-  if(app.highscore === true) {
+  if(context === 'highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
-  } else {
+  } else if (context !== 'highscores-button') {
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
 }
@@ -420,7 +413,7 @@ app.updateScore = function() {
 }
 
 // Gets scores from firebase
-app.getScores = function() {
+app.getScores = function(context) {
   firebase.database().ref().once('value', function(snapshot) {
 		app.highscores = snapshot.val();
 
@@ -428,35 +421,41 @@ app.getScores = function() {
       return [value];
     });
 
-    app.sortScores(app.highscores);
+    app.sortScores(context, app.highscores);
 	});
 }
 
 // Sorts scores from firebase and only shows top 5
-app.sortScores = function() {
+app.sortScores = function(context) {
   app.highscores.sort(function(a,b) {
       return b.score - a.score;
   });
+
+  console.log(app.highscores);
 
   if(app.highscores.length > 5) {
     app.highscores.splice(5, 6);
   }
 
-  app.setScores(app.highscores);
+  console.log(app.highscores);
+
+  app.setScores(context, app.highscores);
 
   // Add "I see you, ${app.name}. No cheating!" message if score is too high and don't add to highscores
 }
 
-// Puts scores from firebase in highscores table and shows input for name ifuser gets a high score
-app.setScores = function() {
-  app.generateHighscoreOverlay(app.highscores);
+// Puts scores from firebase in highscores table and shows input for name if user gets a high score
+app.setScores = function(context) {
+  app.generateHighscoreOverlay(context, app.highscores);
 
   for(let item in app.highscores) {
     $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores:not(.highscores--new)').fadeIn(200);
   }
 
-  if(app.highscore === true) {
+  if(context === 'highscore') {
     $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
+  } else if (context === 'highscores-button') {
+    $(`<button class="overlay__button overlay__button--pause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
 }
 
@@ -476,7 +475,7 @@ app.init = function() {
     app.setOptions();
   });
 
-  $('.options__items').on('click', '.options__item[for="pause"]', function() {
+  $('.options__item[for="pause"]').on('click', function() {
     if (app.games.clicks > 0) {
       app.generateOverlay('pause', app.minutes, app.seconds);
     }
@@ -484,6 +483,12 @@ app.init = function() {
 
   $('.options__item[for="restart"]').on('click', function() {
     app.reset();
+  });
+
+  $('.options__item[for="highscores"]').on('click', function() {
+    if (app.games.clicks < 1) {
+      app.getScores('highscores-button');
+    }
   });
 
   $('.game__board').on('click', '.game__board-tile:not(.game__board-tile--flipped)', function() {
@@ -528,7 +533,7 @@ app.init = function() {
   });
 
   $('main').on('click', '.overlay__button--highscores', function() {
-    app.getScores();
+    app.getScores('highscore');
     // or app.updateScore() if entry needs to be updated - maye?
   });
 }

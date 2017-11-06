@@ -101,7 +101,7 @@ main {
     .options__items--controls & {
       height: 43px;
       position: relative;
-      width: calc(50% - 5px);
+      width: calc(33.33% - calc(13px / 2));
       margin-bottom: 5px;
 
       &[for="start"] {
