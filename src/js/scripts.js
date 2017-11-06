@@ -377,7 +377,7 @@ app.saveScore = function() {
 
   // These are the max number of points possible if all matches are made in under 1 second, assuming 90 seconds in total
   if((app.games.score > 540 && app.level === 'easy') || (app.games.score > 900 && app.level === 'medium') || (app.games.score > 1350 && app.level === 'hard')) {
-    alert(`I see you ${app.name}, NO CHEATING!`);
+    app.cheaterOverlay();
   } else {
     firebase.database().ref().push({
       name: app.name,
@@ -463,6 +463,10 @@ app.generateHighscoreOverlay = function(context) {
   }
 }
 
+app.cheaterOverlay = function(context) {
+  $(`<div class="overlay overlay--cheater"><div class="overlay__contents"><img src="dist/images/cheater.jpg" alt="Yeah, if you could go ahead and stop cheating that would be great..." class="overlay__image"></div></div>`).hide().appendTo('main').fadeIn(200);
+}
+
 app.init = function() {
   firebase.initializeApp(app.config);
   app.generateStats();
@@ -534,6 +538,12 @@ app.init = function() {
   $('main').on('click', '.overlay__button--highscores', function() {
     app.getScores('new-highscore');
     // or app.updateScore() if entry needs to be updated - maye?
+  });
+
+  $('main').on('click', '.overlay__image', function() {
+    $('.overlay--cheater').fadeOut(200, function() {
+      $(this).remove();
+    });
   });
 }
 
