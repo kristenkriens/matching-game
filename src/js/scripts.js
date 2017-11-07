@@ -467,7 +467,7 @@ app.setScores = function(context) {
   app.generateHighscoreOverlay(context, app.highscores);
 
   for(let item in app.highscores) {
-    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${app.highscores[item].seconds}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(200);
+    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${((app.highscores[item].seconds < 10) ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(200);
   }
 
   if(context === 'new-highscore') {
@@ -500,8 +500,6 @@ app.cheater = function() {
   for(let item in maxPoints) {
     maxPoints[item] = (((app.games.minutes * 60) + app.games.seconds) * (app.levelBoxes[item] / 2)) - (app.levelBoxes[item] * 5);
   }
-
-  console.log(maxPoints.easy);
 
   if( ((app.games.score > maxPoints.easy) && (app.level === 'easy')) || ((app.games.score > maxPoints.medium) && (app.level === 'medium')) || ((app.games.score > maxPoints.hard) && (app.level === 'hard')) ) {
     $(`<div class="overlay overlay--cheater"><div class="overlay__contents"><img src="dist/images/cheater.jpg" alt="Yeah, if you could go ahead and stop cheating that would be great..." class="overlay__image"></div></div>`).hide().appendTo('main').fadeIn(200);
