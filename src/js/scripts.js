@@ -377,7 +377,7 @@ app.generateOverlay = function(context, mins, secs) {
 
 // Saves scores to firebase
 app.saveScore = function() {
-  app.name = $('.highscores__new input').val();
+  app.name = $('.highscore-text input').val();
 
   if(!app.name) {
     app.name = 'Anonymous';
@@ -471,7 +471,7 @@ app.setScores = function(context) {
   }
 
   if(context === 'new-highscore') {
-    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" maxlength="25" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.minutesTaken}:${app.secondsTaken}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
+    $(`<div class="highscore-text"><p>Congratulations, you got a high score!</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores').fadeIn(750);
   }
 }
 
@@ -479,7 +479,7 @@ app.setScores = function(context) {
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
-  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+  $(`<div class="overlay overlay--highscore"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -578,7 +578,7 @@ app.init = function() {
     app.reset();
   });
 
-  $('main').on('keypress', '.highscores input', function(event) {
+  $('main').on('keypress', '.highscore-text input', function(event) {
     if (event.keyCode === 13) {
       $(".overlay__button--play-again").click();
     }

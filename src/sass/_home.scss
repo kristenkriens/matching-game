@@ -327,6 +327,35 @@ main {
     }
   }
 
+  &--highscore {
+    .highscore-text {
+      margin-bottom: 15px;
+
+      p {
+        font-size: 20px;
+
+        @media (max-width: $sm-width) {
+          font-size: 18px;
+        }
+      }
+    }
+
+    input {
+      padding: 5px 10px;
+      color: $black;
+      background-color: white;
+      border: 0;
+      outline: 0;
+      text-align: center;
+      width: 100%;
+      max-width: 250px;
+
+      &::placeholder {
+        color: $black;
+      }
+    }
+  }
+
   &__contents {
     width: 100%;
     padding: 30px;
@@ -414,11 +443,6 @@ main {
 
   tr {
     background-color: $light-orange;
-
-    &.spacer {
-      height: 20px;
-      background-color: transparent;
-    }
   }
 
   tr:first-of-type {
@@ -440,30 +464,6 @@ main {
 
   tr:not(:first-of-type) {
     font-size: 85%;
-  }
-
-  &__new {
-    td:nth-of-type(2) {
-      background-color: $white;
-    }
-  }
-
-  input {
-    color: $black;
-    background-color: transparent;
-    border: 0;
-    outline: 0;
-    text-align: center;
-    height: 20px;
-    width: 100%;
-
-    &::placeholder {
-      color: $black;
-    }
-
-    @media (max-width: $sm-width) {
-      height: 15px;
-    }
   }
 
   @media (max-width: $md-width) {
