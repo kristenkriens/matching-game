@@ -44,8 +44,9 @@ app.pausedMinute = '';
 app.pausedSecond = '';
 app.minutes = '';
 app.seconds = '';
-app.minutesLeft = '';
-app.secondsLeft = '';
+app.timeTaken = '';
+app.minutesTaken = '';
+app.secondsTaken = '';
 
 app.clickedItems = [];
 app.clickedIndexes = [];
@@ -354,10 +355,11 @@ app.generateOverlay = function(context, mins, secs) {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
 
-      app.minutesLeft = app.games.minutes - app.minutes;
-      app.secondsLeft = parseInt(app.games.seconds) - app.seconds;
+      app.timeTaken = (60 * (app.games.minutes - app.minutes)) + (app.games.seconds - app.seconds);
+      app.minutesTaken = Math.floor(app.timeTaken / 60);
+      app.secondsTaken = app.timeTaken - app.minutesTaken * 60;
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.minutesLeft}:${app.secondsLeft}</p><button class="overlay__button overlay__button--highscores">Continue</button></div></div>`).hide().appendTo('main').fadeIn(750);
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.minutesTaken}:${app.secondsTaken}</p><button class="overlay__button overlay__button--highscores">Continue</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
       if(context === 'win') {
         setTimeout(function() {
@@ -388,8 +390,8 @@ app.saveScore = function() {
       name: app.name,
       score: app.games.score,
       level: app.level,
-      minutes: app.minutesLeft,
-      seconds: app.secondsLeft,
+      minutes: app.minutesTaken,
+      seconds: app.secondsTaken,
       clicks: app.games.clicks
     });
   }
@@ -400,8 +402,8 @@ app.saveScore = function() {
 //     name: app.name,
 //     score: app.games.score,
 //     level: app.level,
-//     minutes: app.minutesLeft,
-//     seconds: app.secondsLeft,
+//     minutes: app.minutesTaken,
+//     seconds: app.secondsTaken,
 //     clicks: app.games.clicks
 //   };
 //
@@ -467,7 +469,7 @@ app.setScores = function(context) {
   }
 
   if(context === 'new-highscore') {
-    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.minutesLeft}:${app.secondsLeft}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
+    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" maxlength="25" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.minutesTaken}:${app.secondsTaken}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
   }
 }
 
