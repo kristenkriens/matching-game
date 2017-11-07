@@ -471,7 +471,7 @@ app.setScores = function(context) {
   }
 
   if(context === 'new-highscore') {
-    $(`<div class="highscore-text"><p>Congratulations, you got a high score!</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores').fadeIn(750);
+    $(`<div class="highscore-text"><p>Congratulations! You got a highscore of ${app.games.score}.</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores').fadeIn(750);
   }
 }
 
@@ -479,7 +479,7 @@ app.setScores = function(context) {
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
-  $(`<div class="overlay overlay--highscore"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -498,10 +498,12 @@ app.cheater = function() {
   };
 
   for(let item in maxPoints) {
-    maxPoints[item] = (((app.games.minutes * 60) + app.games.seconds) * (app.levelBoxes[item] / 2)) - (app.levelBoxes[item] * 2 * 5);
+    maxPoints[item] = (((app.games.minutes * 60) + app.games.seconds) * (app.levelBoxes[item] / 2)) - (app.levelBoxes[item] * 5);
   }
 
-  if((app.games.score > maxPoints.easy && app.level === 'easy') || (app.games.score > maxPoints.medium && app.level === 'medium') || (app.games.score > maxPoints.hard && app.level === 'hard')) {
+  console.log(maxPoints.easy);
+
+  if( ((app.games.score > maxPoints.easy) && (app.level === 'easy')) || ((app.games.score > maxPoints.medium) && (app.level === 'medium')) || ((app.games.score > maxPoints.hard) && (app.level === 'hard')) ) {
     $(`<div class="overlay overlay--cheater"><div class="overlay__contents"><img src="dist/images/cheater.jpg" alt="Yeah, if you could go ahead and stop cheating that would be great..." class="overlay__image"></div></div>`).hide().appendTo('main').fadeIn(200);
 
     return true;

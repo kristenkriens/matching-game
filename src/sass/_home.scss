@@ -327,35 +327,6 @@ main {
     }
   }
 
-  &--highscore {
-    .highscore-text {
-      margin-bottom: 15px;
-
-      p {
-        font-size: 20px;
-
-        @media (max-width: $sm-width) {
-          font-size: 18px;
-        }
-      }
-    }
-
-    input {
-      padding: 5px 10px;
-      color: $black;
-      background-color: white;
-      border: 0;
-      outline: 0;
-      text-align: center;
-      width: 100%;
-      max-width: 250px;
-
-      &::placeholder {
-        color: $black;
-      }
-    }
-  }
-
   &__contents {
     width: 100%;
     padding: 30px;
@@ -482,6 +453,33 @@ main {
   @media (max-width: $xs-width) {
     td:nth-of-type(4) {
       display: none;
+    }
+  }
+}
+
+.highscore-text {
+  margin-bottom: 15px;
+
+  p {
+    font-size: 20px;
+
+    @media (max-width: $sm-width) {
+      font-size: 18px;
+    }
+  }
+
+  input {
+    padding: 5px 10px;
+    color: $black;
+    background-color: white;
+    border: 0;
+    outline: 0;
+    text-align: center;
+    width: 100%;
+    max-width: 250px;
+
+    &::placeholder {
+      color: $black;
     }
   }
 }
