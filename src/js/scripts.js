@@ -44,6 +44,8 @@ app.pausedMinute = '';
 app.pausedSecond = '';
 app.minutes = '';
 app.seconds = '';
+app.minutesLeft = '';
+app.secondsLeft = '';
 
 app.clickedItems = [];
 app.clickedIndexes = [];
@@ -188,7 +190,7 @@ app.randomNum = function(num) {
 // Generates stats markup
 app.generateStats = function() {
   $('.game__stats').append(`<div class="game__stats-clicks"><i class="fa fa-mouse-pointer" aria-hidden="true"></i><span class="accessible">Clicks</span><span class="text" aria-hidden="true">Clicks</span><span aria-hidden="true">:</span> <span class="clicks" >${app.games.clicks}</span></div>`);
-  $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><div class="game__stats-timer-overlay"></div><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${(app.games.seconds < 10 ? '0' + app.games.seconds : app.games.seconds)}</span><span class="accessible"></span></div>`);
+  $('.game__stats').append(`<div class="game__stats-timer" role="timer" aria-atomic="true"><div class="game__stats-timer-overlay"></div><span class="minutes">${app.games.minutes}</span><span class="accessible"></span><span aria-hidden="true">:</span><span class="seconds">${app.games.seconds}</span><span class="accessible"></span></div>`);
   $('.game__stats').append(`<div class="game__stats-score"><i class="fa fa-star" aria-hidden="true"></i><span class="accessible">Score</span><span class="text" aria-hidden="true">Score</span><span aria-hidden="true">:</span> <span class="score">${app.games.score}</span></div>`);
 
   app.timeUnits(app.games.minutes, app.games.seconds);
@@ -352,7 +354,10 @@ app.generateOverlay = function(context, mins, secs) {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
 
-      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</p><button class="overlay__button overlay__button--highscores">Continue</button></div></div>`).hide().appendTo('main').fadeIn(750);
+      app.minutesLeft = app.games.minutes - app.minutes;
+      app.secondsLeft = parseInt(app.games.seconds) - app.seconds;
+
+      $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.minutesLeft}:${app.secondsLeft}</p><button class="overlay__button overlay__button--highscores">Continue</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
       if(context === 'win') {
         setTimeout(function() {
@@ -383,8 +388,8 @@ app.saveScore = function() {
       name: app.name,
       score: app.games.score,
       level: app.level,
-      minutes: app.games.minutes - app.minutes,
-      seconds: app.games.seconds - app.seconds,
+      minutes: app.minutesLeft,
+      seconds: app.secondsLeft,
       clicks: app.games.clicks
     });
   }
@@ -395,8 +400,8 @@ app.saveScore = function() {
 //     name: app.name,
 //     score: app.games.score,
 //     level: app.level,
-//     minutes: app.games.minutes - app.minutes,
-//     seconds: app.games.seconds - app.seconds,
+//     minutes: app.minutesLeft,
+//     seconds: app.secondsLeft,
 //     clicks: app.games.clicks
 //   };
 //
@@ -447,6 +452,7 @@ app.checkScores = function(context) {
 
   if(app.games.score >= minScore) {
     context = 'new-highscore';
+    // Maybe remove from firebase if not a highscore
   }
 
   app.setScores(context, app.highscores);
@@ -457,11 +463,11 @@ app.setScores = function(context) {
   app.generateHighscoreOverlay(context, app.highscores);
 
   for(let item in app.highscores) {
-    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${(app.highscores[item].seconds < 10 ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(200);
+    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${app.highscores[item].seconds}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(200);
   }
 
   if(context === 'new-highscore') {
-    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.games.minutes - app.minutes}:${((app.games.seconds - app.seconds) < 10 ? '0' + (app.games.seconds - app.seconds) : (app.games.seconds - app.seconds))}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
+    $(`<tr class="spacer"></tr><tr class="highscores__new"><td>?</td><td><span class="accessible">Enter name</span><input type="text" id="name" placeholder="Enter name"></td><td>${app.games.score}</td><td>${app.prettify(app.level)}</td><td>${app.minutesLeft}:${app.secondsLeft}</td><td>${app.games.clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(750);
   }
 }
 
@@ -560,7 +566,6 @@ app.init = function() {
 
   $('main').on('click', '.overlay__button--highscores', function() {
     app.getScores();
-    // or app.updateScore() if entry needs to be updated - maye?
   });
 
   $('main').on('click', '.overlay__image', function() {
