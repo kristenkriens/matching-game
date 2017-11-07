@@ -484,7 +484,7 @@ app.generateHighscoreOverlay = function(context) {
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else if (context === 'highscores') {
-    $(`<button class="overlay__button overlay__button--unpause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+    $(`<button class="overlay__button overlay__button--unpause">Close</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else {
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
@@ -502,7 +502,7 @@ app.cheater = function() {
   }
 
   if( ((app.games.score > maxPoints.easy) && (app.level === 'easy')) || ((app.games.score > maxPoints.medium) && (app.level === 'medium')) || ((app.games.score > maxPoints.hard) && (app.level === 'hard')) ) {
-    $(`<div class="overlay overlay--cheater"><div class="overlay__contents"><img src="dist/images/cheater.jpg" alt="Yeah, if you could go ahead and stop cheating that would be great..." class="overlay__image"></div></div>`).hide().appendTo('main').fadeIn(200);
+    $(`<div class="overlay overlay--cheater"><div class="overlay__contents"><img src="dist/images/cheater.jpg" alt="Yeah, if you could go ahead and stop cheating that would be great..." class="overlay__image"><button class="overlay__button overlay__button--unpause">Close</button></div></div>`).hide().appendTo('main').fadeIn(200);
 
     return true;
   } else {
@@ -588,7 +588,7 @@ app.init = function() {
     app.getScores();
   });
 
-  $('main').on('click', '.overlay__image', function() {
+  $('main').on('click', '.overlay__button--unpause', function() {
     $('.overlay--cheater').fadeOut(200, function() {
       $(this).remove();
     });

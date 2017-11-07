@@ -319,14 +319,6 @@ main {
   left: 0;
   right: 0;
 
-  &--cheater {
-    background-color: transparent;
-
-    .overlay__image {
-      cursor: pointer;
-    }
-  }
-
   &__contents {
     width: 100%;
     padding: 30px;
@@ -339,6 +331,12 @@ main {
     @media (max-width: $sm-width) {
   		padding: 30px 15px;
   	}
+  }
+
+  &__image {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 25px;
   }
 
   h2 {
