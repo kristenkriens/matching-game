@@ -351,7 +351,7 @@ app.generateOverlay = function(context, mins, secs) {
   if(context === 'pause') {
     $('html, body').css('overflow', 'hidden');
 
-    $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Left: ${app.minutes}:${app.seconds}</p><button class="overlay__button overlay__button--pause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
+    $(`<div class="overlay"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time Left: ${app.minutes}:${app.seconds}</p><button class="overlay__button overlay__button--unpause">Continue Game</button></div></div>`).hide().appendTo('main').fadeIn(200);
   } else {
     setTimeout(function() {
       $('html, body').css('overflow', 'hidden');
@@ -484,7 +484,7 @@ app.generateHighscoreOverlay = function(context) {
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else if (context === 'highscores') {
-    $(`<button class="overlay__button overlay__button--pause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
+    $(`<button class="overlay__button overlay__button--unpause">Continue</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else {
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
@@ -568,7 +568,7 @@ app.init = function() {
     $('html, body').css('overflow', 'auto');
   });
 
-  $('main').on('click', '.overlay__button--pause', function() {
+  $('main').on('click', '.overlay__button--unpause', function() {
     app.pausedMinute = app.minutes;
     app.pausedSecond = app.seconds;
   });
