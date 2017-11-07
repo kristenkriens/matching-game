@@ -201,7 +201,7 @@ app.generateStats = function() {
   }
 }
 
-// Takes users desired type and level level and applies applicable classes
+// Gets users desired type and level
 app.getOptions = function() {
   app.level = $('input[name="level"]:checked').attr('id');
   app.type = $('input[name="type"]:checked').attr('id');
@@ -309,8 +309,9 @@ app.checkMatch = function(that) {
       $('.game__board-tile').css("pointer-events", "none");
 
       setTimeout(function() {
-        $('.game__board-tile').eq(app.clickedIndexes[0]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
-        $('.game__board-tile').eq(app.clickedIndexes[1]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
+        for (let i = 0; i <= 1; i++) {
+          $('.game__board-tile').eq(app.clickedIndexes[i]).removeClass('game__board-tile--flipped').find('img').attr('alt', 'Hidden');;
+        }
 
         $('.game__board-tile').css("pointer-events", "auto");
       }, 750);
@@ -382,10 +383,7 @@ app.saveScore = function() {
     app.name = 'Anonymous';
   }
 
-  // These are the max number of points possible if all matches are made in under 1 second, assuming 90 seconds in total
-  if((app.games.score > 540 && app.level === 'easy') || (app.games.score > 900 && app.level === 'medium') || (app.games.score > 1350 && app.level === 'hard')) {
-    app.cheaterOverlay();
-  } else {
+  if(!app.cheater()) {
     firebase.database().ref().push({
       name: app.name,
       score: app.games.score,
@@ -488,8 +486,24 @@ app.generateHighscoreOverlay = function(context) {
   }
 }
 
-app.cheaterOverlay = function(context) {
-  $(`<div class="overlay overlay--cheater"><div class="overlay__contents"><img src="dist/images/cheater.jpg" alt="Yeah, if you could go ahead and stop cheating that would be great..." class="overlay__image"></div></div>`).hide().appendTo('main').fadeIn(200);
+app.cheater = function() {
+  let maxPoints = {
+    easy: 0,
+    medium: 0,
+    hard: 0
+  };
+
+  for(let item in maxPoints) {
+    maxPoints[item] = (((app.games.minutes * 60) + app.games.seconds) * (app.levelBoxes[item] / 2)) - (app.levelBoxes[item] * 2 * 5);
+  }
+
+  if((app.games.score > maxPoints.easy && app.level === 'easy') || (app.games.score > maxPoints.medium && app.level === 'medium') || (app.games.score > maxPoints.hard && app.level === 'hard')) {
+    $(`<div class="overlay overlay--cheater"><div class="overlay__contents"><img src="dist/images/cheater.jpg" alt="Yeah, if you could go ahead and stop cheating that would be great..." class="overlay__image"></div></div>`).hide().appendTo('main').fadeIn(200);
+
+    return true;
+  } else {
+    return false;
+  }
 }
 
 app.init = function() {
