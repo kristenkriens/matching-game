@@ -383,15 +383,19 @@ app.saveScore = function() {
     app.name = 'Anonymous';
   }
 
+  let postData = {
+    name: app.name,
+    score: app.games.score,
+    level: app.level,
+    minutes: app.minutesTaken,
+    seconds: app.secondsTaken,
+    clicks: app.games.clicks
+  }
+
   if(!app.cheater()) {
-    firebase.database().ref().push({
-      name: app.name,
-      score: app.games.score,
-      level: app.level,
-      minutes: app.minutesTaken,
-      seconds: app.secondsTaken,
-      clicks: app.games.clicks
-    });
+    firebase.database().ref('winners').push(postData);
+  } else {
+    firebase.database().ref('cheaters').push(postData);
   }
 }
 
@@ -406,17 +410,17 @@ app.saveScore = function() {
 //   };
 //
 // 	// Get key for new post
-// 	var newPostKey = firebase.database().ref().push().key;
+// 	var newPostKey = firebase.database().ref('winners').push().key;
 //
 // 	// Write new data in the posts list
 // 	var updates = {};
 // 	updates[newPostKey] = postData;
-// 	return firebase.database().ref().update(updates);
+// 	return firebase.database().ref('winners').update(updates);
 // }
 
 // Gets scores from firebase
 app.getScores = function(context) {
-  firebase.database().ref().once('value', function(snapshot) {
+  firebase.database().ref('winners').once('value', function(snapshot) {
 		app.highscores = snapshot.val();
 
     app.highscores = $.map(app.highscores, function(value) {
