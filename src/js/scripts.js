@@ -54,6 +54,7 @@ app.clickedItems = [];
 app.clickedIndexes = [];
 
 app.highscores = {};
+app.numHighscores = 10;
 
 // Makes dynamic equal width and height boxes
 app.equalHeightWidth = function() {
@@ -420,8 +421,8 @@ app.sortScores = function(context) {
       return b.score - a.score;
   });
 
-  if(app.highscores.length > 5) {
-    app.highscores.splice(5, Infinity);
+  if(app.highscores.length > app.numHighscores) {
+    app.highscores.splice(app.numHighscores, Infinity);
   }
 
   app.checkScores(context, app.highscores);
@@ -481,7 +482,7 @@ app.cheater = function() {
   };
 
   for(let item in maxPoints) {
-    maxPoints[item] = (((app.games.minutes * 60) + app.games.seconds) * (app.levelBoxes[item] / 2)) - (app.levelBoxes[item] * 5);
+    maxPoints[item] = (((app.games.minutes * 60) + app.games.seconds) * (app.levelBoxes[item] / 2)) - (app.levelBoxes[item] * app.numHighscores);
   }
 
   if( ((app.games.score > maxPoints.easy) && (app.level === 'easy')) || ((app.games.score > maxPoints.medium) && (app.level === 'medium')) || ((app.games.score > maxPoints.hard) && (app.level === 'hard')) ) {
