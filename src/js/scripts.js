@@ -424,23 +424,69 @@ app.sortScores = function(context) {
   app.checkScores(context, app.highscores);
 }
 
-// Make sure score is in the top 5 and sets context of 'new-highscore'
+// Make sure score is in the top 5 (app.numHighscores) and sets context of 'new-highscore'
 app.checkScores = function(context) {
-  if(app.highscores.length > app.numHighscores) {
-    app.highscores.splice(app.numHighscores, Infinity);
+  // filter app.numHighscores by level
+
+  let easyHighscores = [];
+  let mediumHighscores = [];
+  let hardHighscores = [];
+
+  easyHighscores = app.highscores.filter(function(score) {
+    if (score.level === 'easy') {
+      return true;
+    }
+  });
+
+  mediumHighscores = app.highscores.filter(function(score) {
+    if (score.level === 'medium') {
+      return true;
+    }
+  });
+
+  hardHighscores = app.highscores.filter(function(score) {
+    if (score.level === 'hard') {
+      return true;
+    }
+  });
+
+  if (easyHighscores.length > app.numHighscores) {
+    easyHighscores.splice(app.numHighscores, Infinity);
+  } else if (mediumHighscores.length > app.numHighscores) {
+    mediumHighscores.splice(app.numHighscores, Infinity);
+  } else if (hardHighscores.length > app.numHighscores) {
+    hardHighscores.splice(app.numHighscores, Infinity);
   }
 
-  let scoreArray = [];
+  let easyScoreArray = [];
+  let mediumScoreArray = [];
+  let hardScoreArray = [];
 
-  for(let item in app.highscores) {
-    scoreArray.push(app.highscores[item].score);
+  for(let item in easyHighscores) {
+    easyScoreArray.push(easyHighscores[item].score);
   }
 
-  let minScore = Math.min.apply(null, scoreArray);
+  for(let item in mediumHighscores) {
+    mediumScoreArray.push(mediumHighscores[item].score);
+  }
 
-  if(app.games.score >= minScore) {
+  for(let item in hardHighscores) {
+    hardScoreArray.push(hardHighscores[item].score);
+  }
+
+  let minEasyScore = Math.min.apply(null, easyScoreArray);
+  let minMediumScore = Math.min.apply(null, mediumScoreArray);
+  let minHardScore = Math.min.apply(null, hardScoreArray);
+
+  if ((app.games.score >= minEasyScore) && app.level === 'easy') {
     context = 'new-highscore';
-    // Maybe remove from firebase if not a highscore
+    // Maybe remove item from firebase if not a highscore
+  } else if ((app.games.score >= minMediumScore) && app.level === 'medium') {
+    context = 'new-highscore';
+    // Maybe remove item from firebase if not a highscore
+  } else if ((app.games.score >= minHardScore) && app.level === 'hard') {
+    context = 'new-highscore';
+    // Maybe remove item from firebase if not a highscore
   }
 
   app.setScores(context, app.highscores);
@@ -451,11 +497,22 @@ app.setScores = function(context) {
   app.generateHighscoreOverlay(context, app.highscores);
 
   for(let item in app.highscores) {
-    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table').fadeIn(200);
+    let level = app.highscores[item].level;
+
+    if(level === 'easy') {
+      $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--easy').fadeIn(200);
+    } else if(level === 'medium') {
+      $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--medium').fadeIn(200);
+    } else {
+      $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--hard').fadeIn(200);
+    }
   }
 
+  // Only shows first 5 items in each table
+  $('.highscores__table tr:nth-of-type(1n+7)').remove();
+
   if(context === 'new-highscore') {
-    $(`<div class="highscores__text"><p>Congratulations! You got a highscore of ${app.games.score}.</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores__table').fadeIn(750);
+    $(`<div class="highscores__text"><p>Congratulations, you got a highscore of ${app.games.score} on ${app.prettify(app.level)}!</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores__table--hard').fadeIn(750);
   }
 }
 
@@ -463,7 +520,7 @@ app.setScores = function(context) {
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
-  $(`<div class="overlay" role="dialog"><div class="overlay__contents"><div class="highscores"><h2 class="highscores__title">Highscores</h2><table class="highscores__table"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div></div>`).hide().appendTo('main').fadeIn(200);
+  $(`<div class="overlay" role="dialog"><div class="overlay__contents"><div class="highscores highscores--${app.level}"><h2 class="highscores__title">Highscores</h2><button class="highscores__button highscores__button--easy">Easy</button><button class="highscores__button highscores__button--medium">Medium</button><button class="highscores__button highscores__button--hard">Hard</button><table class="highscores__table highscores__table--easy"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--medium"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--hard"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Time</td><td>Clicks</td></tr></table></div></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -568,6 +625,16 @@ app.init = function() {
 
   $('main').on('click', '.overlay__button--highscores', function() {
     app.getScores();
+  });
+
+  $('main').on('click', '.highscores__button', function() {
+    if($(this).hasClass('highscores__button--easy')) {
+      $('.highscores').removeClass().addClass('highscores highscores--easy');
+    } else if($(this).hasClass('highscores__button--medium')) {
+      $('.highscores').removeClass().addClass('highscores highscores--medium');
+    } else {
+      $('.highscores').removeClass().addClass('highscores highscores--hard');
+    }
   });
 
   $('main').on('keypress', '.highscores__text input', function(event) {
