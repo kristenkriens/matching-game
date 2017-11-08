@@ -424,7 +424,7 @@ app.sortScores = function(context) {
   app.checkScores(context, app.highscores);
 }
 
-// Make sure score is in the top 5 (app.numHighscores) and sets context of 'new-highscore'
+// Make sure score is in the top 5 (app.numHighscores) scores per level and sets context of 'new-highscore'
 app.checkScores = function(context) {
   // filter app.numHighscores by level
 
