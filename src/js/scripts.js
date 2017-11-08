@@ -34,6 +34,8 @@ app.levelBoxes = {
   hard: 30
 }
 
+app.date = new Date().toString();
+
 app.name = '';
 app.type = '';
 app.level = '';
@@ -387,9 +389,9 @@ app.saveScore = function() {
     name: app.name,
     score: app.games.score,
     level: app.level,
-    minutes: app.minutesTaken,
-    seconds: app.secondsTaken,
-    clicks: app.games.clicks
+    time: app.minutesTaken + ':' + ((app.secondsTaken < 10) ? '0' + app.secondsTaken : app.secondsTaken),
+    clicks: app.games.clicks,
+    date: app.date
   }
 
   if(!app.cheater()) {
@@ -448,7 +450,7 @@ app.setScores = function(context) {
   app.generateHighscoreOverlay(context, app.highscores);
 
   for(let item in app.highscores) {
-    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${((app.highscores[item].seconds < 10) ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table').fadeIn(200);
+    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table').fadeIn(200);
   }
 
   if(context === 'new-highscore') {
