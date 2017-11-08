@@ -314,6 +314,8 @@ main {
 .overlay {
   background-color: $orange;
   position: fixed;
+  overflow-x: hidden;
+  overflow-y: scroll;
   top: 0;
   bottom: 0;
   left: 0;
