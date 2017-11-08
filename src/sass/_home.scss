@@ -325,9 +325,9 @@ main {
     width: 100%;
     padding: 30px;
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     text-align: center;
 
     @media (max-width: $sm-width) {
@@ -397,7 +397,6 @@ main {
 .highscores {
   h2.highscores__title {
     font-size: 100px;
-    margin-bottom: 25px;
 
     @media (max-width: $md-width) {
       font-size: 75px;
@@ -411,7 +410,7 @@ main {
   &__table {
     width: 100%;
     max-width: 600px;
-    margin: 50px auto 25px;
+    margin: 35px auto 25px;
   }
 
   tr {
