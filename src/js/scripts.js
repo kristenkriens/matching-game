@@ -54,7 +54,7 @@ app.clickedItems = [];
 app.clickedIndexes = [];
 
 app.highscores = {};
-app.numHighscores = 10;
+app.numHighscores = 5;
 
 // Makes dynamic equal width and height boxes
 app.equalHeightWidth = function() {
