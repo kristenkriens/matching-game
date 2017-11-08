@@ -399,25 +399,6 @@ app.saveScore = function() {
   }
 }
 
-// app.updateScore = function() {
-// 	let postData = {
-//     name: app.name,
-//     score: app.games.score,
-//     level: app.level,
-//     minutes: app.minutesTaken,
-//     seconds: app.secondsTaken,
-//     clicks: app.games.clicks
-//   };
-//
-// 	// Get key for new post
-// 	var newPostKey = firebase.database().ref('winners').push().key;
-//
-// 	// Write new data in the posts list
-// 	var updates = {};
-// 	updates[newPostKey] = postData;
-// 	return firebase.database().ref('winners').update(updates);
-// }
-
 // Gets scores from firebase
 app.getScores = function(context) {
   firebase.database().ref('winners').once('value', function(snapshot) {
