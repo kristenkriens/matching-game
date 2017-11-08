@@ -415,21 +415,21 @@ app.getScores = function(context) {
 	});
 }
 
-// Sorts scores from firebase and only shows top 5
+// Sorts scores from firebase
 app.sortScores = function(context) {
   app.highscores.sort(function(a,b) {
       return b.score - a.score;
   });
 
+  app.checkScores(context, app.highscores);
+}
+
+// Make sure score is in the top 5 and sets context of 'new-highscore'
+app.checkScores = function(context) {
   if(app.highscores.length > app.numHighscores) {
     app.highscores.splice(app.numHighscores, Infinity);
   }
 
-  app.checkScores(context, app.highscores);
-}
-
-// Checks if score is in the top 5 and sets context if it is
-app.checkScores = function(context) {
   let scoreArray = [];
 
   for(let item in app.highscores) {
