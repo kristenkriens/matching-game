@@ -406,9 +406,12 @@ main {
 }
 
 .highscores {
-  width: 100%;
-  max-width: 600px;
-  margin: 50px auto 25px;
+
+  &__table {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto 25px;
+  }
 
   tr {
     background-color: $light-orange;

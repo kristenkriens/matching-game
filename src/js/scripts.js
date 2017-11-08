@@ -467,11 +467,11 @@ app.setScores = function(context) {
   app.generateHighscoreOverlay(context, app.highscores);
 
   for(let item in app.highscores) {
-    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${((app.highscores[item].seconds < 10) ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores').fadeIn(200);
+    $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.prettify(app.highscores[item].level)}</td><td>${app.highscores[item].minutes}:${((app.highscores[item].seconds < 10) ? '0' + app.highscores[item].seconds : app.highscores[item].seconds)}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table').fadeIn(200);
   }
 
   if(context === 'new-highscore') {
-    $(`<div class="highscore-text"><p>Congratulations! You got a highscore of ${app.games.score}.</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores').fadeIn(750);
+    $(`<div class="highscore-text"><p>Congratulations! You got a highscore of ${app.games.score}.</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores__table').fadeIn(750);
   }
 }
 
@@ -479,7 +479,7 @@ app.setScores = function(context) {
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
-  $(`<div class="overlay"><div class="overlay__contents"><h2 class="long">Highscores</h2><table class="highscores"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div>`).hide().appendTo('main').fadeIn(200);
+  $(`<div class="overlay"><div class="overlay__contents"><div class="highscores"><h2 class="long">Highscores</h2><table class="highscores__table highscores__table--easy"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--medium"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--hard"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -571,6 +571,10 @@ app.init = function() {
   $('main').on('click', '.overlay__button--unpause', function() {
     app.pausedMinute = app.minutes;
     app.pausedSecond = app.seconds;
+
+    $('.overlay--cheater').fadeOut(200, function() {
+      $(this).remove();
+    });
   });
 
   $('main').on('click', '.overlay__button--play-again', function() {
@@ -578,20 +582,14 @@ app.init = function() {
     app.reset();
   });
 
-  $('main').on('keypress', '.highscore-text input', function(event) {
-    if (event.keyCode === 13) {
-      $(".overlay__button--play-again").click();
-    }
-  });
-
   $('main').on('click', '.overlay__button--highscores', function() {
     app.getScores();
   });
 
-  $('main').on('click', '.overlay__button--unpause', function() {
-    $('.overlay--cheater').fadeOut(200, function() {
-      $(this).remove();
-    });
+  $('main').on('keypress', '.highscore-text input', function(event) {
+    if (event.keyCode === 13) {
+      $(".overlay__button--play-again").click();
+    }
   });
 }
 
