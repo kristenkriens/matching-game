@@ -350,19 +350,6 @@ main {
     @media (max-width: $sm-width) {
       font-size: 75px;
     }
-
-    &.long {
-      font-size: 100px;
-      margin-bottom: 15px;
-
-      @media (max-width: $md-width) {
-        font-size: 75px;
-      }
-
-      @media (max-width: $sm-width) {
-        font-size: 50px;
-      }
-    }
   }
 
   p {
@@ -406,6 +393,18 @@ main {
 }
 
 .highscores {
+  h2.highscores__title {
+    font-size: 100px;
+    margin-bottom: 25px;
+
+    @media (max-width: $md-width) {
+      font-size: 75px;
+    }
+
+    @media (max-width: $sm-width) {
+      font-size: 50px;
+    }
+  }
 
   &__table {
     width: 100%;
@@ -438,6 +437,33 @@ main {
     font-size: 85%;
   }
 
+  &__text {
+    margin-bottom: 15px;
+
+    p {
+      font-size: 20px;
+
+      @media (max-width: $sm-width) {
+        font-size: 18px;
+      }
+    }
+
+    input {
+      padding: 5px 10px;
+      color: $black;
+      background-color: white;
+      border: 0;
+      outline: 0;
+      text-align: center;
+      width: 100%;
+      max-width: 250px;
+
+      &::placeholder {
+        color: $black;
+      }
+    }
+  }
+
   @media (max-width: $md-width) {
     td:nth-of-type(6) {
       display: none;
@@ -454,33 +480,6 @@ main {
   @media (max-width: $xs-width) {
     td:nth-of-type(4) {
       display: none;
-    }
-  }
-}
-
-.highscore-text {
-  margin-bottom: 15px;
-
-  p {
-    font-size: 20px;
-
-    @media (max-width: $sm-width) {
-      font-size: 18px;
-    }
-  }
-
-  input {
-    padding: 5px 10px;
-    color: $black;
-    background-color: white;
-    border: 0;
-    outline: 0;
-    text-align: center;
-    width: 100%;
-    max-width: 250px;
-
-    &::placeholder {
-      color: $black;
     }
   }
 }

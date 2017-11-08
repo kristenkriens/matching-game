@@ -377,7 +377,7 @@ app.generateOverlay = function(context, mins, secs) {
 
 // Saves scores to firebase
 app.saveScore = function() {
-  app.name = $('.highscore-text input').val();
+  app.name = $('.highscores__text input').val();
 
   if(!app.name) {
     app.name = 'Anonymous';
@@ -471,7 +471,7 @@ app.setScores = function(context) {
   }
 
   if(context === 'new-highscore') {
-    $(`<div class="highscore-text"><p>Congratulations! You got a highscore of ${app.games.score}.</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores__table').fadeIn(750);
+    $(`<div class="highscores__text"><p>Congratulations! You got a highscore of ${app.games.score}.</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores__table').fadeIn(750);
   }
 }
 
@@ -479,7 +479,7 @@ app.setScores = function(context) {
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
-  $(`<div class="overlay"><div class="overlay__contents"><div class="highscores"><h2 class="long">Highscores</h2><table class="highscores__table highscores__table--easy"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--medium"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--hard"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div></div>`).hide().appendTo('main').fadeIn(200);
+  $(`<div class="overlay"><div class="overlay__contents"><div class="highscores"><h2 class="highscores__title">Highscores</h2><table class="highscores__table"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Level</td><td>Time</td><td>Clicks</td></tr></table></div></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(context === 'new-highscore') {
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
@@ -586,7 +586,7 @@ app.init = function() {
     app.getScores();
   });
 
-  $('main').on('keypress', '.highscore-text input', function(event) {
+  $('main').on('keypress', '.highscores__text input', function(event) {
     if (event.keyCode === 13) {
       $(".overlay__button--play-again").click();
     }
