@@ -424,59 +424,59 @@ app.sortScores = function(context) {
   app.checkScores(context, app.highscores);
 }
 
-// Make sure score is in the top 5 (app.numHighscores) scores per level and sets context of 'new-highscore'
+// Makes sure score is in the top 5 (app.numHighscores) scores per level and sets context of 'new-highscore'
 app.checkScores = function(context) {
   // filter app.numHighscores by level
-
-  let easyHighscores = [];
-  let mediumHighscores = [];
-  let hardHighscores = [];
-
-  easyHighscores = app.highscores.filter(function(score) {
-    if (score.level === 'easy') {
-      return true;
-    }
-  });
-
-  mediumHighscores = app.highscores.filter(function(score) {
-    if (score.level === 'medium') {
-      return true;
-    }
-  });
-
-  hardHighscores = app.highscores.filter(function(score) {
-    if (score.level === 'hard') {
-      return true;
-    }
-  });
-
-  if (easyHighscores.length > app.numHighscores) {
-    easyHighscores.splice(app.numHighscores, Infinity);
-  } else if (mediumHighscores.length > app.numHighscores) {
-    mediumHighscores.splice(app.numHighscores, Infinity);
-  } else if (hardHighscores.length > app.numHighscores) {
-    hardHighscores.splice(app.numHighscores, Infinity);
-  }
 
   let easyScoreArray = [];
   let mediumScoreArray = [];
   let hardScoreArray = [];
 
-  for(let item in easyHighscores) {
-    easyScoreArray.push(easyHighscores[item].score);
+  easyScoreArray = app.highscores.filter(function(score) {
+    if (score.level === 'easy') {
+      return true;
+    }
+  });
+
+  mediumScoreArray = app.highscores.filter(function(score) {
+    if (score.level === 'medium') {
+      return true;
+    }
+  });
+
+  hardScoreArray = app.highscores.filter(function(score) {
+    if (score.level === 'hard') {
+      return true;
+    }
+  });
+
+  if (easyScoreArray.length > app.numHighscores) {
+    easyScoreArray.splice(app.numHighscores, Infinity);
+  } else if (mediumScoreArray.length > app.numHighscores) {
+    mediumScoreArray.splice(app.numHighscores, Infinity);
+  } else if (hardScoreArray.length > app.numHighscores) {
+    hardScoreArray.splice(app.numHighscores, Infinity);
   }
 
-  for(let item in mediumHighscores) {
-    mediumScoreArray.push(mediumHighscores[item].score);
+  let easyScoreArrayShort = [];
+  let mediumScoreArrayShort = [];
+  let hardScoreArrayShort = [];
+
+  for(let item in easyScoreArray) {
+    easyScoreArrayShort.push(easyScoreArray[item].score);
   }
 
-  for(let item in hardHighscores) {
-    hardScoreArray.push(hardHighscores[item].score);
+  for(let item in mediumScoreArray) {
+    mediumScoreArrayShort.push(mediumScoreArray[item].score);
   }
 
-  let minEasyScore = Math.min.apply(null, easyScoreArray);
-  let minMediumScore = Math.min.apply(null, mediumScoreArray);
-  let minHardScore = Math.min.apply(null, hardScoreArray);
+  for(let item in hardScoreArray) {
+    hardScoreArrayShort.push(hardScoreArray[item].score);
+  }
+
+  let minEasyScore = Math.min.apply(null, easyScoreArrayShort);
+  let minMediumScore = Math.min.apply(null, mediumScoreArrayShort);
+  let minHardScore = Math.min.apply(null, hardScoreArrayShort);
 
   if ((app.games.score >= minEasyScore) && app.level === 'easy' && app.games.score > 0) {
     context = 'new-highscore';
