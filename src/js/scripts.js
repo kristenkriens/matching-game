@@ -500,11 +500,11 @@ app.setScores = function(context) {
     let level = app.highscores[item].level;
 
     if(level === 'easy') {
-      $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--easy').fadeIn(200);
+      $(`<tr><td></td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--easy').fadeIn(200);
     } else if(level === 'medium') {
-      $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--medium').fadeIn(200);
+      $(`<tr><td></td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--medium').fadeIn(200);
     } else {
-      $(`<tr><td>${parseInt(item) + 1}</td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--hard').fadeIn(200);
+      $(`<tr><td></td><td>${app.highscores[item].name}</td><td>${app.highscores[item].score}</td><td>${app.highscores[item].time}</td><td>${app.highscores[item].clicks}</td></tr>`).hide().appendTo('.highscores__table--hard').fadeIn(200);
     }
   }
 

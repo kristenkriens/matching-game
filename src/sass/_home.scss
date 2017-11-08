@@ -463,10 +463,20 @@ main {
     width: 100%;
     max-width: 600px;
     margin: 10px auto 20px;
+
+    counter-reset: rowNumber;
   }
 
   tr {
     background-color: $light-orange;
+
+    &:not(:first-of-type) {
+      counter-increment: rowNumber;
+
+      td:first-child:before {
+        content: counter(rowNumber);
+      }
+    }
 
     &:first-of-type {
       background-color: $dark-orange;
