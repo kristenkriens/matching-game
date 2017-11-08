@@ -363,7 +363,7 @@ app.generateOverlay = function(context, mins, secs) {
       app.minutesTaken = Math.floor(app.timeTaken / 60);
       app.secondsTaken = app.timeTaken - app.minutesTaken * 60;
 
-      $(`<div class="overlay" role="dialog"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.minutesTaken}:${app.secondsTaken}</p><button class="overlay__button overlay__button--highscores">Continue</button></div></div>`).hide().appendTo('main').fadeIn(750);
+      $(`<div class="overlay" role="dialog"><div class="overlay__contents"><h2>${contextText}</h2><p>Clicks: ${app.games.clicks}</p><p>Score: ${app.games.score}</p><p>Time: ${app.minutesTaken}:${((app.secondsTaken < 10) ? '0' + app.secondsTaken : app.secondsTaken)}</p><button class="overlay__button overlay__button--highscores">Continue</button></div></div>`).hide().appendTo('main').fadeIn(750);
 
       if(context === 'win') {
         setTimeout(function() {
