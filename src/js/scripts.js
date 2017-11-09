@@ -426,8 +426,6 @@ app.sortScores = function(context) {
 
 // Makes sure score is in the top 5 (app.numHighscores) scores per level and sets context of 'new-highscore'
 app.checkScores = function(context) {
-  // filter app.numHighscores by level
-
   let easyScoreArray = [];
   let mediumScoreArray = [];
   let hardScoreArray = [];
@@ -492,7 +490,7 @@ app.checkScores = function(context) {
   app.setScores(context, app.highscores);
 }
 
-// Puts scores from firebase in highscores table and shows input for name if user gets a high score
+// Puts scores from firebase in highscores table
 app.setScores = function(context) {
   app.generateHighscoreOverlay(context, app.highscores);
 
@@ -510,23 +508,23 @@ app.setScores = function(context) {
 
   // Only shows first 5 items in each table
   $('.highscores__table tr:nth-of-type(1n+7)').remove();
-
-  if(context === 'new-highscore') {
-    $(`<div class="highscores__text"><p>Congratulations, you got a highscore of ${app.games.score} on ${app.prettify(app.level)}!</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores__table--hard').fadeIn(750);
-  }
 }
 
-// Generates highscore overlay and adjusts button text according to context
+// Generates highscore overlay, shows input for name if user gets a high score, and adjusts button text according to context
 app.generateHighscoreOverlay = function(context) {
   $('html, body').css('overflow', 'hidden');
 
   $(`<div class="overlay" role="dialog"><div class="overlay__contents"><div class="highscores highscores--${app.level}"><h2 class="highscores__title">Highscores</h2><button class="highscores__button highscores__button--easy">Easy</button><button class="highscores__button highscores__button--medium">Medium</button><button class="highscores__button highscores__button--hard">Hard</button><table class="highscores__table highscores__table--easy"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--medium"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Time</td><td>Clicks</td></tr></table><table class="highscores__table highscores__table--hard"><tr><td><span class="accessible">Rank</span></td><td>Name</td><td>Score</td><td>Time</td><td>Clicks</td></tr></table></div></div></div>`).hide().appendTo('main').fadeIn(200);
 
   if(context === 'new-highscore') {
+    $(`<div class="highscores__text"><p>Congratulations, you got a highscore of ${app.games.score} on ${app.prettify(app.level)}!</p><span class="accessible">Enter name</span><input type="text" id="name" maxlength="20" placeholder="Enter name"></div>`).hide().insertAfter('.highscores__table--hard').fadeIn(750);
+
     $(`<button class="overlay__button overlay__button--play-again">Submit/Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else if (context === 'highscores') {
     $(`<button class="overlay__button overlay__button--unpause">Close</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   } else {
+    $(`<div class="highscores__text"><p>Oh no, you didn't get a highscore!</p></div>`).hide().insertAfter('.highscores__table--hard').fadeIn(750);
+
     $(`<button class="overlay__button overlay__button--play-again">Play Again</button>`).hide().appendTo('.overlay__contents').fadeIn(750);
   }
 }
