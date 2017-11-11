@@ -476,17 +476,12 @@ app.checkScores = function(context) {
   let minMediumScore = Math.min.apply(null, mediumScoreValuesArray);
   let minHardScore = Math.min.apply(null, hardScoreValuesArray);
 
-  console.log(easyScoreArray, easyScoreValuesArray, minEasyScore)
-
   if ((app.games.score >= minEasyScore) && app.level === 'easy' && app.games.score > 0) {
     context = 'new-highscore';
-    // Maybe remove item from firebase if not a highscore
   } else if ((app.games.score >= minMediumScore) && app.level === 'medium' && app.games.score > 0) {
     context = 'new-highscore';
-    // Maybe remove item from firebase if not a highscore
   } else if ((app.games.score >= minHardScore) && app.level === 'hard' && app.games.score > 0) {
     context = 'new-highscore';
-    // Maybe remove item from firebase if not a highscore
   }
 
   app.setScores(context, app.highscores);
