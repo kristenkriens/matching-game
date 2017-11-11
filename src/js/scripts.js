@@ -456,25 +456,27 @@ app.checkScores = function(context) {
     hardScoreArray.splice(app.numHighscores, Infinity);
   }
 
-  let easyScoreArrayShort = [];
-  let mediumScoreArrayShort = [];
-  let hardScoreArrayShort = [];
+  let easyScoreValuesArray = [];
+  let mediumScoreValuesArray = [];
+  let hardScoreValuesArray = [];
 
   for(let item in easyScoreArray) {
-    easyScoreArrayShort.push(easyScoreArray[item].score);
+    easyScoreValuesArray.push(easyScoreArray[item].score);
   }
 
   for(let item in mediumScoreArray) {
-    mediumScoreArrayShort.push(mediumScoreArray[item].score);
+    mediumScoreValuesArray.push(mediumScoreArray[item].score);
   }
 
   for(let item in hardScoreArray) {
-    hardScoreArrayShort.push(hardScoreArray[item].score);
+    hardScoreValuesArray.push(hardScoreArray[item].score);
   }
 
-  let minEasyScore = Math.min.apply(null, easyScoreArrayShort);
-  let minMediumScore = Math.min.apply(null, mediumScoreArrayShort);
-  let minHardScore = Math.min.apply(null, hardScoreArrayShort);
+  let minEasyScore = Math.min.apply(null, easyScoreValuesArray);
+  let minMediumScore = Math.min.apply(null, mediumScoreValuesArray);
+  let minHardScore = Math.min.apply(null, hardScoreValuesArray);
+
+  console.log(easyScoreArray, easyScoreValuesArray, minEasyScore)
 
   if ((app.games.score >= minEasyScore) && app.level === 'easy' && app.games.score > 0) {
     context = 'new-highscore';
