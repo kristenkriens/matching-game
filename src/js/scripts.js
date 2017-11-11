@@ -449,40 +449,40 @@ app.checkScores = function(context) {
   });
 
   if (easyScoreArray.length > app.numHighscores) {
-    easyScoreArray.splice(app.numHighscores, Infinity);
+    easyScoreArray.slice(app.numHighscores, Infinity);
   } else if (mediumScoreArray.length > app.numHighscores) {
-    mediumScoreArray.splice(app.numHighscores, Infinity);
+    mediumScoreArray.slice(app.numHighscores, Infinity);
   } else if (hardScoreArray.length > app.numHighscores) {
-    hardScoreArray.splice(app.numHighscores, Infinity);
+    hardScoreArray.slice(app.numHighscores, Infinity);
   }
 
-  let easyScoreArrayShort = [];
-  let mediumScoreArrayShort = [];
-  let hardScoreArrayShort = [];
+  let easyHighscoreArray = [];
+  let mediumHighscoreArray = [];
+  let hardHighscoreArray = [];
 
   for(let item in easyScoreArray) {
-    easyScoreArrayShort.push(easyScoreArray[item].score);
+    easyHighscoreArray.push(easyScoreArray[item].score);
   }
 
   for(let item in mediumScoreArray) {
-    mediumScoreArrayShort.push(mediumScoreArray[item].score);
+    mediumHighscoreArray.push(mediumScoreArray[item].score);
   }
 
   for(let item in hardScoreArray) {
-    hardScoreArrayShort.push(hardScoreArray[item].score);
+    hardHighscoreArray.push(hardScoreArray[item].score);
   }
 
-  let minEasyScore = Math.min.apply(null, easyScoreArrayShort);
-  let minMediumScore = Math.min.apply(null, mediumScoreArrayShort);
-  let minHardScore = Math.min.apply(null, hardScoreArrayShort);
+  let minEasyHighscore = Math.min.apply(null, easyHighscoreArray);
+  let minMediumHighscore = Math.min.apply(null, mediumHighscoreArray);
+  let minHardHighscore = Math.min.apply(null, hardHighscoreArray);
 
-  if ((app.games.score >= minEasyScore) && app.level === 'easy' && app.games.score > 0) {
+  if ((app.games.score >= minEasyHighscore) && app.level === 'easy' && app.games.score > 0) {
     context = 'new-highscore';
     // Maybe remove item from firebase if not a highscore
-  } else if ((app.games.score >= minMediumScore) && app.level === 'medium' && app.games.score > 0) {
+  } else if ((app.games.score >= minMediumHighscore) && app.level === 'medium' && app.games.score > 0) {
     context = 'new-highscore';
     // Maybe remove item from firebase if not a highscore
-  } else if ((app.games.score >= minHardScore) && app.level === 'hard' && app.games.score > 0) {
+  } else if ((app.games.score >= minHardHighscore) && app.level === 'hard' && app.games.score > 0) {
     context = 'new-highscore';
     // Maybe remove item from firebase if not a highscore
   }
