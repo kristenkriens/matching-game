@@ -481,11 +481,11 @@ app.checkScores = function(context) {
   let minHardScore = Math.min.apply(null, hardScoreValuesArray);
 
   if(app.games.score > 0) {
-    if ((app.games.score >= minEasyScore) && app.level === 'easy') {
+    if ((app.games.score > minEasyScore) && app.level === 'easy') {
       context = 'new-highscore';
-    } else if ((app.games.score >= minMediumScore) && app.level === 'medium') {
+    } else if ((app.games.score > minMediumScore) && app.level === 'medium') {
       context = 'new-highscore';
-    } else if ((app.games.score >= minHardScore) && app.level === 'hard') {
+    } else if ((app.games.score > minHardScore) && app.level === 'hard') {
       context = 'new-highscore';
     }
   }
