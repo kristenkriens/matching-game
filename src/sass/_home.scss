@@ -313,8 +313,6 @@ main {
 
 .overlay {
   display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: $orange;
   position: fixed;
   overflow-x: hidden;
@@ -328,6 +326,7 @@ main {
     width: 100%;
     padding: 30px;
     text-align: center;
+    margin: auto;
 
     @media (max-width: $sm-width) {
   		padding: 30px 15px;
