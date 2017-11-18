@@ -411,7 +411,7 @@ app.getScores = function(context) {
       return [value];
     });
 
-    app.sortScores(context, app.highscores);
+    app.sortScores(context);
 	});
 }
 
@@ -421,7 +421,7 @@ app.sortScores = function(context) {
       return b.score - a.score;
   });
 
-  app.checkScores(context, app.highscores);
+  app.checkScores(context);
 }
 
 // Makes sure score is in the top 5 (app.numHighscores) scores per level and sets context of 'new-highscore'
@@ -450,9 +450,13 @@ app.checkScores = function(context) {
 
   if (easyScoreArray.length > app.numHighscores) {
     easyScoreArray.splice(app.numHighscores, Infinity);
-  } else if (mediumScoreArray.length > app.numHighscores) {
+  }
+
+  if (mediumScoreArray.length > app.numHighscores) {
     mediumScoreArray.splice(app.numHighscores, Infinity);
-  } else if (hardScoreArray.length > app.numHighscores) {
+  }
+
+  if (hardScoreArray.length > app.numHighscores) {
     hardScoreArray.splice(app.numHighscores, Infinity);
   }
 
@@ -476,20 +480,22 @@ app.checkScores = function(context) {
   let minMediumScore = Math.min.apply(null, mediumScoreValuesArray);
   let minHardScore = Math.min.apply(null, hardScoreValuesArray);
 
-  if ((app.games.score >= minEasyScore) && app.level === 'easy' && app.games.score > 0) {
-    context = 'new-highscore';
-  } else if ((app.games.score >= minMediumScore) && app.level === 'medium' && app.games.score > 0) {
-    context = 'new-highscore';
-  } else if ((app.games.score >= minHardScore) && app.level === 'hard' && app.games.score > 0) {
-    context = 'new-highscore';
+  if(app.games.score > 0) {
+    if ((app.games.score >= minEasyScore) && app.level === 'easy') {
+      context = 'new-highscore';
+    } else if ((app.games.score >= minMediumScore) && app.level === 'medium') {
+      context = 'new-highscore';
+    } else if ((app.games.score >= minHardScore) && app.level === 'hard') {
+      context = 'new-highscore';
+    }
   }
 
-  app.setScores(context, app.highscores);
+  app.setScores(context);
 }
 
 // Puts scores from firebase in highscores table
 app.setScores = function(context) {
-  app.generateHighscoreOverlay(context, app.highscores);
+  app.generateHighscoreOverlay(context);
 
   for(let item in app.highscores) {
     let level = app.highscores[item].level;
